@@ -86,7 +86,7 @@ const deleteUserById = async (req, res) => {
 const createUser = async (req, res) => {
   const body = req.body;
   try {
-    const { error, value } = createUserValidator.validate(body);
+    const { error, value } = UserValidator.createUserValidator.validate(body);
     if (error) {
       return res.sendResponse(400, { message: error.message });
     }
@@ -114,7 +114,7 @@ const getAllUsers = async (req, res) => {
     if (!users || users.length == 0)
       return res.sendResponse(404, { message: "No users found" });
 
-    const totalUsers = await userCount();
+    const totalUsers = await UserService.userCount();
     return res.sendResponse(200, users, "success", {
       page,
       limit,

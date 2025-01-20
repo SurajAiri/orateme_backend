@@ -1,4 +1,3 @@
-const { date } = require("joi");
 const bcrypt = require("bcrypt");
 const JwtService = require("../../shared/services/jwt.service");
 const UserService = require("../services/user.service");
@@ -19,7 +18,7 @@ async function registerWithUsername(req, res) {
     // const newUser = await createUserService({ ...value, refreshToken });
     const newUser = await UserService.createUser(value);
     if (!newUser) return res.sendResponse(500, "Failed to create user");
-    const accessToken = generateAccessToken(newUser);
+    const accessToken = JwtService.generateAccessToken(newUser);
     return res.sendResponse(200, {
       user: newUser,
       accessToken,
