@@ -6,6 +6,7 @@ const { default: mongoose } = require('mongoose');
 const authRoutes = require('./src/user/routes/auth.routes');
 const userRoutes = require('./src/user/routes/user.routes');
 const adminUserRoutes = require('./src/user/routes/admin_user.routes');
+const adminActivityOutlineRoutes = require('./src/activity/routes/activity_outline.routes');
 
 
 // constants
@@ -31,6 +32,7 @@ app.use("/api/v1/user", authMiddleware.restrictTo(), userRoutes);
 
 // admin routes
 app.use("/api/v1/admin/user", authMiddleware.restrictTo(["admin"]), adminUserRoutes);
+app.use("/api/v1/admin/ao", authMiddleware.restrictTo(["admin"]), adminActivityOutlineRoutes);
 
 
 app.listen(PORT, () => {

@@ -1,5 +1,7 @@
 const UserService = require("../services/user.service");
 const UserValidator = require("../validators/user.validator");
+const { DEFAULT_LIMIT,DEFAULT_PAGE } = require('../../config/constants');
+
 
 // common operations [private access]
 async function _updateUser(userId, body, res) {
@@ -107,7 +109,7 @@ const createUser = async (req, res) => {
 };
 
 const getAllUsers = async (req, res) => {
-  const { page = 1, limit = 10 } = req.query;
+  const { page = DEFAULT_PAGE, limit = DEFAULT_LIMIT } = req.query;
   try {
     const users = await UserService.findAllUser({ page, limit });
 
@@ -123,7 +125,7 @@ const getAllUsers = async (req, res) => {
     });
   } catch (error) {
     console.error("UserControllerError: getAllUsers", error);
-    return res.sendResponse(500, { message: "Internal Server Error" });
+    return res.sendResponse(500, { message: "Internal Server Error",error: error.message });
   }
 };
 
