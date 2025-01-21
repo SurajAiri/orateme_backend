@@ -28,19 +28,19 @@ class ActivityController {
             const rec = {
                 question:ques,
             }
-            const record = RecordSchema.createRecordSchema(rec);
+            const record = await RecordSchema.createRecordSchema(rec);
             if(!record)return res.sendResponse(400, {message: 'Failed to create record'});
 
             // 6. create activity instance
             const act = {
                 userId,
                 actOutId,
-                recordId:record._id,
+                recordId:[record._id],
                 recordCount:ao.questionCount,
             }
 
             // 7. return response 
-            const activity = ActivityService.createActivity(act);
+            const activity = await ActivityService.createActivity(act);
             if(!activity)return res.sendResponse(400, {message: 'Failed to create activity'});
             return res.sendResponse(201, activity);
         }
