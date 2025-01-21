@@ -5,8 +5,13 @@ const authMiddleware = require('./src/shared/middlewares/auth.middleware');
 const { default: mongoose } = require('mongoose');
 const authRoutes = require('./src/user/routes/auth.routes');
 const userRoutes = require('./src/user/routes/user.routes');
-const adminUserRoutes = require('./src/user/routes/admin_user.routes');
-const adminActivityOutlineRoutes = require('./src/activity/routes/activity_outline.routes');
+const aoRoutes = require('./src/activity/routes/activity_outline.routes')
+const activityRoutes = require('./src/activity/routes/activity.routes');
+
+const adminUserRoutes = require('./src/user/routes/user.admin.routes');
+const adminActivityOutlineRoutes = require('./src/activity/routes/activity_outline.admin.routes');
+const adminActivityRoutes = require('./src/activity/routes/activity.admin.routes');
+
 
 
 // constants
@@ -27,12 +32,15 @@ app.get('/', (req, res) => {
 // routes
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", authMiddleware.restrictTo(), userRoutes);
+app.use("/api/v1/ao",aoRoutes)
+app.use("/api/v1/activity", activityRoutes);
 
 
 
 // admin routes
 app.use("/api/v1/admin/user", authMiddleware.restrictTo(["admin"]), adminUserRoutes);
 app.use("/api/v1/admin/ao", authMiddleware.restrictTo(["admin"]), adminActivityOutlineRoutes);
+app.use("/api/v1/admin/activity", authMiddleware.restrictTo(["admin"]), adminActivityRoutes);
 
 
 app.listen(PORT, () => {
@@ -40,7 +48,11 @@ app.listen(PORT, () => {
 });
 
 // connect to mongodb
-mongoose.connect(process.env.MONGODB_URI).then(() => {
-    console.log("Connected to MongoDB");
-});
+mongoose.connect(process.env.MONGODB_URI)
+    .then(() => {
+        console.log("Connected to MongoDB");
+    })
+    .catch((err) => {
+        console.error("Failed to connect to MongoDB", err);
+    });
   

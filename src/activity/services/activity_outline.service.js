@@ -22,17 +22,7 @@ class ActivityOutlineService {
         const filter = type ? { type } : {};
         return await ActivityOutline.countDocuments(filter);
     }
-
-    // async getActivityOutlinesByType(query) {
-    //     const {type, page, limit} = query;
-    //     return await ActivityOutline.find({ type }).skip((page - 1) * limit).limit(limit).exec();
-        
-    // }
-
-    // async getActivityOutlinesByTypeCount(type){
-    //     return await ActivityOutline.countDocuments({ type });
-    // }
-
+    
     async updateActivityOutlineById(id, data) {
         return await ActivityOutline.findByIdAndUpdate(id, data, { new: true });
     }

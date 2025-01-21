@@ -24,9 +24,8 @@ class ActivityOutlineController {
             if (!ao || ao.length === 0) return res.sendResponse(404, {message: 'Activity Outline not found'});
 
             const totalCount = await aoService.activityOutlineCount(type);
-            console.log({page,limit})
 
-            return res.sendResponse(200, ao, "success", { page, limit, totalCount, totalPages:Math.ceil(totalCount/limit) });
+            return res.sendResponse(200, ao, "success", { page: parseInt(page, 10), limit: parseInt(limit, 10), totalCount, totalPages: Math.ceil(totalCount / limit) });
         }catch(err){
             console.error('ActivityOutlineControllerError: getAll', err);
             return res.sendResponse(500, {message: 'Internal Server Error', error: err.message});
