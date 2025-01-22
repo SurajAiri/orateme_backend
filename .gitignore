@@ -91,6 +91,9 @@ web_modules/
 .next
 out
 
+# misc
+*temp*.*
+
 # Nuxt.js build / generate output
 .nuxt
 dist

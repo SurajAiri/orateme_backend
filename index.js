@@ -7,10 +7,14 @@ const authRoutes = require('./src/user/routes/auth.routes');
 const userRoutes = require('./src/user/routes/user.routes');
 const aoRoutes = require('./src/activity/routes/activity_outline.routes')
 const activityRoutes = require('./src/activity/routes/activity.routes');
+const s3Routes = require('./src/media/routes/s3.routes');
+const queRoutes = require('./src/activity/routes/question.routes')
 
 const adminUserRoutes = require('./src/user/routes/user.admin.routes');
 const adminActivityOutlineRoutes = require('./src/activity/routes/activity_outline.admin.routes');
 const adminActivityRoutes = require('./src/activity/routes/activity.admin.routes');
+const adminQuestionRoutes = require("./src/activity/routes/question.admin.routes")
+const adminQuestionBankRoutes = require('./src/activity/routes/question_bank.admin.routes')
 
 
 
@@ -32,8 +36,10 @@ app.get('/', (req, res) => {
 // routes
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", authMiddleware.restrictTo(), userRoutes);
-app.use("/api/v1/ao",aoRoutes)
-app.use("/api/v1/activity", activityRoutes);
+app.use("/api/v1/ao",authMiddleware.restrictTo(),aoRoutes)
+app.use("/api/v1/activity",authMiddleware.restrictTo(), activityRoutes);
+app.use("/api/v1/media",authMiddleware.restrictTo(),s3Routes);
+app.use("/api/v1/que",authMiddleware.restrictTo(),s3Routes);
 
 
 
@@ -41,6 +47,8 @@ app.use("/api/v1/activity", activityRoutes);
 app.use("/api/v1/admin/user", authMiddleware.restrictTo(["admin"]), adminUserRoutes);
 app.use("/api/v1/admin/ao", authMiddleware.restrictTo(["admin"]), adminActivityOutlineRoutes);
 app.use("/api/v1/admin/activity", authMiddleware.restrictTo(["admin"]), adminActivityRoutes);
+app.use("/api/v1/admin/ques", authMiddleware.restrictTo(["admin"]), adminQuestionRoutes);
+app.use("/api/v1/admin/ques_bank", authMiddleware.restrictTo(["admin"]), adminQuestionBankRoutes);
 
 
 app.listen(PORT, () => {
