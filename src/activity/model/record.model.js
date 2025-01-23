@@ -15,7 +15,7 @@ const recordSchema = new Schema({
     },
     status:{
         type:String,
-        enum:['created','queue','processing','completed'],
+        enum:['created','uploaded','queue','processing','completed'],
         default:'created',
     },
     performanceId: {

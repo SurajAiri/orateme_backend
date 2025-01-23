@@ -55,48 +55,11 @@ class ActivityController {
         }
     }
     
-    
-    // async create(req, res) {
-    //     try {
-    //         const { actOutId } = req.body;
-    //         const { id: userId } = req.user;
-    
-    //         // Validate input
-    //         const { error, value } = ActivityValidator.createActivity.validate(req.body);
-    //         if (error) return res.sendResponse(400, { message: error.message });
-    
-    //         // Fetch activity outline
-    //         const ao = await ActivityOutlineService.getActivityOutlineById(actOutId);
-    //         if (!ao) return res.sendResponse(400, { message: 'Invalid activity outline id' });
-    
-    //         // Generate random question
-    //         console.log(ao)
-    //         const ques = await getRandomQuestionByQuesBankUtil(ao.questionBankId, ao.questionCount);
-    //         console.log(ques);
-
-    //         if (ques.error) return res.sendResponse(ques.error.status, { message: ques.error.message });
-    
-    //         // Create activity
-    //         const activity = await ActivityService.createActivityTransaction(
-    //             userId, 
-    //             actOutId, 
-    //             ao.questionCount, 
-    //             ques
-    //         );
-    
-    //         if (!activity) return res.sendResponse(400, { message: 'Failed to create activity' });
-    
-    //         return res.sendResponse(201, activity);
-    
-    //     } catch (err) {
-    //         console.error(`ActivityController: createActivityTransaction ${err.message}`);
-    //         return res.sendResponse(500, { message: 'Internal server error',error:err.message });
-    //     }
-    // }
-
 
     async uploadRecord(req, res) {
         // 1. verify activity
+        const { id: userId } = req.user;
+        // const { recordId,mediaUrl } = req.body;
         // 2. verify record
         // 3. upload media to aws
         // 4. update record with media url
@@ -107,6 +70,17 @@ class ActivityController {
         // 2. update media url
         // 3. add record to audio transcription queue
         // 4. return response
+
+        const {id:userId} = req.user;
+        const {recordId} = req.body;
+
+        try{
+            const rec = RecordService.updateRecordSchemaById(recordId, {status:'uploaded'});
+            if(!rec)return res.sendResponse(400, {message: 'Invalid record id'});
+        }catch(err){
+            console.error('ActivityControllerError: confirmUploadUser', err);
+            return res.sendResponse(500, {message: 'Internal Server Error', error: err.message});
+        }
     }
 
     async confirmUploadAwsAuto(req,res){
@@ -114,6 +88,17 @@ class ActivityController {
         // 2. update media url
         // 3. add record to audio transcription queue
         // 4. return response
+
+        const {key} = req.body;
+        try{
+            const recordId = key.split('/')[1];
+            const rec = RecordService.updateRecordSchemaById(recordId, {status:'uploaded', mediaUrl:key});
+            if(!rec)return res.sendResponse(400, {message: 'Invalid record key'});
+        }
+        catch(err){
+            console.error('ActivityControllerError: confirmUploadAwsAuto', err);
+            return res.sendResponse(500, {message: 'Internal Server Error', error: err.message});
+        }
     }
 
     async getById(req,res){
