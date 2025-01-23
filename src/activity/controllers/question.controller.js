@@ -73,6 +73,38 @@ class QuestionController {
         }
     }
 
+    async getRandomQuestionByQuesBank(req, res) {
+        const { quesBankId } = req.params;
+        let { count = 1 } = req.query;
+        count = parseInt(count, 10);
+        try {
+            // Validate the quesBankId
+            if (!quesBankId) {
+                return res.sendResponse(400, { message: "Question Bank ID is required." });
+            }
+    
+            // Fetch a random question from the question bank
+            
+
+                const randomQuestion = await QuestionService.getRandomQuestionByQuesBank(quesBankId,count);
+                console.log("randomQues: ",randomQuestion);
+                // const randomQuestion = [];
+                // console.log(randomQuestion);
+            
+            // Check if a question was found
+            if (!randomQuestion || randomQuestion.length !== count) {
+                return res.sendResponse(404, { message: `Specified no. '${count}' of Questions not found` });
+            }
+    
+            // Return the random question
+            return res.sendResponse(200, randomQuestion);
+        } catch (error) {
+            console.error('QuestionControllerError: getRandomQuestionByQuesBank', error);
+            return res.sendResponse(500, { message: "Unable to fetch random question. Please try again later." , error: error.message});
+        }
+    }
+
+
     async getById(req, res) {
         const { id } = req.params;
         try {

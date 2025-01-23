@@ -9,6 +9,7 @@ const activityOutlineSchema = new mongoose.Schema(
     questionCount: { type: Number, default:1, required: true }, // number of questions in this activity
     maxDurationTime: { type: Number, required: true }, // in seconds
     minDurationTime: { type: Number, required: true }, // in seconds
+    questionBankId: {type:mongoose.Schema.ObjectId, required: true}
     // fee: { type: Number, required: true }, // required credit to buy this activity
   },
   { timestamps: true }

@@ -1,50 +1,99 @@
 const { DEFAULT_PAGE, DEFAULT_LIMIT } = require('../../config/constants');
 const ActivityService = require('../services/activity.service');
 const ActivityOutlineService = require('../services/activity_outline.service');
-const RecordSchema = require('../services/record.service');
+const RecordService = require('../services/record.service');
+const getRandomQuestionByQuesBankUtil = require('../utils/question.utils');
 const ActivityValidator = require('../validators/activity.validator');
+const questionController = require('./question.controller');
 
 class ActivityController {
     async create(req, res) {
-        // TODO: 1.  verify license
-        // ToDo: 2. check daily limit
-
-        const {actOutId} = req.body;
-        const {id:userId} = req.user;
-        
-        {
-            // 2.b. validate input
-            const {error, value} = ActivityValidator.createActivity.validate(req.body);
-            if(error)return res.sendResponse(400, {message: error.message});
-            
-            // 3. fetch activity outline
-            const ao = ActivityOutlineService.getActivityOutlineById(actOutId);
-            if(!ao)return res.sendResponse(400, {message: 'Invalid activity outline id'});
-
-            // todo: 4. generate topics
-            const ques = 'What is the capital of Nigeria?';
-
-            // 5. create record instance with question
-            const rec = {
-                question:ques,
-            }
-            const record = await RecordSchema.createRecordSchema(rec);
-            if(!record)return res.sendResponse(400, {message: 'Failed to create record'});
-
-            // 6. create activity instance
+        try {
+            const { actOutId } = req.body;
+            const { id: userId } = req.user;
+    
+            // Validate input
+            const { error, value } = ActivityValidator.createActivity.validate(req.body);
+            if (error) return res.sendResponse(400, { message: error.message });
+    
+            // Fetch activity outline
+            const ao = await ActivityOutlineService.getActivityOutlineById(actOutId);
+            if (!ao) return res.sendResponse(400, { message: 'Invalid activity outline id' });
+    
+            // Generate random questions
+            const ques = await getRandomQuestionByQuesBankUtil(ao.questionBankId, ao.questionCount);
+            if (ques.error) return res.sendResponse(ques.error.status, { message: ques.error.message });
+    
+            // Create records for the questions in parallel using Promise.all
+            const records = await Promise.all(
+                ques.map(async (que) => {
+                    const rec = await RecordService.createRecordSchema({ quesId: que });
+                    return rec ? rec._id : null; // Return `_id` or null
+                })
+            );
+    
+            // Ensure `rec_ids` is always a list
+            const rec_ids = records.filter((id) => id !== null); // Remove null values
+    
+            // Prepare the activity object
             const act = {
                 userId,
                 actOutId,
-                recordId:[record._id],
-                recordCount:ao.questionCount,
-            }
-
-            // 7. return response 
+                recordCount: ao.questionCount,
+                recordId: rec_ids, // Always a list
+            };
+    
+            // Create activity
             const activity = await ActivityService.createActivity(act);
-            if(!activity)return res.sendResponse(400, {message: 'Failed to create activity'});
+            if (!activity) return res.sendResponse(400, { message: 'Failed to create activity' });
+    
+            // Return success response
             return res.sendResponse(201, activity);
+        } catch (err) {
+            console.error(`ActivityController: createActivityTransaction ${err.message}`);
+            return res.sendResponse(500, { message: 'Internal server error', error: err.message });
         }
     }
+    
+    
+    // async create(req, res) {
+    //     try {
+    //         const { actOutId } = req.body;
+    //         const { id: userId } = req.user;
+    
+    //         // Validate input
+    //         const { error, value } = ActivityValidator.createActivity.validate(req.body);
+    //         if (error) return res.sendResponse(400, { message: error.message });
+    
+    //         // Fetch activity outline
+    //         const ao = await ActivityOutlineService.getActivityOutlineById(actOutId);
+    //         if (!ao) return res.sendResponse(400, { message: 'Invalid activity outline id' });
+    
+    //         // Generate random question
+    //         console.log(ao)
+    //         const ques = await getRandomQuestionByQuesBankUtil(ao.questionBankId, ao.questionCount);
+    //         console.log(ques);
+
+    //         if (ques.error) return res.sendResponse(ques.error.status, { message: ques.error.message });
+    
+    //         // Create activity
+    //         const activity = await ActivityService.createActivityTransaction(
+    //             userId, 
+    //             actOutId, 
+    //             ao.questionCount, 
+    //             ques
+    //         );
+    
+    //         if (!activity) return res.sendResponse(400, { message: 'Failed to create activity' });
+    
+    //         return res.sendResponse(201, activity);
+    
+    //     } catch (err) {
+    //         console.error(`ActivityController: createActivityTransaction ${err.message}`);
+    //         return res.sendResponse(500, { message: 'Internal server error',error:err.message });
+    //     }
+    // }
+
 
     async uploadRecord(req, res) {
         // 1. verify activity

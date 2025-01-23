@@ -39,7 +39,7 @@ app.use("/api/v1/user", authMiddleware.restrictTo(), userRoutes);
 app.use("/api/v1/ao",authMiddleware.restrictTo(),aoRoutes)
 app.use("/api/v1/activity",authMiddleware.restrictTo(), activityRoutes);
 app.use("/api/v1/media",authMiddleware.restrictTo(),s3Routes);
-app.use("/api/v1/que",authMiddleware.restrictTo(),s3Routes);
+app.use("/api/v1/ques",authMiddleware.restrictTo(),queRoutes);
 
 
 

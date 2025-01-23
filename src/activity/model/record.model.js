@@ -22,9 +22,12 @@ const recordSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Performance',
     },
+    quesId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Question',
+    },
     question: {
         type: String,
-        required: true
     }
 }, {
     timestamps: true

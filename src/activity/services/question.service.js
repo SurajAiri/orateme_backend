@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose");
 const questionModel = require("../model/question.model")
 
 
@@ -20,6 +21,14 @@ class QuestionService {
 
     async getById(id) {
         return await questionModel.findById(id);
+    }
+
+    async getRandomQuestionByQuesBank(questionBankId, count=1) {
+        return await questionModel.aggregate([
+            { $match: { questionBankId:new mongoose.Types.ObjectId(questionBankId) } },
+            { $sample: { size: count } },
+            { $project: { _id: 1, content: 1, difficulty: 1 } }  // Select only needed fields
+        ]);
     }
 
     async getAll() {

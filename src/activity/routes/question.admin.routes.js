@@ -11,5 +11,6 @@ router.route("/:id")
     .patch(QuestionController.updateById)
     .delete(QuestionController.deleteById);
 
+router.get("/random/:quesBankId", QuestionController.getRandomQuestionByQuesBank);
 router.post("/many", QuestionController.createMany);
 module.exports = router;
