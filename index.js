@@ -15,13 +15,20 @@ const adminActivityOutlineRoutes = require('./src/activity/routes/activity_outli
 const adminActivityRoutes = require('./src/activity/routes/activity.admin.routes');
 const adminQuestionRoutes = require("./src/activity/routes/question.admin.routes")
 const adminQuestionBankRoutes = require('./src/activity/routes/question_bank.admin.routes')
+const cors = require('cors');
 
 
+// enable CORS for localhost
+const corsOptions = {
+    origin: '*',
+    optionsSuccessStatus: 200
+};
 
 // constants
 const app = express();
 const PORT = process.env.PORT || 3000;
 const MONGO_URI = process.env.MONGO_URI;
+app.use(cors(corsOptions));
 
 // middlewares
 app.use(express.json());

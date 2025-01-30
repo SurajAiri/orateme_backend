@@ -76,7 +76,7 @@ class QuestionController {
     async getRandomQuestionByQuesBank(req, res) {
         const { quesBankId } = req.params;
         let { count = 1 } = req.query;
-        count = parseInt(count, 10);
+        count = parseInt(count);
         try {
             // Validate the quesBankId
             if (!quesBankId) {
@@ -84,8 +84,6 @@ class QuestionController {
             }
     
             // Fetch a random question from the question bank
-            
-
                 const randomQuestion = await QuestionService.getRandomQuestionByQuesBank(quesBankId,count);
                 console.log("randomQues: ",randomQuestion);
                 // const randomQuestion = [];

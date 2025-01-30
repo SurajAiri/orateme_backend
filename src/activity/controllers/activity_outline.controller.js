@@ -25,7 +25,7 @@ class ActivityOutlineController {
 
             const totalCount = await aoService.activityOutlineCount(type);
 
-            return res.sendResponse(200, ao, "success", { page: parseInt(page,DEFAULT_PAGE), limit: parseInt(limit, DEFAULT_LIMIT), totalCount, totalPages: Math.ceil(totalCount / limit) });
+            return res.sendResponse(200, ao, "success", { page: parseInt(page), limit: parseInt(limit), totalCount, totalPages: Math.ceil(totalCount / limit) });
         }catch(err){
             console.error('ActivityOutlineControllerError: getAll', err);
             return res.sendResponse(500, {message: 'Internal Server Error', error: err.message});
