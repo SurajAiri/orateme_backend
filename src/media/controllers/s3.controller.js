@@ -1,14 +1,16 @@
-const s3Service = require('../services/s3.service');
+// const s3Service = require('../services/cloudinary.service');
+const s3Service = require('../services/b2.blaze.service');
 
 async function handleS3FileUploadUrl(req, res) {
   const {intent, uniqueId} = req.body;
-
-   res.sendResponse(400, {message: 'Missing required fields: intent and uniqueId'});
+  console.log('handleS3FileUploadUrl', intent, uniqueId);
+  if(!intent || !uniqueId)
+    res.sendResponse(400, {message: 'Missing required fields: intent and uniqueId'});
    // todo: validate uniqueId (audio/video => recordId exists, profile => userId exists)
    // todo: validate right user (audio/video => recordId belongs to user, profile => userId matches)
 
   try{
-    const result = await s3Service.generateS3FileUploadUrl(intent,uniqueId);
+    const result = await s3Service.generateB2FileUploadUrl(intent,uniqueId);
     if(!result) res.sendResponse(400, {message: 'Invalid intent'});
 
     res.sendResponse(200, result);
@@ -21,10 +23,11 @@ async function handleS3FileUploadUrl(req, res) {
 async function handleGetS3FileUrl(req, res) {
     const {intent, uniqueId} = req.body;
 
-    res.sendResponse(400, {message: 'Missing required fields: intent and uniqueId'});
+    if(!intent || !uniqueId)
+     return res.sendResponse(400, {message: 'Missing required fields: intent and uniqueId'});
 
     try{
-        const result = await s3Service.getS3FileUrl(intent,uniqueId);
+        const result = await s3Service.getB2FileUrl(intent,uniqueId);
         if(!result) res.sendResponse(400, {message: 'Invalid intent'});
 
         res.sendResponse(200,{url: result});
