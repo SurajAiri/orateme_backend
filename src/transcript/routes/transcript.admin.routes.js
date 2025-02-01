@@ -4,7 +4,7 @@ const TranscriptController = require("../controllers/transcript.controller");
 const router = express.Router();
 
 router.route("/")
-.get(TranscriptController.adminGetAll);
+.get(TranscriptController.getAll);
 
 router.route("/:userId")
     .post(TranscriptController.adminCreate);

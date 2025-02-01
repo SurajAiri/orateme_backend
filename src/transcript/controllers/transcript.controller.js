@@ -31,10 +31,8 @@ class TranscriptController {
         return this._createTranscript(userId, req.body, res);
     }
 
-
-    // common operations [private access]
-    async _getAllTranscripts(userId, query, res) {
-        const { page = DEFAULT_PAGE, limit = DEFAULT_LIMIT } = query;
+    async getAll(req, res) {
+        const { userId, page = DEFAULT_PAGE, limit = DEFAULT_LIMIT } = req.query;
         try {
             const transcripts = await transcriptService.getAllTranscripts({ userId, page, limit });
             if (!transcripts || transcripts.length === 0) return res.sendResponse(404, { message: 'Transcripts not found' });
@@ -55,16 +53,6 @@ class TranscriptController {
             }
             return res.sendResponse(500, { message: 'Internal Server Error', error: err.message });
         }
-    }
-
-    adminGetAll = async (req, res) => {
-        const { userId } = req.query;
-        return this._getAllTranscripts(userId, req.query, res);
-    }
-
-    userGetAll = async (req, res) => {
-        const { id: userId } = req.user;
-        return this._getAllTranscripts(userId, req.query, res);
     }
 
     async getById(req, res) {
