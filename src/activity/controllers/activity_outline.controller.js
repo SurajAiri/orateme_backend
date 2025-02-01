@@ -70,21 +70,6 @@ class ActivityOutlineController {
         }
     }
 
-    // async getByType(req, res) {
-    //     const { type, page, limit } = req.query;
-    //     try {
-    //         const ao = await aoService.e(type, { page, limit });
-    //         if (!ao || ao.length === 0) return res.sendResponse(404, {message: 'Activity Outline not found'});
-
-    //         const totalCount = await aoService.activityOutlineCount(type);
-
-    //         return res.sendResponse(200, ao, "success", { page, limit, totalCount, totalPages: Math.ceil(totalCount / limit) });
-    //     } catch (err) {
-    //         console.error('ActivityOutlineControllerError: getByType', err);
-    //         return res.sendResponse(500, {message: 'Internal Server Error', error: err.message});
-    //     }
-    // }
-    
 }
 
 module.exports = new ActivityOutlineController();

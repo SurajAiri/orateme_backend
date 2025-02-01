@@ -1,0 +1,1287 @@
+{
+  "metadata": {
+    "transaction_key": "deprecated",
+    "request_id": "8c932de8-faa8-43be-be15-7f0a8dcf34d5",
+    "sha256": "99489d427bc71cef13c1627522b1481c1bc08902cb1c65befa082e21a0a4ae90",
+    "created": "2025-02-01T01:04:57.587Z",
+    "duration": 79.69087,
+    "channels": 1,
+    "models": [
+      "30089e05-99d1-4376-b32e-c263170674af"
+    ],
+    "model_info": {
+      "30089e05-99d1-4376-b32e-c263170674af": {
+        "name": "2-general-nova",
+        "version": "2024-01-09.29447",
+        "arch": "nova-2"
+      }
+    }
+  },
+  "results": {
+    "channels": [
+      {
+        "alternatives": [
+          {
+            "transcript": "Good morning to all the dignitaries. So the topic for my impromptu is, how the technology has changed our our daily life. So as we all know, this is the age of science and technology. We are seeing the use of technology, mostly Internet in every day of our life. In this world, we can't even imagine our life without the use of Internet or the technology. Nowadays, we can even imagine that the technology is the synonym of our living of life or quality of life. It's more the technology we use is the better our life becomes. The better it enhances our life in all the ways. It has the technology has its own impact in both from the medical to entertainment, to education, to everything. Technology has been the has become the thing that can't be changed. So I believe that as we can't live without our phone, even a second. So there's a huge impact of technology in our life. Thank you.",
+            "confidence": 0.99541,
+            "words": [
+              {
+                "word": "good",
+                "start": 3.76,
+                "end": 3.9199998,
+                "confidence": 0.99844486,
+                "punctuated_word": "Good"
+              },
+              {
+                "word": "morning",
+                "start": 3.9199998,
+                "end": 4.24,
+                "confidence": 0.99933225,
+                "punctuated_word": "morning"
+              },
+              {
+                "word": "to",
+                "start": 4.24,
+                "end": 4.4,
+                "confidence": 0.9974843,
+                "punctuated_word": "to"
+              },
+              {
+                "word": "all",
+                "start": 4.4,
+                "end": 4.7999997,
+                "confidence": 0.9999336,
+                "punctuated_word": "all"
+              },
+              {
+                "word": "the",
+                "start": 4.7999997,
+                "end": 5.04,
+                "confidence": 0.99918133,
+                "punctuated_word": "the"
+              },
+              {
+                "word": "dignitaries",
+                "start": 5.04,
+                "end": 5.54,
+                "confidence": 0.9197488,
+                "punctuated_word": "dignitaries."
+              },
+              {
+                "word": "so",
+                "start": 5.92,
+                "end": 6.16,
+                "confidence": 0.99939406,
+                "punctuated_word": "So"
+              },
+              {
+                "word": "the",
+                "start": 6.16,
+                "end": 6.3999996,
+                "confidence": 0.99906546,
+                "punctuated_word": "the"
+              },
+              {
+                "word": "topic",
+                "start": 6.3999996,
+                "end": 6.7999997,
+                "confidence": 0.9997788,
+                "punctuated_word": "topic"
+              },
+              {
+                "word": "for",
+                "start": 6.7999997,
+                "end": 7.04,
+                "confidence": 0.9528564,
+                "punctuated_word": "for"
+              },
+              {
+                "word": "my",
+                "start": 7.04,
+                "end": 7.44,
+                "confidence": 0.9923919,
+                "punctuated_word": "my"
+              },
+              {
+                "word": "impromptu",
+                "start": 7.44,
+                "end": 7.9199996,
+                "confidence": 0.9934672,
+                "punctuated_word": "impromptu"
+              },
+              {
+                "word": "is",
+                "start": 7.9199996,
+                "end": 8.42,
+                "confidence": 0.97905254,
+                "punctuated_word": "is,"
+              },
+              {
+                "word": "how",
+                "start": 10.4,
+                "end": 10.639999,
+                "confidence": 0.99884665,
+                "punctuated_word": "how"
+              },
+              {
+                "word": "the",
+                "start": 10.639999,
+                "end": 10.8,
+                "confidence": 0.99757916,
+                "punctuated_word": "the"
+              },
+              {
+                "word": "technology",
+                "start": 10.8,
+                "end": 11.3,
+                "confidence": 0.999622,
+                "punctuated_word": "technology"
+              },
+              {
+                "word": "has",
+                "start": 11.44,
+                "end": 11.84,
+                "confidence": 0.99990606,
+                "punctuated_word": "has"
+              },
+              {
+                "word": "changed",
+                "start": 11.84,
+                "end": 12.24,
+                "confidence": 0.99961865,
+                "punctuated_word": "changed"
+              },
+              {
+                "word": "our",
+                "start": 12.24,
+                "end": 12.639999,
+                "confidence": 0.98985696,
+                "punctuated_word": "our"
+              },
+              {
+                "word": "our",
+                "start": 12.639999,
+                "end": 12.96,
+                "confidence": 0.78036004,
+                "punctuated_word": "our"
+              },
+              {
+                "word": "daily",
+                "start": 12.96,
+                "end": 13.46,
+                "confidence": 0.99622583,
+                "punctuated_word": "daily"
+              },
+              {
+                "word": "life",
+                "start": 13.5199995,
+                "end": 14.0199995,
+                "confidence": 0.9637433,
+                "punctuated_word": "life."
+              },
+              {
+                "word": "so",
+                "start": 15.3949995,
+                "end": 15.875,
+                "confidence": 0.99481165,
+                "punctuated_word": "So"
+              },
+              {
+                "word": "as",
+                "start": 15.875,
+                "end": 16.035,
+                "confidence": 0.766676,
+                "punctuated_word": "as"
+              },
+              {
+                "word": "we",
+                "start": 16.035,
+                "end": 16.195,
+                "confidence": 0.9185203,
+                "punctuated_word": "we"
+              },
+              {
+                "word": "all",
+                "start": 16.195,
+                "end": 16.275,
+                "confidence": 0.9995289,
+                "punctuated_word": "all"
+              },
+              {
+                "word": "know",
+                "start": 16.275,
+                "end": 16.595,
+                "confidence": 0.99756294,
+                "punctuated_word": "know,"
+              },
+              {
+                "word": "this",
+                "start": 16.595,
+                "end": 16.835,
+                "confidence": 0.999326,
+                "punctuated_word": "this"
+              },
+              {
+                "word": "is",
+                "start": 16.835,
+                "end": 16.875,
+                "confidence": 0.99855596,
+                "punctuated_word": "is"
+              },
+              {
+                "word": "the",
+                "start": 16.875,
+                "end": 16.914999,
+                "confidence": 0.99472755,
+                "punctuated_word": "the"
+              },
+              {
+                "word": "age",
+                "start": 16.914999,
+                "end": 17.154999,
+                "confidence": 0.99504507,
+                "punctuated_word": "age"
+              },
+              {
+                "word": "of",
+                "start": 17.154999,
+                "end": 17.235,
+                "confidence": 0.9998795,
+                "punctuated_word": "of"
+              },
+              {
+                "word": "science",
+                "start": 17.235,
+                "end": 17.475,
+                "confidence": 0.9789651,
+                "punctuated_word": "science"
+              },
+              {
+                "word": "and",
+                "start": 17.475,
+                "end": 17.635,
+                "confidence": 0.98185205,
+                "punctuated_word": "and"
+              },
+              {
+                "word": "technology",
+                "start": 17.635,
+                "end": 18.135,
+                "confidence": 0.97727215,
+                "punctuated_word": "technology."
+              },
+              {
+                "word": "we",
+                "start": 18.914999,
+                "end": 19.154999,
+                "confidence": 0.99887186,
+                "punctuated_word": "We"
+              },
+              {
+                "word": "are",
+                "start": 19.154999,
+                "end": 19.395,
+                "confidence": 0.99991333,
+                "punctuated_word": "are"
+              },
+              {
+                "word": "seeing",
+                "start": 19.395,
+                "end": 19.795,
+                "confidence": 0.99937385,
+                "punctuated_word": "seeing"
+              },
+              {
+                "word": "the",
+                "start": 19.795,
+                "end": 19.955,
+                "confidence": 0.99967444,
+                "punctuated_word": "the"
+              },
+              {
+                "word": "use",
+                "start": 19.955,
+                "end": 20.195,
+                "confidence": 0.9997558,
+                "punctuated_word": "use"
+              },
+              {
+                "word": "of",
+                "start": 20.195,
+                "end": 20.435,
+                "confidence": 0.99988246,
+                "punctuated_word": "of"
+              },
+              {
+                "word": "technology",
+                "start": 20.435,
+                "end": 20.935,
+                "confidence": 0.9749741,
+                "punctuated_word": "technology,"
+              },
+              {
+                "word": "mostly",
+                "start": 21.235,
+                "end": 21.715,
+                "confidence": 0.9990005,
+                "punctuated_word": "mostly"
+              },
+              {
+                "word": "internet",
+                "start": 21.715,
+                "end": 22.215,
+                "confidence": 0.90527153,
+                "punctuated_word": "Internet"
+              },
+              {
+                "word": "in",
+                "start": 22.275,
+                "end": 22.595,
+                "confidence": 0.8688728,
+                "punctuated_word": "in"
+              },
+              {
+                "word": "every",
+                "start": 22.595,
+                "end": 22.914999,
+                "confidence": 0.7314866,
+                "punctuated_word": "every"
+              },
+              {
+                "word": "day",
+                "start": 22.914999,
+                "end": 23.235,
+                "confidence": 0.9969597,
+                "punctuated_word": "day"
+              },
+              {
+                "word": "of",
+                "start": 23.235,
+                "end": 23.474998,
+                "confidence": 0.99963963,
+                "punctuated_word": "of"
+              },
+              {
+                "word": "our",
+                "start": 23.474998,
+                "end": 23.634998,
+                "confidence": 0.9992199,
+                "punctuated_word": "our"
+              },
+              {
+                "word": "life",
+                "start": 23.634998,
+                "end": 24.134998,
+                "confidence": 0.87310517,
+                "punctuated_word": "life."
+              },
+              {
+                "word": "in",
+                "start": 25.075,
+                "end": 25.235,
+                "confidence": 0.9941922,
+                "punctuated_word": "In"
+              },
+              {
+                "word": "this",
+                "start": 25.235,
+                "end": 25.555,
+                "confidence": 0.9998838,
+                "punctuated_word": "this"
+              },
+              {
+                "word": "world",
+                "start": 25.555,
+                "end": 26.055,
+                "confidence": 0.98844427,
+                "punctuated_word": "world,"
+              },
+              {
+                "word": "we",
+                "start": 26.115,
+                "end": 26.355,
+                "confidence": 0.9982998,
+                "punctuated_word": "we"
+              },
+              {
+                "word": "can't",
+                "start": 26.355,
+                "end": 26.595,
+                "confidence": 0.99987984,
+                "punctuated_word": "can't"
+              },
+              {
+                "word": "even",
+                "start": 26.595,
+                "end": 26.915,
+                "confidence": 0.9999161,
+                "punctuated_word": "even"
+              },
+              {
+                "word": "imagine",
+                "start": 26.915,
+                "end": 27.395,
+                "confidence": 0.9998399,
+                "punctuated_word": "imagine"
+              },
+              {
+                "word": "our",
+                "start": 27.395,
+                "end": 27.555,
+                "confidence": 0.9995453,
+                "punctuated_word": "our"
+              },
+              {
+                "word": "life",
+                "start": 27.555,
+                "end": 27.794998,
+                "confidence": 0.99806553,
+                "punctuated_word": "life"
+              },
+              {
+                "word": "without",
+                "start": 27.794998,
+                "end": 28.195,
+                "confidence": 0.99991584,
+                "punctuated_word": "without"
+              },
+              {
+                "word": "the",
+                "start": 28.195,
+                "end": 28.355,
+                "confidence": 0.9988789,
+                "punctuated_word": "the"
+              },
+              {
+                "word": "use",
+                "start": 28.355,
+                "end": 28.595,
+                "confidence": 0.9802925,
+                "punctuated_word": "use"
+              },
+              {
+                "word": "of",
+                "start": 28.595,
+                "end": 28.835,
+                "confidence": 0.9998516,
+                "punctuated_word": "of"
+              },
+              {
+                "word": "internet",
+                "start": 28.835,
+                "end": 29.335,
+                "confidence": 0.9244468,
+                "punctuated_word": "Internet"
+              },
+              {
+                "word": "or",
+                "start": 29.474998,
+                "end": 29.634998,
+                "confidence": 0.9956476,
+                "punctuated_word": "or"
+              },
+              {
+                "word": "the",
+                "start": 29.634998,
+                "end": 29.794998,
+                "confidence": 0.99771273,
+                "punctuated_word": "the"
+              },
+              {
+                "word": "technology",
+                "start": 29.794998,
+                "end": 30.294998,
+                "confidence": 0.89840835,
+                "punctuated_word": "technology."
+              },
+              {
+                "word": "nowadays",
+                "start": 31.609999,
+                "end": 32.11,
+                "confidence": 0.9990861,
+                "punctuated_word": "Nowadays,"
+              },
+              {
+                "word": "we",
+                "start": 32.57,
+                "end": 32.73,
+                "confidence": 0.999551,
+                "punctuated_word": "we"
+              },
+              {
+                "word": "can",
+                "start": 32.73,
+                "end": 32.969997,
+                "confidence": 0.9999267,
+                "punctuated_word": "can"
+              },
+              {
+                "word": "even",
+                "start": 32.969997,
+                "end": 33.29,
+                "confidence": 0.99939907,
+                "punctuated_word": "even"
+              },
+              {
+                "word": "imagine",
+                "start": 33.29,
+                "end": 33.69,
+                "confidence": 0.9972697,
+                "punctuated_word": "imagine"
+              },
+              {
+                "word": "that",
+                "start": 33.69,
+                "end": 34.19,
+                "confidence": 0.9996427,
+                "punctuated_word": "that"
+              },
+              {
+                "word": "the",
+                "start": 34.649998,
+                "end": 34.73,
+                "confidence": 0.6974781,
+                "punctuated_word": "the"
+              },
+              {
+                "word": "technology",
+                "start": 34.73,
+                "end": 35.23,
+                "confidence": 0.9882781,
+                "punctuated_word": "technology"
+              },
+              {
+                "word": "is",
+                "start": 35.37,
+                "end": 35.61,
+                "confidence": 0.938721,
+                "punctuated_word": "is"
+              },
+              {
+                "word": "the",
+                "start": 35.61,
+                "end": 35.85,
+                "confidence": 0.9937469,
+                "punctuated_word": "the"
+              },
+              {
+                "word": "synonym",
+                "start": 35.85,
+                "end": 36.25,
+                "confidence": 0.9941485,
+                "punctuated_word": "synonym"
+              },
+              {
+                "word": "of",
+                "start": 36.25,
+                "end": 36.41,
+                "confidence": 0.992157,
+                "punctuated_word": "of"
+              },
+              {
+                "word": "our",
+                "start": 36.41,
+                "end": 36.73,
+                "confidence": 0.9903902,
+                "punctuated_word": "our"
+              },
+              {
+                "word": "living",
+                "start": 36.73,
+                "end": 37.21,
+                "confidence": 0.98827875,
+                "punctuated_word": "living"
+              },
+              {
+                "word": "of",
+                "start": 37.21,
+                "end": 37.449997,
+                "confidence": 0.9825554,
+                "punctuated_word": "of"
+              },
+              {
+                "word": "life",
+                "start": 37.449997,
+                "end": 37.949997,
+                "confidence": 0.99952316,
+                "punctuated_word": "life"
+              },
+              {
+                "word": "or",
+                "start": 38.41,
+                "end": 38.73,
+                "confidence": 0.9234589,
+                "punctuated_word": "or"
+              },
+              {
+                "word": "quality",
+                "start": 38.73,
+                "end": 39.129997,
+                "confidence": 0.9992772,
+                "punctuated_word": "quality"
+              },
+              {
+                "word": "of",
+                "start": 39.129997,
+                "end": 39.37,
+                "confidence": 0.9998349,
+                "punctuated_word": "of"
+              },
+              {
+                "word": "life",
+                "start": 39.37,
+                "end": 39.87,
+                "confidence": 0.98763263,
+                "punctuated_word": "life."
+              },
+              {
+                "word": "it's",
+                "start": 40.97,
+                "end": 41.29,
+                "confidence": 0.7497692,
+                "punctuated_word": "It's"
+              },
+              {
+                "word": "more",
+                "start": 41.29,
+                "end": 41.61,
+                "confidence": 0.9698408,
+                "punctuated_word": "more"
+              },
+              {
+                "word": "the",
+                "start": 41.61,
+                "end": 41.769997,
+                "confidence": 0.88581157,
+                "punctuated_word": "the"
+              },
+              {
+                "word": "technology",
+                "start": 41.769997,
+                "end": 42.269997,
+                "confidence": 0.9944031,
+                "punctuated_word": "technology"
+              },
+              {
+                "word": "we",
+                "start": 42.41,
+                "end": 42.57,
+                "confidence": 0.99686986,
+                "punctuated_word": "we"
+              },
+              {
+                "word": "use",
+                "start": 42.57,
+                "end": 42.89,
+                "confidence": 0.8879346,
+                "punctuated_word": "use"
+              },
+              {
+                "word": "is",
+                "start": 42.89,
+                "end": 43.39,
+                "confidence": 0.9063866,
+                "punctuated_word": "is"
+              },
+              {
+                "word": "the",
+                "start": 43.93,
+                "end": 44.09,
+                "confidence": 0.6266798,
+                "punctuated_word": "the"
+              },
+              {
+                "word": "better",
+                "start": 44.09,
+                "end": 44.489998,
+                "confidence": 0.99720556,
+                "punctuated_word": "better"
+              },
+              {
+                "word": "our",
+                "start": 44.489998,
+                "end": 44.73,
+                "confidence": 0.9922845,
+                "punctuated_word": "our"
+              },
+              {
+                "word": "life",
+                "start": 44.73,
+                "end": 45.05,
+                "confidence": 0.9973387,
+                "punctuated_word": "life"
+              },
+              {
+                "word": "becomes",
+                "start": 45.05,
+                "end": 45.55,
+                "confidence": 0.874303,
+                "punctuated_word": "becomes."
+              },
+              {
+                "word": "the",
+                "start": 47.055,
+                "end": 47.215,
+                "confidence": 0.89974475,
+                "punctuated_word": "The"
+              },
+              {
+                "word": "better",
+                "start": 47.215,
+                "end": 47.695,
+                "confidence": 0.9599396,
+                "punctuated_word": "better"
+              },
+              {
+                "word": "it",
+                "start": 47.695,
+                "end": 47.934998,
+                "confidence": 0.9043192,
+                "punctuated_word": "it"
+              },
+              {
+                "word": "enhances",
+                "start": 47.934998,
+                "end": 48.434998,
+                "confidence": 0.99862695,
+                "punctuated_word": "enhances"
+              },
+              {
+                "word": "our",
+                "start": 48.574997,
+                "end": 48.815,
+                "confidence": 0.99768066,
+                "punctuated_word": "our"
+              },
+              {
+                "word": "life",
+                "start": 48.815,
+                "end": 49.135,
+                "confidence": 0.99653363,
+                "punctuated_word": "life"
+              },
+              {
+                "word": "in",
+                "start": 49.135,
+                "end": 49.375,
+                "confidence": 0.8717095,
+                "punctuated_word": "in"
+              },
+              {
+                "word": "all",
+                "start": 49.375,
+                "end": 49.614998,
+                "confidence": 0.9793732,
+                "punctuated_word": "all"
+              },
+              {
+                "word": "the",
+                "start": 49.614998,
+                "end": 49.695,
+                "confidence": 0.6309028,
+                "punctuated_word": "the"
+              },
+              {
+                "word": "ways",
+                "start": 49.695,
+                "end": 50.195,
+                "confidence": 0.79652464,
+                "punctuated_word": "ways."
+              },
+              {
+                "word": "it",
+                "start": 50.894997,
+                "end": 51.215,
+                "confidence": 0.5845614,
+                "punctuated_word": "It"
+              },
+              {
+                "word": "has",
+                "start": 51.215,
+                "end": 51.614998,
+                "confidence": 0.99716955,
+                "punctuated_word": "has"
+              },
+              {
+                "word": "the",
+                "start": 51.614998,
+                "end": 51.855,
+                "confidence": 0.396939,
+                "punctuated_word": "the"
+              },
+              {
+                "word": "technology",
+                "start": 51.855,
+                "end": 52.335,
+                "confidence": 0.97365236,
+                "punctuated_word": "technology"
+              },
+              {
+                "word": "has",
+                "start": 52.335,
+                "end": 52.655,
+                "confidence": 0.8218297,
+                "punctuated_word": "has"
+              },
+              {
+                "word": "its",
+                "start": 52.655,
+                "end": 52.894997,
+                "confidence": 0.98392236,
+                "punctuated_word": "its"
+              },
+              {
+                "word": "own",
+                "start": 52.894997,
+                "end": 53.214996,
+                "confidence": 0.9987594,
+                "punctuated_word": "own"
+              },
+              {
+                "word": "impact",
+                "start": 53.214996,
+                "end": 53.714996,
+                "confidence": 0.9944429,
+                "punctuated_word": "impact"
+              },
+              {
+                "word": "in",
+                "start": 53.934998,
+                "end": 54.254997,
+                "confidence": 0.96035403,
+                "punctuated_word": "in"
+              },
+              {
+                "word": "both",
+                "start": 54.254997,
+                "end": 54.754997,
+                "confidence": 0.97998524,
+                "punctuated_word": "both"
+              },
+              {
+                "word": "from",
+                "start": 54.815,
+                "end": 55.214996,
+                "confidence": 0.8979824,
+                "punctuated_word": "from"
+              },
+              {
+                "word": "the",
+                "start": 55.214996,
+                "end": 55.454998,
+                "confidence": 0.98081553,
+                "punctuated_word": "the"
+              },
+              {
+                "word": "medical",
+                "start": 55.454998,
+                "end": 55.954998,
+                "confidence": 0.99473286,
+                "punctuated_word": "medical"
+              },
+              {
+                "word": "to",
+                "start": 56.015,
+                "end": 56.335,
+                "confidence": 0.85324115,
+                "punctuated_word": "to"
+              },
+              {
+                "word": "entertainment",
+                "start": 56.335,
+                "end": 56.835,
+                "confidence": 0.95387805,
+                "punctuated_word": "entertainment,"
+              },
+              {
+                "word": "to",
+                "start": 57.135,
+                "end": 57.454998,
+                "confidence": 0.99677116,
+                "punctuated_word": "to"
+              },
+              {
+                "word": "education",
+                "start": 57.454998,
+                "end": 57.954998,
+                "confidence": 0.970372,
+                "punctuated_word": "education,"
+              },
+              {
+                "word": "to",
+                "start": 58.254997,
+                "end": 58.655,
+                "confidence": 0.99748623,
+                "punctuated_word": "to"
+              },
+              {
+                "word": "everything",
+                "start": 58.655,
+                "end": 59.155,
+                "confidence": 0.9384754,
+                "punctuated_word": "everything."
+              },
+              {
+                "word": "technology",
+                "start": 60.655,
+                "end": 61.155,
+                "confidence": 0.9744864,
+                "punctuated_word": "Technology"
+              },
+              {
+                "word": "has",
+                "start": 61.295,
+                "end": 61.795,
+                "confidence": 0.7809775,
+                "punctuated_word": "has"
+              },
+              {
+                "word": "been",
+                "start": 62.52,
+                "end": 63.02,
+                "confidence": 0.9801103,
+                "punctuated_word": "been"
+              },
+              {
+                "word": "the",
+                "start": 63.8,
+                "end": 63.88,
+                "confidence": 0.7760187,
+                "punctuated_word": "the"
+              },
+              {
+                "word": "has",
+                "start": 63.96,
+                "end": 64.2,
+                "confidence": 0.99973243,
+                "punctuated_word": "has"
+              },
+              {
+                "word": "become",
+                "start": 64.2,
+                "end": 64.68,
+                "confidence": 0.99916005,
+                "punctuated_word": "become"
+              },
+              {
+                "word": "the",
+                "start": 64.68,
+                "end": 65.18,
+                "confidence": 0.99954754,
+                "punctuated_word": "the"
+              },
+              {
+                "word": "thing",
+                "start": 65.24,
+                "end": 65.64,
+                "confidence": 0.99953675,
+                "punctuated_word": "thing"
+              },
+              {
+                "word": "that",
+                "start": 65.64,
+                "end": 66.14,
+                "confidence": 0.9998982,
+                "punctuated_word": "that"
+              },
+              {
+                "word": "can't",
+                "start": 66.2,
+                "end": 66.6,
+                "confidence": 0.9992707,
+                "punctuated_word": "can't"
+              },
+              {
+                "word": "be",
+                "start": 66.6,
+                "end": 67.08,
+                "confidence": 0.9903865,
+                "punctuated_word": "be"
+              },
+              {
+                "word": "changed",
+                "start": 67.08,
+                "end": 67.58,
+                "confidence": 0.92994016,
+                "punctuated_word": "changed."
+              },
+              {
+                "word": "so",
+                "start": 67.88,
+                "end": 68.38,
+                "confidence": 0.999003,
+                "punctuated_word": "So"
+              },
+              {
+                "word": "i",
+                "start": 68.76,
+                "end": 69,
+                "confidence": 0.9977883,
+                "punctuated_word": "I"
+              },
+              {
+                "word": "believe",
+                "start": 69,
+                "end": 69.48,
+                "confidence": 0.9997011,
+                "punctuated_word": "believe"
+              },
+              {
+                "word": "that",
+                "start": 69.48,
+                "end": 69.98,
+                "confidence": 0.99968433,
+                "punctuated_word": "that"
+              },
+              {
+                "word": "as",
+                "start": 70.2,
+                "end": 70.44,
+                "confidence": 0.80214685,
+                "punctuated_word": "as"
+              },
+              {
+                "word": "we",
+                "start": 70.44,
+                "end": 70.68,
+                "confidence": 0.99396175,
+                "punctuated_word": "we"
+              },
+              {
+                "word": "can't",
+                "start": 70.68,
+                "end": 71,
+                "confidence": 0.9986035,
+                "punctuated_word": "can't"
+              },
+              {
+                "word": "live",
+                "start": 71,
+                "end": 71.24,
+                "confidence": 0.96877664,
+                "punctuated_word": "live"
+              },
+              {
+                "word": "without",
+                "start": 71.24,
+                "end": 71.72,
+                "confidence": 0.99951696,
+                "punctuated_word": "without"
+              },
+              {
+                "word": "our",
+                "start": 71.72,
+                "end": 71.880005,
+                "confidence": 0.99689627,
+                "punctuated_word": "our"
+              },
+              {
+                "word": "phone",
+                "start": 71.880005,
+                "end": 72.36,
+                "confidence": 0.81534696,
+                "punctuated_word": "phone,"
+              },
+              {
+                "word": "even",
+                "start": 72.36,
+                "end": 72.68,
+                "confidence": 0.99900925,
+                "punctuated_word": "even"
+              },
+              {
+                "word": "a",
+                "start": 72.68,
+                "end": 72.76,
+                "confidence": 0.99541,
+                "punctuated_word": "a"
+              },
+              {
+                "word": "second",
+                "start": 72.76,
+                "end": 73.26,
+                "confidence": 0.864691,
+                "punctuated_word": "second."
+              },
+              {
+                "word": "so",
+                "start": 73.880005,
+                "end": 74.380005,
+                "confidence": 0.99921966,
+                "punctuated_word": "So"
+              },
+              {
+                "word": "there's",
+                "start": 74.68,
+                "end": 75.08,
+                "confidence": 0.961002,
+                "punctuated_word": "there's"
+              },
+              {
+                "word": "a",
+                "start": 75.08,
+                "end": 75.4,
+                "confidence": 0.99684554,
+                "punctuated_word": "a"
+              },
+              {
+                "word": "huge",
+                "start": 75.4,
+                "end": 75.880005,
+                "confidence": 0.99985385,
+                "punctuated_word": "huge"
+              },
+              {
+                "word": "impact",
+                "start": 75.880005,
+                "end": 76.28,
+                "confidence": 0.9998091,
+                "punctuated_word": "impact"
+              },
+              {
+                "word": "of",
+                "start": 76.28,
+                "end": 76.645874,
+                "confidence": 0.99969304,
+                "punctuated_word": "of"
+              },
+              {
+                "word": "technology",
+                "start": 77.045876,
+                "end": 77.52587,
+                "confidence": 0.98910904,
+                "punctuated_word": "technology"
+              },
+              {
+                "word": "in",
+                "start": 77.52587,
+                "end": 77.685875,
+                "confidence": 0.9927342,
+                "punctuated_word": "in"
+              },
+              {
+                "word": "our",
+                "start": 77.685875,
+                "end": 77.92587,
+                "confidence": 0.9990275,
+                "punctuated_word": "our"
+              },
+              {
+                "word": "life",
+                "start": 77.92587,
+                "end": 78.42587,
+                "confidence": 0.99781984,
+                "punctuated_word": "life."
+              },
+              {
+                "word": "thank",
+                "start": 78.56587,
+                "end": 78.88587,
+                "confidence": 0.99461716,
+                "punctuated_word": "Thank"
+              },
+              {
+                "word": "you",
+                "start": 78.88587,
+                "end": 79.38587,
+                "confidence": 0.998315,
+                "punctuated_word": "you."
+              }
+            ],
+            "paragraphs": {
+              "transcript": "\nGood morning to all the dignitaries. So the topic for my impromptu is, how the technology has changed our our daily life. So as we all know, this is the age of science and technology. We are seeing the use of technology, mostly Internet in every day of our life. In this world, we can't even imagine our life without the use of Internet or the technology.\n\nNowadays, we can even imagine that the technology is the synonym of our living of life or quality of life. It's more the technology we use is the better our life becomes. The better it enhances our life in all the ways. It has the technology has its own impact in both from the medical to entertainment, to education, to everything. Technology has been the has become the thing that can't be changed.\n\nSo I believe that as we can't live without our phone, even a second. So there's a huge impact of technology in our life. Thank you.",
+              "paragraphs": [
+                {
+                  "sentences": [
+                    {
+                      "text": "Good morning to all the dignitaries.",
+                      "start": 3.76,
+                      "end": 5.54
+                    },
+                    {
+                      "text": "So the topic for my impromptu is, how the technology has changed our our daily life.",
+                      "start": 5.92,
+                      "end": 14.0199995
+                    },
+                    {
+                      "text": "So as we all know, this is the age of science and technology.",
+                      "start": 15.3949995,
+                      "end": 18.135
+                    },
+                    {
+                      "text": "We are seeing the use of technology, mostly Internet in every day of our life.",
+                      "start": 18.914999,
+                      "end": 24.134998
+                    },
+                    {
+                      "text": "In this world, we can't even imagine our life without the use of Internet or the technology.",
+                      "start": 25.075,
+                      "end": 30.294998
+                    }
+                  ],
+                  "num_words": 67,
+                  "start": 3.76,
+                  "end": 30.294998
+                },
+                {
+                  "sentences": [
+                    {
+                      "text": "Nowadays, we can even imagine that the technology is the synonym of our living of life or quality of life.",
+                      "start": 31.609999,
+                      "end": 39.87
+                    },
+                    {
+                      "text": "It's more the technology we use is the better our life becomes.",
+                      "start": 40.97,
+                      "end": 45.55
+                    },
+                    {
+                      "text": "The better it enhances our life in all the ways.",
+                      "start": 47.055,
+                      "end": 50.195
+                    },
+                    {
+                      "text": "It has the technology has its own impact in both from the medical to entertainment, to education, to everything.",
+                      "start": 50.894997,
+                      "end": 59.155
+                    },
+                    {
+                      "text": "Technology has been the has become the thing that can't be changed.",
+                      "start": 60.655,
+                      "end": 67.58
+                    }
+                  ],
+                  "num_words": 73,
+                  "start": 31.609999,
+                  "end": 67.58
+                },
+                {
+                  "sentences": [
+                    {
+                      "text": "So I believe that as we can't live without our phone, even a second.",
+                      "start": 67.88,
+                      "end": 73.26
+                    },
+                    {
+                      "text": "So there's a huge impact of technology in our life.",
+                      "start": 73.880005,
+                      "end": 78.42587
+                    },
+                    {
+                      "text": "Thank you.",
+                      "start": 78.56587,
+                      "end": 79.38587
+                    }
+                  ],
+                  "num_words": 26,
+                  "start": 67.88,
+                  "end": 79.38587
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
