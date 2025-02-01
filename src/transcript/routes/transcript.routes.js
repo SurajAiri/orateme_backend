@@ -3,13 +3,9 @@ const TranscriptController = require("../controllers/transcript.controller");
 
 const router = express.Router();
 
-router.route("/")
-        .post(TranscriptController.userCreate);
-    // .get(TranscriptController.getAll)
+router.post("/data",TranscriptController.userCreateWithData);
+router.post("/url",TranscriptController.userCreateWithUrl);
 
-router.route("/:id")
-    .get(TranscriptController.getById);
-    // .patch(TranscriptController.updateById)
-    // .delete(TranscriptController.deleteById);
+router.get("/:id",TranscriptController.getById);
 
 module.exports = router;

@@ -27,13 +27,13 @@ const paragraphSchema = new mongoose.Schema({
     sentences: [sentenceSchema],
     start: Number,
     end: Number,
-    confidence: Number
+    num_words: Number,
 });
 
 const transcriptSchema = new mongoose.Schema({
     words: [wordSchema],
     paragraphs: [paragraphSchema],
-    userId:{type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+    userId:{type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
 });
 
 module.exports = mongoose.model('Transcript', transcriptSchema);
