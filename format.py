@@ -18,7 +18,7 @@ print(d2)
 
 para = d2['paragraphs']['paragraphs']
 
-print("This is the transcript in sentence level: in format\nstart - end : sentence")
+# print("This is the transcript in sentence level: in format\nstart - end : sentence")
 for i in para:
     sents = i['sentences']
 

@@ -10,19 +10,15 @@ class PerformanceSchemaService {
     }
 
     async getAllPerformanceSchemas(query) {
-        const { type, page, limit } = query;
-        const filter = {};
-        if (type) filter.type = type;
-        return await PerformanceSchema.find(filter)
+        const { page, limit } = query;
+        return await PerformanceSchema
             .skip((page - 1) * limit)
             .limit(limit)
             .exec();
     }
 
-    async performanceSchemaCount(type) {
-        const filter = {};
-        if (type) filter.type = type;
-        return await PerformanceSchema.countDocuments(filter);
+    async performanceSchemaCount() {
+        return await PerformanceSchema.countDocuments();
     }
     
     async updatePerformanceSchemaById(id, data) {

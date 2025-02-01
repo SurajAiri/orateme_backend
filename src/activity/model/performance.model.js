@@ -1,51 +1,29 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const Schema = mongoose.Schema;
-
-const PerformanceSchema = new Schema({
-    strengths: {
-        type: String,
-        required: true
-    },
-    weakness: {
-        type: String,
-        required: true
-    },
-    fluency: {
-        type: Number,
-        required: true
-    },
-    pronunciation: {
-        type: Number,
-        required: true
-    },
-    vocab: {
-        type: Number,
-        required: true
-    },
-    creativity: {
-        type: Number,
-        required: true
-    },
-    content: {
-        type: Number,
-        required: true
-    },
-    coherence: {
-        type: Number,
-        required: true
-    },
-    overall:{
-        type:Number,
-        required:true,
-    },
-    suggestion: {
-        type: String,
-        required: true
-    }
+const performanceSchema = new mongoose.Schema({
+  score: { type: Number, required: true, min: 0, max: 10 },
+  evaluation: { type: String, required: true }
 });
 
-module.exports = {
-    Performance: mongoose.model('Performance', PerformanceSchema),
-    OverallPerformance: mongoose.model('OverallPerformance', PerformanceSchema)
-};
+const candidatePerformanceSchema = new mongoose.Schema({
+  fluency: { type: performanceSchema, required: true },
+  pronunciation: { type: performanceSchema, required: true },
+  vocabulary: { type: performanceSchema, required: true },
+  grammar: { type: performanceSchema, required: true },
+  coherence: { type: performanceSchema, required: true }
+});
+
+const overallPerformanceSchema = new mongoose.Schema({
+  score: { type: Number, required: true, min: 0, max: 10 },
+  evaluation: { type: String, required: true }
+});
+
+const speechEvaluationSchema = new mongoose.Schema({
+  candidate_performance: { type: candidatePerformanceSchema, required: true },
+  overall_performance: { type: overallPerformanceSchema, required: true },
+  strengths: { type: String, required: true },
+  weaknesses: { type: String, required: true },
+  suggestions: { type: String, required: true }
+});
+
+module.exports = mongoose.model("Performance", speechEvaluationSchema);
