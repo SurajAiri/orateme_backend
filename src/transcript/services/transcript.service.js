@@ -10,8 +10,8 @@ class TranscriptService {
     }
 
     async getAllTranscripts(query) {
-        const { type, page, limit } = query;
-        const filter = type ? { type } : {};
+        const { userId, page, limit } = query;
+        const filter = userId ? { userId } : {};
         return await TranscriptModel.find(filter)
             .skip((page - 1) * limit)
             .limit(limit)
