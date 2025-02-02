@@ -1,32 +1,32 @@
-const PerformanceSchema = require('../model/performance.model');
+const performanceCount = require('../model/performance.model');
 
 class PerformanceSchemaService {
-    async createPerformanceSchema(data) {
-        return await PerformanceSchema.create(data);
+    async create(data) {
+        return await performanceCount.create(data);
     }
 
-    async getPerformanceSchemaById(id) {
-        return await PerformanceSchema.findById(id);
+    async getById(id) {
+        return await performanceCount.findById(id);
     }
 
-    async getAllPerformanceSchemas(query) {
+    async getAll(query) {
         const { page, limit } = query;
-        return await PerformanceSchema
+        return await performanceCount
             .skip((page - 1) * limit)
             .limit(limit)
             .exec();
     }
 
     async performanceSchemaCount() {
-        return await PerformanceSchema.countDocuments();
+        return await performanceCount.countDocuments();
     }
     
-    async updatePerformanceSchemaById(id, data) {
-        return await PerformanceSchema.findByIdAndUpdate(id, data, { new: true });
+    async updateById(id, data) {
+        return await performanceCount.findByIdAndUpdate(id, data, { new: true });
     }
 
-    async deletePerformanceSchemaById(id) {
-        return await PerformanceSchema.findByIdAndDelete(id);
+    async deleteById(id) {
+        return await performanceCount.findByIdAndDelete(id);
     }
 }
 

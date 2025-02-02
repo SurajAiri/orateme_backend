@@ -5,7 +5,9 @@ const router = express.Router();
 
 router.route("/")
     .get(PerformanceController.getAll)
-    .post(PerformanceController.create);
+    .post(PerformanceController.createWithEvaluator);
+
+// router.route("/data")
 
 router.route("/:id")
     .get(PerformanceController.getById)

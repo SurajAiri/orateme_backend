@@ -2,7 +2,7 @@ const transcriptService = require('../services/transcript.service');
 const transcriptValidator = require('../validators/transcript.validator');
 const { DEFAULT_LIMIT, DEFAULT_PAGE } = require('../../config/constants');
 const{ transcribeAudioWithUrl} = require('../transcriber/deepgram.transcriber');
-const { parseTranscriptDeepgram } = require('../utils/parse_transcript');
+const { parseTranscriptDeepgram } = require('../utils/deepgram_transcript');
 const recordService = require('../../activity/services/record.service');
 
 class TranscriptController {
@@ -64,7 +64,7 @@ class TranscriptController {
     async getById(req, res) {
         const { id } = req.params;
         try {
-            const transcript = await transcriptService.getTranscriptById(id);
+            const transcript = await transcriptService.getById(id);
             if (!transcript) return res.sendResponse(404, { message: 'Transcript not found' });
             return res.sendResponse(200, transcript);
         } catch (err) {

@@ -5,7 +5,7 @@ class TranscriptService {
         return await TranscriptModel.create(data);
     }
 
-    async getTranscriptById(id) {
+    async getById(id) {
         return await TranscriptModel.findById(id);
     }
 

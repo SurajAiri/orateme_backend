@@ -10,8 +10,9 @@ const recordSchema = new Schema({
     //     type: String,
     //     required: true
     // },
-    transcript:{
-        type:String,
+    transcriptId:{
+        type: Schema.Types.ObjectId,
+        ref: 'Transcript',
     },
     status:{
         type:String,

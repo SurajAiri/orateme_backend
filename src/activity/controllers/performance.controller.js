@@ -1,20 +1,23 @@
-const PerformanceService = require("../services/performance.service");
+const performanceService = require("../services/performance.service");
 const { DEFAULT_LIMIT, DEFAULT_PAGE } = require('../../config/constants');
-const PerformanceValidator = require("../validators/performance.validator");
+const performanceValidator = require("../validators/performance.validator");
 const openaiEvaluation = require("../../evaluation/services/openai.evaluation");
+const { parseTranscriptDb } = require("../../utils/transcript_parser");
+const activityService = require("../services/activity.service");
+const transcriptService = require("../../transcript/services/transcript.service");
 
 class PerformanceController {
     async create(req, res) {
         try {
             // 1. Validate request body
-            const { error, value } = PerformanceValidator.createPerformance.validate(req.body);
+            const { error, value } = performanceValidator.createPerformance.validate(req.body);
             if(error) return res.sendResponse(400, {message: error.message});
 
             // 2. Create performance
-            const performance = await PerformanceService.create(value);
+            const performance = await performanceService.create(value);
 
             // 3. update activity with performance id
-            // const activity = await ActivityService.updateById(value.activityId, { performanceId: performance._id });
+            // const activity = await activityService.updateById(value.activityId, { performanceId: performance._id });
 
 
             return res.sendResponse(201, performance);
@@ -35,32 +38,38 @@ class PerformanceController {
 
         try{
             //2. fetch activity
-            const activity = await ActivityService.getById(activityId);
+            const activity = await activityService.getById(activityId);
             if(!activity) return res.sendResponse(404, { message: 'Activity not found' });
 
             //3. fetch transcript
-            const transcript = await TranscriptService.getById(transcriptId);
+            const transcript = await transcriptService.getById(transcriptId);
             if(!transcript) return res.sendResponse(404, { message: 'Transcript not found' });
 
             //4. format activity, question, transcript
             const question = activity.recordId[0].quesId.content;
             const actTitle = activity.actOutId.title;
-            // const transcriptText = transcript.text; // fixme: parse transcript text in proper format
+            const transcriptText = parseTranscriptDb(transcript);
 
 
             // 5. Evaluate performance
-            const evalu = await openaiEvaluation.evaluateSpeech(transcriptId);
-            if(!evalu) return res.sendResponse(400, { message: 'Failed to evaluate performance' });
+            const gptEval = await openaiEvaluation.evaluateSpeech(actTitle, question, transcriptText);
+            if(!gptEval) return res.sendResponse(400, { message: 'Failed to evaluate performance' });
+
 
             // 6. Validate evaluation data format
-            const { error, value } = PerformanceValidator.createPerformance.validate(evalu);
+            const { error, value } = performanceValidator.createPerformance.validate(gptEval['report']);
             if(error) return res.sendResponse(400, {message: error.message});
 
             // 7. Create performance
-            const performance = await PerformanceService.create(value);
+            const performance = await performanceService.create(value);
+            if(!performance) return res.sendResponse(400, { message: 'Failed to create performance' });
 
             // 8. update activity with performance id
-            // const activity = await ActivityService.updateById(value.activityId, { performanceId: performance._id });
+            const act = await activityService.updateById(activity._id, { overallPerformanceId: performance._id });
+            console.log('act', act);
+            if(!act) return res.sendResponse(400, { message: 'Failed to update activity' });
+
+            return res.sendResponse(201, performance);
 
         }catch(err){
             console.error('PerformanceControllerError: createWithEvaluator', err);
@@ -72,11 +81,11 @@ class PerformanceController {
         const { page = DEFAULT_PAGE, limit = DEFAULT_LIMIT } = req.query;
 
         try {
-            const totalCount = await PerformanceService.getCount();
+            const totalCount = await performanceService.getCount();
 
             const query = { page, limit };
             
-            const performances = await PerformanceService.getAll(query);
+            const performances = await performanceService.getAll(query);
             if (!performances || performances.length === 0) return res.sendResponse(404, { message: 'Performances not found' });
 
             return res.sendResponse(200, performances, "success", { page, limit, totalCount, totalPages: Math.ceil(totalCount / limit) });
@@ -89,7 +98,7 @@ class PerformanceController {
     async getById(req, res) {
         const { id } = req.params;
         try {
-            const performance = await PerformanceService.getById(id);
+            const performance = await performanceService.getById(id);
             if (!performance) return res.sendResponse(404, { message: 'Performance not found' });
             return res.sendResponse(200, performance);
         } catch (err) {
@@ -101,10 +110,10 @@ class PerformanceController {
     async updateById(req, res) {
         const { id } = req.params;
         try {
-            const { error, value } = PerformanceValidator.updatePerformance.validate(req.body);
+            const { error, value } = performanceValidator.updatePerformance.validate(req.body);
             if (error) return res.sendResponse(400, { message: error.message });
 
-            const performance = await PerformanceService.updateById(id, value);
+            const performance = await performanceService.updateById(id, value);
             if (!performance) return res.sendResponse(404, { message: 'Performance not found' });
             return res.sendResponse(200, performance);
         } catch (err) {
@@ -116,7 +125,7 @@ class PerformanceController {
     async deleteById(req, res) {
         const { id } = req.params;
         try {
-            const performance = await PerformanceService.deleteById(id);
+            const performance = await performanceService.deleteById(id);
             if (!performance) return res.sendResponse(404, { message: 'Performance not found' });
             return res.sendResponse(200, { message: 'Performance deleted' });
         } catch (err) {

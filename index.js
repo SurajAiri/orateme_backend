@@ -11,6 +11,7 @@ const activityRoutes = require('./src/activity/routes/activity.routes');
 const s3Routes = require('./src/media/routes/s3.routes');
 const queRoutes = require('./src/activity/routes/question.routes')
 const transcriptRoutes = require('./src/transcript/routes/transcript.routes')
+const performanceRoutes = require('./src/activity/routes/performance.routes')
 
 const adminUserRoutes = require('./src/user/routes/user.admin.routes');
 const adminActivityOutlineRoutes = require('./src/activity/routes/activity_outline.admin.routes');
@@ -55,6 +56,7 @@ app.use("/api/v1/activity",authMiddleware.restrictTo(), activityRoutes);
 app.use("/api/v1/media",authMiddleware.restrictTo(),s3Routes);
 app.use("/api/v1/ques",authMiddleware.restrictTo(),queRoutes);
 app.use("/api/v1/transcript",authMiddleware.restrictTo(),transcriptRoutes);
+app.use("/api/v1/result",authMiddleware.restrictTo(),performanceRoutes);
 
 
 
