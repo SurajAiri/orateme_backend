@@ -6,8 +6,8 @@ const router = express.Router();
 router.route("/")
 .get(TranscriptController.getAll);
 
-router.post("/data/:userId",TranscriptController.adminCreateWithData);
-router.post("/url/:userId",TranscriptController.adminCreateWithUrl);
+router.post("/data/",TranscriptController.adminCreateWithData);
+router.post("/url/",TranscriptController.adminCreateWithUrl);
 
 router.route("/:id")
     .get(TranscriptController.getById)

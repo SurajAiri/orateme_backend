@@ -9,6 +9,15 @@ class OpenaiEvalService {
     });
   }
 
+
+  /**
+   * Evaluates a speech transcript using OpenAI's language model.
+   * @param {Object} activity - The activity object containing evaluation context
+   * @param {string} question - The question or prompt for evaluation
+   * @param {string} transcript - The speech transcript to be evaluated
+   * @returns {Promise<string>} The evaluation response content from the model
+   * @throws {Error} When evaluation fails
+   */
   async evaluateSpeech(activity, question, transcript) {
     try {
       const messages = generatePrompt(activity, question, transcript);

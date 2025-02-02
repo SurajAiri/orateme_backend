@@ -6,11 +6,17 @@ const openaiEvaluation = require("../../evaluation/services/openai.evaluation");
 class PerformanceController {
     async create(req, res) {
         try {
+            // 1. Validate request body
             const { error, value } = PerformanceValidator.createPerformance.validate(req.body);
-
             if(error) return res.sendResponse(400, {message: error.message});
 
+            // 2. Create performance
             const performance = await PerformanceService.create(value);
+
+            // 3. update activity with performance id
+            // const activity = await ActivityService.updateById(value.activityId, { performanceId: performance._id });
+
+
             return res.sendResponse(201, performance);
         } catch (err) {
             console.error('PerformanceControllerError: create', err);
@@ -18,18 +24,43 @@ class PerformanceController {
         }
     }
 
+    // onnext: this is only valid till assumption all activities will have single question only
     async createWithEvaluator(req, res) {
-        const { transcriptId } = req.params;
+        // 1. Validate request body
+        // const { transcriptId } = req.params;
+        // if(!transcriptId) return res.sendResponse(400, { message: 'TranscriptId is required' });
+
+        const { transcriptId, activityId } = req.body;
+        if (!transcriptId || !activityId) return res.sendResponse(400, { message: 'transcriptId and activityId are required fields' });
+
         try{
+            //2. fetch activity
+            const activity = await ActivityService.getById(activityId);
+            if(!activity) return res.sendResponse(404, { message: 'Activity not found' });
+
+            //3. fetch transcript
+            const transcript = await TranscriptService.getById(transcriptId);
+            if(!transcript) return res.sendResponse(404, { message: 'Transcript not found' });
+
+            //4. format activity, question, transcript
+            const question = activity.recordId[0].quesId.content;
+            const actTitle = activity.actOutId.title;
+            // const transcriptText = transcript.text; // fixme: parse transcript text in proper format
+
+
+            // 5. Evaluate performance
             const evalu = await openaiEvaluation.evaluateSpeech(transcriptId);
-
             if(!evalu) return res.sendResponse(400, { message: 'Failed to evaluate performance' });
-            const { error, value } = PerformanceValidator.createPerformance.validate(evalu);
 
+            // 6. Validate evaluation data format
+            const { error, value } = PerformanceValidator.createPerformance.validate(evalu);
             if(error) return res.sendResponse(400, {message: error.message});
 
+            // 7. Create performance
             const performance = await PerformanceService.create(value);
 
+            // 8. update activity with performance id
+            // const activity = await ActivityService.updateById(value.activityId, { performanceId: performance._id });
 
         }catch(err){
             console.error('PerformanceControllerError: createWithEvaluator', err);

@@ -6,7 +6,7 @@ const UserValidator = require("../validators/user.validator");
 // const { sendOtpTwilio } = require("../services/twilio.service");
 
 
-// todo: implement refresh token later on v2
+// onnext: implement refresh token later on v2
 // username login
 async function registerWithUsername(req, res) {
   try {

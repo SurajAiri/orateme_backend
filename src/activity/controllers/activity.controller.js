@@ -75,7 +75,7 @@ class ActivityController {
         const {recordId} = req.body;
 
         try{
-            const rec = RecordService.updateRecordSchemaById(recordId, {status:'uploaded'});
+            const rec = RecordService.updateRecordById(recordId, {status:'uploaded'});
             if(!rec)return res.sendResponse(400, {message: 'Invalid record id'});
         }catch(err){
             console.error('ActivityControllerError: confirmUploadUser', err);
@@ -92,7 +92,7 @@ class ActivityController {
         const {key} = req.body;
         try{
             const recordId = key.split('/')[1];
-            const rec = RecordService.updateRecordSchemaById(recordId, {status:'uploaded', mediaUrl:key});
+            const rec = RecordService.updateRecordById(recordId, {status:'uploaded', mediaUrl:key});
             if(!rec)return res.sendResponse(400, {message: 'Invalid record key'});
         }
         catch(err){

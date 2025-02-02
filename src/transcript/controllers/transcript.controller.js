@@ -3,6 +3,7 @@ const transcriptValidator = require('../validators/transcript.validator');
 const { DEFAULT_LIMIT, DEFAULT_PAGE } = require('../../config/constants');
 const{ transcribeAudioWithUrl} = require('../transcriber/deepgram.transcriber');
 const { parseTranscriptDeepgram } = require('../utils/parse_transcript');
+const recordService = require('../../activity/services/record.service');
 
 class TranscriptController {
 
@@ -59,7 +60,7 @@ class TranscriptController {
     }
 
     // common operations [private access]
-    // todo: Yet to restrict user to see only their transcript
+    // onnext: Yet to restrict user to see only their transcript
     async getById(req, res) {
         const { id } = req.params;
         try {
@@ -72,68 +73,98 @@ class TranscriptController {
         }
     }
 
-    async _createTranscriptWithData(userId, body, res) {
+    async _createTranscriptWithData(res, userId,recordId, body) {
+        // 1. check if user is authorized and recordId is provided
         if (!userId) return res.sendResponse(401, { message: 'Unauthorized user' });
+        if (!recordId) return res.sendResponse(400, { message: 'recordId is required' });
+
         try {
+            //onnext: 2. validate record and user
+
+            // 3. validate transcript data
             const { error, value } = transcriptValidator.createTranscript.validate(body);
             if (error) return res.sendResponse(400, { message: error.message });
             value.userId = userId;
 
+            // 4. create transcript
             const transcript = await transcriptService.createTranscript(value);
+
+            // 5. update transcript id in record
+            const record = await recordService.updateRecordById(recordId, { transcriptId: transcript._id });
+            if (!record) return res.sendResponse(404, { message: 'Record not found' });
+            // onnext: rollback transcript creation if record update fails
+
             return res.sendResponse(201, transcript);
         } catch (err) {
+
             console.error('TranscriptControllerError: create', err);
 
             if (err.name === 'CastError' && err.path === 'userId') {
                 return res.sendResponse(404, { message: 'User not found' });
             }
 
+
             return res.sendResponse(500, { message: 'Internal Server Error', error: err.message });
         }
     }
 
      adminCreateWithData = async(req, res) =>{
-        const { userId } = req.params;
-        return this._createTranscriptWithData(userId, req.body, res);
+        const { userId, recordId, ...body } = req.body;
+        return this._createTranscriptWithData(res, userId,recordId, body);
     }
 
     userCreateWithData = async (req, res) => {
         const { id: userId } = req.user;
+        const { recordId, ...body } = req.body;
 
-        return this._createTranscriptWithData(userId, req.body, res);
+        return this._createTranscriptWithData(res, userId,recordId, body);
     }
 
-    async _createTranscriptWithUrl(userId,audioUrl, res) {
+    // onnext: refactor transcript creation with data and url
+    async _createTranscriptWithUrl(res, userId, recordId, audioUrl) {
+        // 1. check if user is authorized and audioUrl is provided and recordId is provided
         if (!userId) return res.sendResponse(401, { message: 'Unauthorized user' });
-        if(!audioUrl) return res.sendResponse(400, { message: 'audioUrl is required' });
+        if(!audioUrl || !recordId) return res.sendResponse(400, { message: 'audioUrl and recordId are required parameters' });
+
         try {
-            
+            // onnext: 2. validate record and user
+
+            // 3. transcribe audio
             const transcript = await transcribeAudioWithUrl(audioUrl);
             const response = parseTranscriptDeepgram(transcript);
+
+            // 4. validate transcript data
             const { error, value } = transcriptValidator.createTranscript.validate(response);
             if (error) return res.sendResponse(400, { message: error.message });
             value.userId = userId;
-            const tns = await transcriptService.createTranscript(value);
-            // transcript.userId = userId;
-            // const tns = await transcriptService.createTranscript(transcript);
 
+            // 5. create transcript
+            const tns = await transcriptService.createTranscript(value);
             if(!tns) return res.sendResponse(400, { message: 'Transcript not created' });
+
+            // 6. update transcript id in record
+            const record = await recordService.updateRecordById(recordId, { transcriptId: tns._id });
+            if (!record) return res.sendResponse(404, { message: 'Record not found' });
+
+            // onnext: rollback transcript creation if record update fails
             return res.sendResponse(201, tns);
 
         } catch (err) {
             console.error('TranscriptControllerError: create', err);
             return res.sendResponse(500, { message: 'Internal Server Error', error: err.message });
         }
+
     }
     
     adminCreateWithUrl = async (req, res)=> {
-        const { userId } = req.params;
-        return this._createTranscriptWithUrl(userId,req.body.audioUrl, res);
+        const { userId, recordId, audioUrl } = req.body;
+        return this._createTranscriptWithUrl(res, userId,recordId, audioUrl);
     }
     
      userCreateWithUrl = async(req, res)=>{
         const { id: userId } = req.user;
-        return this._createTranscriptWithUrl(userId,req.body.audioUrl, res);
+        const { recordId, audioUrl } = req.body;
+        return this._createTranscriptWithUrl(res, userId,recordId, audioUrl);
     }
 
 

@@ -25,11 +25,11 @@ class RecordSchemaService {
         return await RecordSchema.countDocuments(filter);
     }
     
-    async updateRecordSchemaById(id, data) {
+    async updateRecordById(id, data) {
         return await RecordSchema.findByIdAndUpdate(id, data, { new: true });
     }
 
-    async deleteRecordSchemaById(id) {
+    async deleteRecordById(id) {
         return await RecordSchema.findByIdAndDelete(id);
     }
 }

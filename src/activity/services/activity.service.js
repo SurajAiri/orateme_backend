@@ -49,7 +49,14 @@ class ActivitySchemaService {
     async getById(id) {
         return await ActivitySchema.findById(id)
             .populate('actOutId')
+            .populate({
+            path: 'recordId',
+            populate: {
+                path: 'quesId'
+            }
+            })
             .populate('overallPerformanceId');
+
     }
 
     async getAll(query) {

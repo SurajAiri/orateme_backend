@@ -6,8 +6,8 @@ async function handleS3FileUploadUrl(req, res) {
   console.log('handleS3FileUploadUrl', intent, uniqueId);
   if(!intent || !uniqueId)
     res.sendResponse(400, {message: 'Missing required fields: intent and uniqueId'});
-   // todo: validate uniqueId (audio/video => recordId exists, profile => userId exists)
-   // todo: validate right user (audio/video => recordId belongs to user, profile => userId matches)
+   // onnext: validate uniqueId (audio/video => recordId exists, profile => userId exists)
+   // onnext: validate right user (audio/video => recordId belongs to user, profile => userId matches)
 
   try{
     const result = await s3Service.generateB2FileUploadUrl(intent,uniqueId);
@@ -38,7 +38,7 @@ async function handleGetS3FileUrl(req, res) {
 }
 
 async function handleUploadCompleteTrigger(req, res) {
-  // todo: initiate audio transcription by adding record to queue
+  // onnext: initiate audio transcription by adding record to queue
   console.log('Upload complete trigger received');
   res.send('Upload complete trigger received');
 }
