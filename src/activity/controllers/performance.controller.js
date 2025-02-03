@@ -66,7 +66,7 @@ class PerformanceController {
 
             // 8. update activity with performance id
             const act = await activityService.updateById(activity._id, { overallPerformanceId: performance._id });
-            console.log('act', act);
+            // console.log('act', act);
             if(!act) return res.sendResponse(400, { message: 'Failed to update activity' });
 
             return res.sendResponse(201, performance);

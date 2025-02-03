@@ -11,7 +11,7 @@ const model = new ChatAnthropic({
   temperature: 0
 });
 
-console.log(process.env.ANTHROPIC_API_KEY);
+// console.log(process.env.ANTHROPIC_API_KEY);
 
 const activity = "Impromptu Speech";
 const question = "How technology has changed our daily life?";
@@ -33,7 +33,7 @@ async function evaluateSpeech() {
   try {
     const messages = generatePrompt(activity, question, transcript);
     const response = await model.invoke(messages);
-    console.log("Evaluation Report:", response);
+    // console.log("Evaluation Report:", response);
 
   } catch (error) {
     console.error("Error in evaluation:", error);

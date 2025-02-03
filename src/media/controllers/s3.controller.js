@@ -3,7 +3,7 @@ const s3Service = require('../services/b2.blaze.service');
 
 async function handleS3FileUploadUrl(req, res) {
   const {intent, uniqueId} = req.body;
-  console.log('handleS3FileUploadUrl', intent, uniqueId);
+  // console.log('handleS3FileUploadUrl', intent, uniqueId);
   if(!intent || !uniqueId)
     res.sendResponse(400, {message: 'Missing required fields: intent and uniqueId'});
    // onnext: validate uniqueId (audio/video => recordId exists, profile => userId exists)

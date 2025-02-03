@@ -3,7 +3,13 @@ const recordSchema = require('../model/record.model')
 
 class ActivitySchemaService {
     async createActivity(data) {
-        return await ActivitySchema.create(data);
+        const r = await await ActivitySchema.create(data);
+        return (await r.populate('actOutId')).populate({
+            path: 'recordId',
+            populate: {
+                path: 'quesId'
+            }
+            });
     }
 
     // async createActivityTransaction( userId, actOutId, questionCount, ques) {
