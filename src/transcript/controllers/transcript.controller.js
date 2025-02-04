@@ -146,6 +146,9 @@ class TranscriptController {
             const record = await recordService.updateRecordById(recordId, { transcriptId: tns._id });
             if (!record) return res.sendResponse(404, { message: 'Record not found' });
 
+            console.log('record', record);
+            console.log(tns._id);
+
             // onnext: rollback transcript creation if record update fails
             return res.sendResponse(201, tns);
 

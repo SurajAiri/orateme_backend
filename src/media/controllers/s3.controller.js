@@ -53,7 +53,7 @@ async function handleUploadCompleteTrigger(req, res) {
 
     // get audio url from record // onnext: upload file intent manage later
     const fileRes = await s3Service.getB2FileUrl('video', uniqueId);
-    if(!fileRes) res.sendResponse(404, {message: 'File not uploaded'});
+    if(!fileRes)return res.sendResponse(404, {message: 'File not uploaded'});
 
     // onnext: check if record is already in transcription queue
 
@@ -63,11 +63,11 @@ async function handleUploadCompleteTrigger(req, res) {
     console.log('audioUrl', audioUrl);
 
     // add record to transcription queue
-    transcriptController._createTranscriptWithUrl(res, userId, recordId=uniqueId, audioUrl);
-    res.sendResponse(200, {message: 'Transcription initiated'});
+    return transcriptController._createTranscriptWithUrl(res, userId, recordId=uniqueId, audioUrl);
+    // return res.sendResponse(200, {message: 'Transcription initiated'});
   }catch(err){
     console.error("S3ControllerError: handleUploadCompleteTrigger", err);
-    res.sendResponse(500, {message: 'Internal Server Error', error: err.message});
+    return res.sendResponse(500, {message: 'Internal Server Error', error: err.message});
   }
 }
 

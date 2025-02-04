@@ -11,6 +11,9 @@ class ActivitySchemaService {
             }
             });
     }
+    // async getUncompletedActivity(userId, actOutId) {
+    //     return await ActivitySchema.findOne({ userId, actOutId, completed: false });
+    // }
 
     // async createActivityTransaction( userId, actOutId, questionCount, ques) {
     //     const session = await ActivitySchema.startSession();

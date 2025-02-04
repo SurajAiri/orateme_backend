@@ -5,6 +5,7 @@ const openaiEvaluation = require("../../evaluation/services/openai.evaluation");
 const { parseTranscriptDb } = require("../../utils/transcript_parser");
 const activityService = require("../services/activity.service");
 const transcriptService = require("../../transcript/services/transcript.service");
+const {  llmJsonParser } = require("../../utils/llm_parser");
 
 class PerformanceController {
     async create(req, res) {
@@ -55,9 +56,10 @@ class PerformanceController {
             const gptEval = await openaiEvaluation.evaluateSpeech(actTitle, question, transcriptText);
             if(!gptEval) return res.sendResponse(400, { message: 'Failed to evaluate performance' });
 
+            const evaluation = llmJsonParser(gptEval);
 
             // 6. Validate evaluation data format
-            const { error, value } = performanceValidator.createPerformance.validate(gptEval['report']);
+            const { error, value } = performanceValidator.createPerformance.validate(evaluation['report']);
             if(error) return res.sendResponse(400, {message: error.message});
 
             // 7. Create performance

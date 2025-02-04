@@ -1,6 +1,7 @@
 const { DEFAULT_PAGE, DEFAULT_LIMIT } = require('../../config/constants');
 const ActivityService = require('../services/activity.service');
 const ActivityOutlineService = require('../services/activity_outline.service');
+const recordService = require('../services/record.service');
 const RecordService = require('../services/record.service');
 const getRandomQuestionByQuesBankUtil = require('../utils/question.utils');
 const ActivityValidator = require('../validators/activity.validator');
@@ -11,6 +12,10 @@ class ActivityController {
         try {
             const { actOutId } = req.body;
             const { id: userId } = req.user;
+
+            // return any uncompleted activity with the same actOutId
+            // const incompleteAct = await ActivityService.getUncompletedActivity(userId, actOutId);
+            // if (incompleteAct) return res.sendResponse(200, incompleteAct);
     
             // Validate input
             const { error, value } = ActivityValidator.createActivity.validate(req.body);
@@ -63,6 +68,18 @@ class ActivityController {
         // 2. verify record
         // 3. upload media to aws
         // 4. update record with media url
+    }
+
+    async getRecordById(req, res) {
+        const { id } = req.params;
+        try {
+            const record = await recordService.getRecordSchemaById(id);
+            if (!record) return res.sendResponse(404, { message: 'Record not found' });
+            return res.sendResponse(200, record);
+        } catch (err) {
+            console.error('RecordControllerError: getRecordById', err);
+            return res.sendResponse(500, { message: 'Internal Server Error', error: err.message });
+        }
     }
 
     async confirmUploadUser(req, res){

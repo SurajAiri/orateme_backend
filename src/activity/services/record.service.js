@@ -26,7 +26,8 @@ class RecordSchemaService {
     }
     
     async updateRecordById(id, data) {
-        return await RecordSchema.findByIdAndUpdate(id, data, { new: true });
+        const updatedRecord = await RecordSchema.findByIdAndUpdate(id, data, { new: true }).exec();
+        return updatedRecord;
     }
 
     async deleteRecordById(id) {

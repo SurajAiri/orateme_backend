@@ -26,7 +26,7 @@ const activitySchema = new mongoose.Schema({
     },
     overallPerformanceId:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'OverallPerformance',
+        ref:'Performance',
     }
 
 }, {
