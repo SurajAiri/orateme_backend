@@ -3,7 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const responseFormatter = require('./src/shared/middlewares/response.middleware');
 const authMiddleware = require('./src/shared/middlewares/auth.middleware');
-const { default: mongoose } = require('mongoose');
+const mongoose = require('mongoose');
 const authRoutes = require('./src/user/routes/auth.routes');
 const userRoutes = require('./src/user/routes/user.routes');
 const aoRoutes = require('./src/activity/routes/activity_outline.routes')
@@ -19,7 +19,6 @@ const adminActivityRoutes = require('./src/activity/routes/activity.admin.routes
 const adminQuestionRoutes = require("./src/activity/routes/question.admin.routes")
 const adminQuestionBankRoutes = require('./src/activity/routes/question_bank.admin.routes')
 const adminTranscriptRoutes = require('./src/transcript/routes/transcript.admin.routes')
-
 
 
 

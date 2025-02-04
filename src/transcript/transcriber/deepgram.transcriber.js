@@ -2,7 +2,7 @@ import { createClient } from "@deepgram/sdk";
 // const {createClient} = require("@deepgram/sdk");
 
 // fixMe: uncomment the deepgram logic
-export const transcribeAudioWithUrl = async (audioUrl, model = "nova-2") => {
+ const transcribeAudioWithUrl = async (audioUrl, model = "nova-2") => {
   try {
     const transcriber = createClient(process.env.DEEPGRAM_API_KEY);
 
@@ -25,3 +25,5 @@ export const transcribeAudioWithUrl = async (audioUrl, model = "nova-2") => {
     throw err;
   }
 };
+
+export { transcribeAudioWithUrl };

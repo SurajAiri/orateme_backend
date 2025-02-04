@@ -2,7 +2,7 @@
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 
 
-export function generatePrompt(activity, question, transcript) {
+function generatePrompt(activity, question, transcript) {
   const message = [
     new SystemMessage(
       "You are an advanced speech evaluation assistant for the Orate Me platform. Your role is to analyze and provide structured feedback on users' speaking skills."
@@ -54,3 +54,5 @@ Guidelines:
 
   return message;
 }
+
+export { generatePrompt }; // ES6 export
