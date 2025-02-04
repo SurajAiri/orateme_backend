@@ -25,7 +25,7 @@ const adminTranscriptRoutes = require('./src/transcript/routes/transcript.admin.
 
 // enable CORS for localhost
 const corsOptions = {
-    origin: ['http://localhost:5173'],
+    origin: ['http://localhost:5173',"https://orateme.netlify.app"],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],

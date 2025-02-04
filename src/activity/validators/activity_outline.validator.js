@@ -8,6 +8,7 @@ const createActivityOutline = Joi.object({
     questionCount: Joi.number().default(1).required(), // number of questions in this activity
     maxDurationTime: Joi.number().required(), // in seconds
     minDurationTime: Joi.number().required(), // in seconds
+    questionBankId: Joi.string().required(), // id of question bank
     // fee: Joi.number().required(), // required credit to buy this activity
 });
 
@@ -19,6 +20,7 @@ const updateActivityOutline = Joi.object({
     questionCount: Joi.number().default(1), // number of questions in this activity
     maxDurationTime: Joi.number(), // in seconds
     minDurationTime: Joi.number(), // in seconds
+    questionBankId: Joi.string(), // id of question bank
     // fee: Joi.number(), // required credit to buy this activity
 }).min(1); // At least one field must be updated
 
