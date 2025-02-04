@@ -1,5 +1,5 @@
-const { HumanMessage, SystemMessage } = require("@langchain/core/messages");
-// import { HumanMessage, SystemMessage } from "@langchain/core/messages";
+// const { HumanMessage, SystemMessage } = require("@langchain/core/messages");
+import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 
 
 export function generatePrompt(activity, question, transcript) {
