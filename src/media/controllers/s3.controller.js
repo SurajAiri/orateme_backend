@@ -1,9 +1,9 @@
 // const s3Service = require('../services/cloudinary.service');
+const transcriptController = require('../../transcript/controllers/transcript.controller');
 const s3Service = require('../services/b2.blaze.service');
 
 async function handleS3FileUploadUrl(req, res) {
   const {intent, uniqueId} = req.body;
-  // console.log('handleS3FileUploadUrl', intent, uniqueId);
   if(!intent || !uniqueId)
     res.sendResponse(400, {message: 'Missing required fields: intent and uniqueId'});
    // onnext: validate uniqueId (audio/video => recordId exists, profile => userId exists)
@@ -39,8 +39,36 @@ async function handleGetS3FileUrl(req, res) {
 
 async function handleUploadCompleteTrigger(req, res) {
   // onnext: initiate audio transcription by adding record to queue
-  console.log('Upload complete trigger received');
-  res.send('Upload complete trigger received');
+  const {intent,uniqueId} = req.body;
+  const {id: userId} = req.user;
+
+  if(!uniqueId)
+    return res.sendResponse(400, {message: 'Missing required fields: uniqueId'});
+
+  try{
+    // onnext: validate right user (recordId belongs to user)
+    // onnext: validate record exists
+    // onnext: validate record is in uploaded state
+    // onnext: update record state to processing
+
+    // get audio url from record // onnext: upload file intent manage later
+    const fileRes = await s3Service.getB2FileUrl('video', uniqueId);
+    if(!fileRes) res.sendResponse(404, {message: 'File not uploaded'});
+
+    // onnext: check if record is already in transcription queue
+
+    // parse audioUrl
+    console.log('fileRes', fileRes);
+    const audioUrl = fileRes;
+    console.log('audioUrl', audioUrl);
+
+    // add record to transcription queue
+    transcriptController._createTranscriptWithUrl(res, userId, recordId=uniqueId, audioUrl);
+    res.sendResponse(200, {message: 'Transcription initiated'});
+  }catch(err){
+    console.error("S3ControllerError: handleUploadCompleteTrigger", err);
+    res.sendResponse(500, {message: 'Internal Server Error', error: err.message});
+  }
 }
 
 module.exports = {

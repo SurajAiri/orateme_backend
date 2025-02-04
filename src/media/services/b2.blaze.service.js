@@ -29,7 +29,7 @@ function getBucketDetails(intent) {
       return { 
         bucketName: BUCKETS.video, 
         contentType: 'video/mp4', 
-        extension: '.mp4' 
+        extension: '.webm' 
       };
     case 'profile':
       return { 

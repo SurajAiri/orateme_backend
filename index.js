@@ -52,7 +52,7 @@ app.get('/', (req, res) => {
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", authMiddleware.restrictTo(), userRoutes);
 app.use("/api/v1/ao",authMiddleware.restrictTo(),aoRoutes)
-app.use("/api/v1/activity",authMiddleware.restrictTo(), activityRoutes);
+app.use("/api/v1/act",authMiddleware.restrictTo(), activityRoutes);
 app.use("/api/v1/media",authMiddleware.restrictTo(),s3Routes);
 app.use("/api/v1/ques",authMiddleware.restrictTo(),queRoutes);
 app.use("/api/v1/transcript",authMiddleware.restrictTo(),transcriptRoutes);

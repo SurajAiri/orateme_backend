@@ -17,7 +17,7 @@ const questionSchema = new mongoose.Schema({
     },
     difficulty: {
         type: Number,
-        required: true,
+        required: true, // int 1-5
     },
 }, {timestamps: true});
 

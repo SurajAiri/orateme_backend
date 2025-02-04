@@ -1,8 +1,6 @@
 const questionService = require("../services/question.service");
 
 async function getRandomQuestionByQuesBankUtil(quesBankId, count = 1) {
-    console.log(quesBankId);
-    console.log(count);
     // Validate the quesBankId
     if (!quesBankId) {
         const error = new Error("Question Bank ID is required.");
