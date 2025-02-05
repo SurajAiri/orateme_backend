@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 /*
 words: [ {word, start, end, confidence} ],
@@ -36,4 +36,4 @@ const transcriptSchema = new mongoose.Schema({
     userId:{type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
 });
 
-module.exports = mongoose.model('Transcript', transcriptSchema);
+export default mongoose.model('Transcript', transcriptSchema);

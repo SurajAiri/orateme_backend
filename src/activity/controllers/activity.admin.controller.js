@@ -1,7 +1,7 @@
-const { DEFAULT_PAGE, DEFAULT_LIMIT } = require('../../config/constants');
-const ActivityService = require('../services/activity.service');
-const ActivityOutlineService = require('../services/activity_outline.service');
-const RecordSchema = require('../services/record.service');
+import { DEFAULT_PAGE, DEFAULT_LIMIT } from '../../config/constants.js';
+import ActivityService from '../services/activity.service.js';
+import ActivityOutlineService from '../services/activity_outline.service.js';
+import RecordSchema from '../services/record.service.js';
 
 class AdminActivityController {
     async getById(req,res){
@@ -47,4 +47,4 @@ class AdminActivityController {
         }
 }
 
-module.exports = new AdminActivityController();
+export default new AdminActivityController();

@@ -1,11 +1,11 @@
-const performanceService = require("../services/performance.service");
-const { DEFAULT_LIMIT, DEFAULT_PAGE } = require('../../config/constants');
-const performanceValidator = require("../validators/performance.validator");
-const openaiEvaluation = require("../../evaluation/services/openai.evaluation");
-const { parseTranscriptDb } = require("../../utils/transcript_parser");
-const activityService = require("../services/activity.service");
-const transcriptService = require("../../transcript/services/transcript.service");
-const {  llmJsonParser } = require("../../utils/llm_parser");
+import performanceService from "../services/performance.service.js";
+import { DEFAULT_LIMIT, DEFAULT_PAGE } from '../../config/constants.js';
+import performanceValidator from "../validators/performance.validator.js";
+import openaiEvaluation from "../../evaluation/services/openai.evaluation.js";
+import { parseTranscriptDb } from "../../utils/transcript_parser.js";
+import activityService from "../services/activity.service.js";
+import transcriptService from "../../transcript/services/transcript.service.js";
+import { llmJsonParser } from "../../utils/llm_parser.js";
 
 class PerformanceController {
     async create(req, res) {
@@ -137,4 +137,4 @@ class PerformanceController {
     }
 }
 
-module.exports = new PerformanceController();
+export default new PerformanceController();

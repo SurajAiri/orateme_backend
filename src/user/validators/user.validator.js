@@ -1,4 +1,4 @@
-const Joi = require("joi");
+import Joi from "joi";
 
 const createUserValidator = Joi.object({
   username: Joi.string().required(),
@@ -22,7 +22,7 @@ const updateUserValidator = Joi.object({
   // isActive: Joi.boolean().optional(), // can't update isActive for now
 }).min(1); // Ensure at least one field is being updated
 
-module.exports = {
+export  {
   createUserValidator,
   updateUserValidator,
 };

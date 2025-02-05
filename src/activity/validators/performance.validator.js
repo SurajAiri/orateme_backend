@@ -1,4 +1,4 @@
-const Joi = require('joi');
+import Joi from 'joi';
 
 class PerformanceValidator {
     constructor() {
@@ -38,4 +38,4 @@ class PerformanceValidator {
     }
 }
 
-module.exports = new PerformanceValidator();
+export default new PerformanceValidator();

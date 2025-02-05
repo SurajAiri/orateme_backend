@@ -1,6 +1,5 @@
-const e = require("express");
-const { default: mongoose } = require("mongoose");
-const bcrypt = require("bcrypt");
+import mongoose from 'mongoose';
+import bcrypt from "bcrypt";
 
 const userSchema = new mongoose.Schema(
   {
@@ -42,4 +41,4 @@ userSchema.pre("findOneAndUpdate", async function (next) {
   next();
 });
 
-module.exports = mongoose.model("User", userSchema);
+export default mongoose.model("User", userSchema);

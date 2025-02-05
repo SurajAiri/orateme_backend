@@ -1,5 +1,4 @@
-const ActivitySchema = require('../model/activity.model');
-const recordSchema = require('../model/record.model')
+import ActivitySchema from '../model/activity.model.js';
 
 class ActivitySchemaService {
     async createActivity(data) {
@@ -97,4 +96,4 @@ class ActivitySchemaService {
     }
 }
 
-module.exports = new ActivitySchemaService();
+export default new ActivitySchemaService();

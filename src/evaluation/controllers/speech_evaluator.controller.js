@@ -1,4 +1,4 @@
-const llmService = require("../services/openai.evaluation");
+import llmService from "../services/openai.evaluation.js";
 
 app.post("/evaluate", async (req, res) => {
   try {

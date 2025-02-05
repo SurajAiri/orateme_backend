@@ -1,6 +1,5 @@
-// const s3Service = require('../services/cloudinary.service');
-const transcriptController = require('../../transcript/controllers/transcript.controller');
-const s3Service = require('../services/b2.blaze.service');
+import transcriptController from '../../transcript/controllers/transcript.controller.js';
+import * as s3Service from '../services/b2.blaze.service.js';
 
 async function handleS3FileUploadUrl(req, res) {
   const {intent, uniqueId} = req.body;
@@ -71,7 +70,7 @@ async function handleUploadCompleteTrigger(req, res) {
   }
 }
 
-module.exports = {
+export    {
   handleS3FileUploadUrl,
   handleGetS3FileUrl,
   handleUploadCompleteTrigger,

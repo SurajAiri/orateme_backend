@@ -1,4 +1,4 @@
-const questionBankModel = require("../model/question_bank.model")
+import questionBankModel from "../model/question_bank.model.js";
 
 class QuestionBankService {
     async create(data) {
@@ -26,4 +26,4 @@ class QuestionBankService {
     }
 }
 
-module.exports = new QuestionBankService();
+export default new QuestionBankService();

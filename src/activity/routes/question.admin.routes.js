@@ -1,7 +1,7 @@
-const express = require("express");
-const router = express.Router();
-const QuestionController = require("../controllers/question.controller")
+import express from "express";
+import QuestionController from "../controllers/question.controller.js";
 
+const router = express.Router();
 router.route("/")
     .get(QuestionController.getAll)
     .post(QuestionController.create);
@@ -13,4 +13,4 @@ router.route("/:id")
 
 router.get("/random/:quesBankId", QuestionController.getRandomQuestionByQuesBank);
 router.post("/many", QuestionController.createMany);
-module.exports = router;
+export default router;

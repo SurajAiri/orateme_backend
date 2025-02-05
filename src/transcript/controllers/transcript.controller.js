@@ -1,9 +1,9 @@
-const transcriptService = require('../services/transcript.service');
-const transcriptValidator = require('../validators/transcript.validator');
-const { DEFAULT_LIMIT, DEFAULT_PAGE } = require('../../config/constants');
-const{ transcribeAudioWithUrl} = require('../transcriber/deepgram.transcriber');
-const { parseTranscriptDeepgram } = require('../utils/deepgram_transcript');
-const recordService = require('../../activity/services/record.service');
+import transcriptService from '../services/transcript.service.js';
+import transcriptValidator from '../validators/transcript.validator.js';
+import { DEFAULT_LIMIT, DEFAULT_PAGE } from '../../config/constants.js';
+import { transcribeAudioWithUrl } from '../transcriber/deepgram.transcriber.js';
+import { parseTranscriptDeepgram } from '../utils/deepgram_transcript.js';
+import recordService from '../../activity/services/record.service.js';
 
 class TranscriptController {
 
@@ -173,4 +173,4 @@ class TranscriptController {
 
 }
 
-module.exports = new TranscriptController();
+export default new TranscriptController();

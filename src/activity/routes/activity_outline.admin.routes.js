@@ -1,7 +1,7 @@
-const express = require("express");
-const router = express.Router();
-const aoController = require("../controllers/activity_outline.controller");
+import express from "express";
+import aoController from "../controllers/activity_outline.controller.js";
 
+const router = express.Router();
 router
   .route("/")
   .get(aoController.getAll)
@@ -14,4 +14,4 @@ router.route("/:id")
 
 //   router.route("/")
 
-module.exports = router;
+export default router;

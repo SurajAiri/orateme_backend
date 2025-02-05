@@ -1,11 +1,11 @@
-const { DEFAULT_PAGE, DEFAULT_LIMIT } = require('../../config/constants');
-const ActivityService = require('../services/activity.service');
-const ActivityOutlineService = require('../services/activity_outline.service');
-const recordService = require('../services/record.service');
-const RecordService = require('../services/record.service');
-const getRandomQuestionByQuesBankUtil = require('../utils/question.utils');
-const ActivityValidator = require('../validators/activity.validator');
-const questionController = require('./question.controller');
+import { DEFAULT_PAGE, DEFAULT_LIMIT } from '../../config/constants.js';
+import ActivityService from '../services/activity.service.js';
+import ActivityOutlineService from '../services/activity_outline.service.js';
+import recordService from '../services/record.service.js';
+import RecordService from '../services/record.service.js';
+import getRandomQuestionByQuesBankUtil from '../utils/question.utils.js';
+import ActivityValidator from '../validators/activity.validator.js';
+import questionController from './question.controller.js';
 
 class ActivityController {
     async create(req, res) {
@@ -161,4 +161,4 @@ class ActivityController {
     }
 }
 
-module.exports = new ActivityController();
+export default new ActivityController();

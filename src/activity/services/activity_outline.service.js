@@ -1,4 +1,4 @@
-const ActivityOutline = require('../model/activity_outline.model');
+import ActivityOutline from '../model/activity_outline.model.js';
 
 class ActivityOutlineService {
     async  createActivityOutline(data) {
@@ -32,4 +32,4 @@ class ActivityOutlineService {
     }
 }
 
-module.exports = new ActivityOutlineService();
+export default new ActivityOutlineService();

@@ -1,6 +1,6 @@
-const json5 = require('json5');
+import json5 from 'json5';
 
-const llmJsonParser = (llm) => {
+export const llmJsonParser = (llm) => {
     if (typeof llm === 'object' && !Array.isArray(llm)) return llm;
     try {
         return json5.parse(llm);
@@ -14,7 +14,7 @@ const llmJsonParser = (llm) => {
     }
 };
 
-module.exports = llmJsonParser; // CommonJS export
+
 
 // // Test case
 // const raw = 'hi what is your name ```json\n{"a":"b","c":32}\n```';

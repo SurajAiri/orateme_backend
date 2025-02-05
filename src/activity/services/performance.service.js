@@ -1,4 +1,4 @@
-const performanceCount = require('../model/performance.model');
+import performanceCount from '../model/performance.model.js';
 
 class PerformanceSchemaService {
     async create(data) {
@@ -30,4 +30,4 @@ class PerformanceSchemaService {
     }
 }
 
-module.exports = new PerformanceSchemaService();
+export default new PerformanceSchemaService();

@@ -1,5 +1,5 @@
-const express = require("express");
-const PerformanceController = require("../controllers/performance.controller");
+import express from "express";
+import PerformanceController from "../controllers/performance.controller.js";
 
 const router = express.Router();
 
@@ -14,4 +14,4 @@ router.route("/:id")
     .patch(PerformanceController.updateById)
     .delete(PerformanceController.deleteById);
 
-module.exports = router;
+export default router;

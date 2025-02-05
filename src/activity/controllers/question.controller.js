@@ -1,6 +1,6 @@
-const QuestionService = require("../services/question.service");
-const QuestionValidator = require("../validators/question.validator");
-const { DEFAULT_LIMIT, DEFAULT_PAGE } = require('../../config/constants');
+import QuestionService from "../services/question.service.js";
+import QuestionValidator from "../validators/question.validator.js";
+import { DEFAULT_LIMIT, DEFAULT_PAGE } from '../../config/constants.js';
 
 class QuestionController {
     async create(req, res) {
@@ -144,4 +144,4 @@ class QuestionController {
     }
 }
 
-module.exports = new QuestionController();
+export default new QuestionController();

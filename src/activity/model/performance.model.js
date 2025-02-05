@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from 'mongoose';
 
 const performanceSchema = new mongoose.Schema({
   score: { type: Number, required: true, min: 0, max: 10 },
@@ -26,4 +26,4 @@ const speechEvaluationSchema = new mongoose.Schema({
   suggestions: { type: String, required: true }
 });
 
-module.exports = mongoose.model("Performance", speechEvaluationSchema);
+export default mongoose.model("Performance", speechEvaluationSchema);

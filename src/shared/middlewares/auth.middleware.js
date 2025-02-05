@@ -1,4 +1,4 @@
-const { verifyAccessToken } = require("../services/jwt.service");
+import { verifyAccessToken } from "../services/jwt.service.js";
 
 const authorizeUser = (req, res, next) => {
   const { authorization } = req.headers;
@@ -34,7 +34,7 @@ const restrictTo = (roles = ["user", "admin"]) => {
   };
 };
 
-module.exports = {
+export  {
   authorizeUser,
   restrictTo,
 };

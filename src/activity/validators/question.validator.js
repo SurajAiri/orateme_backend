@@ -1,4 +1,4 @@
-const Joi = require('joi');
+import Joi from 'joi';
 class QuestionValidator {
     constructor() {
         this.createQuestion = Joi.object({
@@ -17,4 +17,4 @@ class QuestionValidator {
     }
 }
 
-module.exports = new QuestionValidator();
+export default new QuestionValidator();

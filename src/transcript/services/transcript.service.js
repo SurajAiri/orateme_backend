@@ -1,4 +1,4 @@
-const TranscriptModel = require('../models/transcript.model');
+import TranscriptModel from '../models/transcript.model.js';
 
 class TranscriptService {
     async createTranscript(data) {
@@ -32,4 +32,4 @@ class TranscriptService {
     }
 }
 
-module.exports = new TranscriptService();
+export default new TranscriptService();

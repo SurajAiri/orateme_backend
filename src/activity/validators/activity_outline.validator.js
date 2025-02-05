@@ -1,4 +1,4 @@
-const Joi = require('joi');
+import Joi from 'joi';
 
 const createActivityOutline = Joi.object({
     title: Joi.string().required(),
@@ -24,7 +24,7 @@ const updateActivityOutline = Joi.object({
     // fee: Joi.number(), // required credit to buy this activity
 }).min(1); // At least one field must be updated
 
-module.exports = {
+export  {
     createActivityOutline,
     updateActivityOutline,
 };

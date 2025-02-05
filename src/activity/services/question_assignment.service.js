@@ -1,4 +1,4 @@
-const assignmentModel = require("../model/question_assignment.model")
+import assignmentModel from "../model/question_assignment.model.js";
 
 
 class AssignmentService {
@@ -27,4 +27,4 @@ class AssignmentService {
     }
 }
 
-module.exports = new AssignmentService();
+export default new AssignmentService();

@@ -1,6 +1,6 @@
-const QuestionBankService = require("../services/question_bank.service");
-const { DEFAULT_LIMIT, DEFAULT_PAGE } = require('../../config/constants');
-const QuestionBankValidator = require("../validators/question_bank.validator");
+import QuestionBankService from "../services/question_bank.service.js";
+import { DEFAULT_LIMIT, DEFAULT_PAGE } from '../../config/constants.js';
+import QuestionBankValidator from "../validators/question_bank.validator.js";
 
 class QuestionBankController {
     async create(req, res) {
@@ -77,4 +77,4 @@ class QuestionBankController {
     }
 }
 
-module.exports = new QuestionBankController();
+export default new QuestionBankController();

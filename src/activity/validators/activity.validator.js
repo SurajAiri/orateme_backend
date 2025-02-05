@@ -1,4 +1,4 @@
-const Joi = require('joi');
+import Joi from 'joi';
 
 class ActivityValidator {
     constructor() {
@@ -14,4 +14,4 @@ class ActivityValidator {
     }
 }
 
-module.exports = new ActivityValidator();
+export default new ActivityValidator();

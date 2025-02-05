@@ -1,4 +1,4 @@
-const questionService = require("../services/question.service");
+import questionService from "../services/question.service.js";
 
 async function getRandomQuestionByQuesBankUtil(quesBankId, count = 1) {
     // Validate the quesBankId
@@ -21,4 +21,4 @@ async function getRandomQuestionByQuesBankUtil(quesBankId, count = 1) {
     return randomQuestions;
 }
 
-module.exports = getRandomQuestionByQuesBankUtil
+export default getRandomQuestionByQuesBankUtil

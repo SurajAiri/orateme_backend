@@ -1,4 +1,4 @@
-const RecordSchema = require('../model/record.model');
+import RecordSchema from '../model/record.model.js';
 
 class RecordSchemaService {
     async createRecordSchema(data) {
@@ -35,4 +35,4 @@ class RecordSchemaService {
     }
 }
 
-module.exports = new RecordSchemaService();
+export default new RecordSchemaService();

@@ -1,6 +1,6 @@
-const aoService = require('../services/activity_outline.service');
-const aoValidator = require('../validators/activity_outline.validator');
-const { DEFAULT_LIMIT,DEFAULT_PAGE } = require('../../config/constants');
+import aoService from '../services/activity_outline.service.js';
+import * as aoValidator from '../validators/activity_outline.validator.js';
+import { DEFAULT_LIMIT, DEFAULT_PAGE } from '../../config/constants.js';
 
 
 class ActivityOutlineController {
@@ -72,4 +72,4 @@ class ActivityOutlineController {
 
 }
 
-module.exports = new ActivityOutlineController();
+export default new ActivityOutlineController();

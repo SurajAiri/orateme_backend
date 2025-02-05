@@ -1,5 +1,5 @@
-const { default: mongoose } = require("mongoose");
-const questionModel = require("../model/question.model")
+import mongoose from 'mongoose';
+import questionModel from "../model/question.model.js";
 
 
 class QuestionService {
@@ -40,4 +40,4 @@ class QuestionService {
     }
 }
 
-module.exports = new QuestionService();
+export default new QuestionService();

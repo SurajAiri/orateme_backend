@@ -1,5 +1,5 @@
-const express = require("express");
-const TranscriptController = require("../controllers/transcript.controller");
+import express from "express";
+import TranscriptController from "../controllers/transcript.controller.js";
 
 const router = express.Router();
 
@@ -14,4 +14,4 @@ router.route("/:id")
     .patch(TranscriptController.updateById)
     .delete(TranscriptController.deleteById);
 
-module.exports = router;
+export default router;

@@ -1,4 +1,4 @@
-function responseFormatter(req, res, next) {
+export default function responseFormatter(req, res, next) {
   res.sendResponse = (statusCode, data, message = null, meta = undefined) => {
     if (statusCode < 300) {
       return res.status(statusCode).json({
@@ -17,4 +17,3 @@ function responseFormatter(req, res, next) {
   next();
 }
 
-module.exports = responseFormatter;

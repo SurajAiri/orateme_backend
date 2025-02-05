@@ -1,6 +1,5 @@
-
-const { S3Client, PutObjectCommand, GetObjectCommand } = require('@aws-sdk/client-s3');
-const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
+import { S3Client, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 // Configure S3 client to use LocalStack
 const s3Client = new S3Client({
@@ -85,7 +84,7 @@ async function getS3FileUrl(intent,uniqueId) {
 
 }
 
-module.exports = {
+export  {
   generateS3FileUploadUrl,
   getS3FileUrl,
 };

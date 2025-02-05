@@ -1,4 +1,4 @@
-const Joi = require('joi');
+import Joi from 'joi';
 
 class TranscriptValidator {
     constructor() {
@@ -34,4 +34,4 @@ class TranscriptValidator {
     }
 }
 
-module.exports = new TranscriptValidator();
+export default new TranscriptValidator();

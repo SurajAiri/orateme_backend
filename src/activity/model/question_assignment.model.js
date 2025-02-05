@@ -4,7 +4,7 @@
 // - activityOutlineId
 // - assignedAt
 
-const {default:mongoose} = require('mongoose');
+import mongoose from 'mongoose';
 
 const userQuestionAssignmentSchema = new mongoose.Schema({
     userId: {
@@ -25,4 +25,4 @@ const userQuestionAssignmentSchema = new mongoose.Schema({
     },
 });
 
-module.exports = mongoose.model('UserQuestionAssignment', userQuestionAssignmentSchema);
+export default mongoose.model('UserQuestionAssignment', userQuestionAssignmentSchema);

@@ -1,4 +1,3 @@
-// const { HumanMessage, SystemMessage } = require("@langchain/core/messages");
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 
 
@@ -55,4 +54,4 @@ Guidelines:
   return message;
 }
 
-export { generatePrompt }; // ES6 export
+export  { generatePrompt };

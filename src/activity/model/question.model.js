@@ -4,7 +4,7 @@
 // - content
 // - difficulty
 
-const { default: mongoose } = require("mongoose");
+import mongoose from 'mongoose';
 
 const questionSchema = new mongoose.Schema({
     questionBankId: {
@@ -21,4 +21,4 @@ const questionSchema = new mongoose.Schema({
     },
 }, {timestamps: true});
 
-module.exports = mongoose.model('Question', questionSchema);
+export default mongoose.model('Question', questionSchema);

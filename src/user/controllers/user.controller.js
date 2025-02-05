@@ -1,7 +1,6 @@
-const UserService = require("../services/user.service");
-const UserValidator = require("../validators/user.validator");
-const { DEFAULT_LIMIT,DEFAULT_PAGE } = require('../../config/constants');
-
+import * as UserService from "../services/user.service.js";
+import * as UserValidator from "../validators/user.validator.js";
+import { DEFAULT_LIMIT, DEFAULT_PAGE } from '../../config/constants.js';
 
 // common operations [private access]
 async function _updateUser(userId, body, res) {
@@ -129,7 +128,7 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-module.exports = {
+export  {
   // user only
   updateUserSelf,
   getUserSelf,

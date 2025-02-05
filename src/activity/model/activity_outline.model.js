@@ -1,4 +1,4 @@
-const { default: mongoose } = require("mongoose");
+import mongoose from 'mongoose';
 
 const activityOutlineSchema = new mongoose.Schema(
   {
@@ -15,4 +15,4 @@ const activityOutlineSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("ActivityOutline", activityOutlineSchema);
+export default mongoose.model("ActivityOutline", activityOutlineSchema);

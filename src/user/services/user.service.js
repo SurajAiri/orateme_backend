@@ -1,4 +1,4 @@
-const User = require("../models/user.model");
+import User from "../models/user.model.js";
 
 // create user, update, delete, find by id, find all
 
@@ -19,8 +19,8 @@ const findUserById = async (id) => {
   return await User.findById(id);
 };
 
-async function findUserByUsername(username, passwordRequired = false) {
-  if (passwordRequired)
+async function findUserByUsername(username, passwordRequired) {
+  if (passwordRequired === true)
     return await User.findOne({ username }).select("+password");
   return await User.findOne({ username });
 }
@@ -41,7 +41,7 @@ const userCount = async () => {
   return await User.countDocuments();
 };
 
-module.exports = {
+export  {
   createUser,
   updateUser,
   deleteUser,

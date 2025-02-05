@@ -1,5 +1,5 @@
-const { ChatOpenAI } = require("@langchain/openai");
-const { generatePrompt } = require("../../utils/prompt");
+import { ChatOpenAI } from "@langchain/openai";
+import { generatePrompt } from "../../utils/prompt.js";
 
 class OpenaiEvalService {
   constructor() {
@@ -53,4 +53,4 @@ class OpenaiEvalService {
   }
 }
 
-module.exports = new OpenaiEvalService();
+export default new OpenaiEvalService();

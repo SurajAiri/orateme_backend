@@ -1,4 +1,4 @@
-const Joi = require('joi');
+import Joi from 'joi';
 
 class QuestionBankValidator {
     constructor() {
@@ -16,4 +16,4 @@ class QuestionBankValidator {
     }
 }
 
-module.exports = new QuestionBankValidator();
+export default new QuestionBankValidator();

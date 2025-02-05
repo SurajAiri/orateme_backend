@@ -1,7 +1,7 @@
-const bcrypt = require("bcrypt");
-const JwtService = require("../../shared/services/jwt.service");
-const UserService = require("../services/user.service");
-const UserValidator = require("../validators/user.validator");
+import bcrypt from "bcrypt";
+import * as JwtService from "../../shared/services/jwt.service.js";
+import * as UserService from "../services/user.service.js";
+import * as UserValidator from "../validators/user.validator.js";
 // const otpGenerator = require("otp-generator");
 // const { sendOtpTwilio } = require("../services/twilio.service");
 
@@ -38,11 +38,13 @@ async function loginWithUsername(req, res) {
   try {
     const user = await UserService.findUserByUsername(
       username,
-      (passwordRequired = true)
+      true
     );
     if (!user) return res.sendResponse(404, "User not found");
     if (!user.isActive)
       return res.sendResponse(403, "Account Banned or Suspended");
+    console.log("login user: ", user);
+    console.log("user password: ", user.password);
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.sendResponse(401, "Invalid password");
@@ -56,6 +58,7 @@ async function loginWithUsername(req, res) {
       // refreshToken,
     });
   } catch (err) {
+    console.error(err);
     console.error(`AuthError: loginWithUsername - ${err.message}`);
     return res.sendResponse(400, `AuthError: loginWithUsername - ${err.message}`);
   }
@@ -85,7 +88,7 @@ async function logoutUser() {
   // todo: implement logout user
 }
 
-module.exports = {
+export  {
   // loginWithGoogleTokenController,
   registerWithUsername,
   loginWithUsername,

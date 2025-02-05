@@ -4,7 +4,7 @@
 // - description
 // - category/subject
 
-const { default: mongoose } = require("mongoose");
+import mongoose from 'mongoose';
 
 
 const questionBankSchema = new mongoose.Schema({
@@ -22,4 +22,4 @@ const questionBankSchema = new mongoose.Schema({
     },
 }, {timestamps: true});
 
-module.exports = mongoose.model('QuestionBank', questionBankSchema);
+export default mongoose.model('QuestionBank', questionBankSchema);
