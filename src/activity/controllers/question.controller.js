@@ -85,13 +85,13 @@ class QuestionController {
     
             // Fetch a random question from the question bank
                 const randomQuestion = await QuestionService.getRandomQuestionByQuesBank(quesBankId,count);
-                console.log("randomQues: ",randomQuestion);
+                // console.log("randomQues: ",randomQuestion);
                 // const randomQuestion = [];
                 // console.log(randomQuestion);
             
             // Check if a question was found
             if (!randomQuestion || randomQuestion.length !== count) {
-                return res.sendResponse(404, { message: `Specified no. '${count}' of Questions not found` });
+                return res.sendResponse(404, { message: `Unable to fetch question list of length: ${count}` });
             }
     
             // Return the random question

@@ -10,10 +10,12 @@ async function getRandomQuestionByQuesBankUtil(quesBankId, count = 1) {
 
     // Fetch random questions from the question bank
     const randomQuestions = await questionService.getRandomQuestionByQuesBank(quesBankId, count);
+    // console.log("we have ",randomQuestions);
+    // console.log(randomQuestions);
 
     // Check if questions were found
     if (!randomQuestions || randomQuestions.length !== count) {
-        const error = new Error(`Specified no. '${count}' of Questions not found`);
+        const error = new Error(`Unable to fetch question list of length: ${count}`);
         error.status = 404;
         throw error;
     }

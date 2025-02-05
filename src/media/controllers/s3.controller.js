@@ -62,7 +62,7 @@ async function handleUploadCompleteTrigger(req, res) {
     console.log('audioUrl', audioUrl);
 
     // add record to transcription queue
-    return transcriptController._createTranscriptWithUrl(res, userId, recordId=uniqueId, audioUrl);
+    return transcriptController._createTranscriptWithUrl(res, userId, uniqueId, audioUrl);
     // return res.sendResponse(200, {message: 'Transcription initiated'});
   }catch(err){
     console.error("S3ControllerError: handleUploadCompleteTrigger", err);
