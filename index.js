@@ -22,7 +22,7 @@ import adminTranscriptRoutes from './src/transcript/routes/transcript.admin.rout
 dotenv.config();
 
 const corsOptions = {
-    origin: ['http://localhost:5173', "https://orateme.netlify.app"],
+    origin: ['http://localhost:5173', "https://orateme.netlify.app","https://www.orateme.com/","https://orateme.com/", "https://web.orateme.com/"],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
