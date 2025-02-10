@@ -1,9 +1,7 @@
 import License from '../models/license.model.js';
-import { Types } from 'mongoose';
 
 class LicenseService {
     // Create a new license
-
     async createLicense(licenseData) {
         try {
             const license = new License(licenseData);
@@ -14,10 +12,10 @@ class LicenseService {
     }
 
     // Get license by ID
-    async getLicenseById(licenseId) {
+    async getById(licenseId) {
         try {
-            return await License.findById(licenseId)
-                .populate('loId');
+            return await License.findById(licenseId);
+                // .populate('loId');
                 // .populate('boughtBy');
         } catch (error) {
             throw new Error(`Error fetching license: ${error.message}`);
@@ -25,7 +23,7 @@ class LicenseService {
     }
 
     // Get licenses by user ID
-    async getLicensesByUser(userId) {
+    async getByUser(userId) {
         try {
             return await License.find({ boughtBy: userId })
                 .populate('loId')
@@ -36,7 +34,7 @@ class LicenseService {
     }
 
     // Update license
-    async updateLicense(licenseId, updateData) {
+    async updateById(licenseId, updateData) {
         try {
             return await License.findByIdAndUpdate(
                 licenseId,

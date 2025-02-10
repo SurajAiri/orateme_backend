@@ -1,11 +1,11 @@
 import express from "express";
-import licenseController from "../controllers/license.controller";
+import licenseController from "../controllers/license.controller.js";
 
-router = express.Router();
-router.post("/",licenseController.createByAdmin);
+const router = express.Router();
+router.post("/",licenseController.adminCreate);
 // router.get("/",licenseController.);
 
-router.use("/:id")
+router.route("/:id")
     .get(licenseController.getById);
 
 router.patch("/suspend/:id",licenseController.suspendById); 

@@ -1,14 +1,15 @@
 import express from "express";
-import licenseOutlineController from "../controllers/licenseOutline.controller";
+import licenseOutlineController from "../controllers/licenseOutline.controller.js";
 
-router = express.Router();
+const router = express.Router();
 router.get("/active",licenseOutlineController.getActivePackages);
 
-router.use("/")
+
+router.route("/")
     .get(licenseOutlineController.getAll)
     .post(licenseOutlineController.create);
 
-router.use("/:id")
+router.route("/:id")
     .get(licenseOutlineController.getById)
     .patch(licenseOutlineController.updateById)
     .delete(licenseOutlineController.deleteById);

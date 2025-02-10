@@ -3,6 +3,8 @@ import Joi from "joi";
 const createUserValidator = Joi.object({
   username: Joi.string().required(),
   email: Joi.string().email().required(),
+  phone: Joi.string().pattern(/^\+?[1-9]\d{1,14}$/).required(), // E.164 format
+  countryCode: Joi.string().required(),
   password: Joi.string().required(),
   firstName: Joi.string().required(),
   lastName: Joi.string().required(),

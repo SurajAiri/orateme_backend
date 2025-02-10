@@ -1,15 +1,24 @@
-import activityUsageService from "../services/activityUsage.service";
+import { updateUserById } from "../../user/controllers/user.controller.js";
+import { findUserByUsername, updateUser } from "../../user/services/user.service.js";
+import activityUsageService from "../services/activityUsage.service.js";
+import LicenseService from "../services/license.service.js";
+import licenseOutlineService from "../services/licenseOutline.service.js";
 
 class licenseController {
-  async _createLicense(data) {
-    const { loId, transactionId, serverType, userId } = data;
+  async _create(res, userId, loId, transactionId, serverType) {
+    if (!userId) return res.sendResponse(401, { message: 'Unauthorized user' });
+    if (!loId || !transactionId || !serverType)
+      return res.sendResponse(400, {
+        message: "loId, transactionId and serviceType are required",
+      });
 
     try {
       // 1. get license outline
-      const plan = await LicenseOutlineService.getById(loId);
-      if (!plan) throw new Error("Invalid license outline id");
+      const plan = await licenseOutlineService.getById(loId);
+      if (!plan)
+        return res.sendResponse(400, { message: "Invalid license outline id" });
 
-      // 3. create license
+      // 2. create license
       const rawLicense = {
         name: plan.name,
         featureTier: plan.featureTier,
@@ -19,78 +28,42 @@ class licenseController {
         transactionId,
         serverType,
         weeklyLimit: plan.weeklyLimit,
-        expiryDate: moment().add(plan.validity, "day").toDate(),
+        expiryDate: new Date(Date.now() + plan.validity * 24 * 60 * 60 * 1000)
       };
+      const license = await LicenseService.createLicense(rawLicense);
+      if (!license)
+        return res.sendResponse(400, { message: "Failed to create license" });
 
-      return await LicenseService.createLicense(rawLicense);
+      // 3. update user 
+      const user = await updateUser(userId,{licenseId:license._id});
+      if(!user){
+        console.error(`Failed to update licenseId: ${license._id} in user: ${userId}`);
+      }
+      
+      return res.sendResponse(201, license, "success");
     } catch (err) {
-      throw err;
+      console.error("LicenseControllerError: createLicense", err);
+      return res.sendResponse(500, {
+        message: "Internal Server Error",
+        error: err.message,
+      });
     }
   }
 
-  async createByUser(req, res) {
+  userCreate = async(req, res)=> {
     const { loId, transactionId, serverType } = req.body;
     const { id: userId } = req.user;
-
-    if (!loId || !transactionId || !serverType)
-      return res.sendResponse(400, {
-        message: "loId, transactionId and serviceType are required",
-      });
-
-    try {
-      const license = await this._createLicense({
-        loId,
-        transactionId,
-        serverType,
-        userId,
-      });
-      if (!license) throw new Error("Failed to create license");
-      return res.sendResponse(201, license, "success");
-    } catch (err) {
-      console.error("LicenseControllerError: createByUser", err);
-      return res.sendResponse(
-        err.message === "Invalid license outline id" ? 400 : 500,
-        {
-          message:
-            err.message === "Invalid license outline id"
-              ? err.message
-              : "Internal Server Error",
-          error: err.message,
-        }
-      );
-    }
+    return this._create(res, userId, loId, transactionId, serverType);
   }
 
-  async createByAdmin(req, res) {
+  adminCreate = async (req, res) =>{
     const { loId, transactionId, serverType, userId } = req.body;
 
-    if (!loId || !transactionId || !serverType || !userId)
-      return res.sendResponse(400, {
-        message: "loId, transactionId, serviceType and userId are required",
-      });
+    // check if user exists
+    const user = await UserService.findUserById(userId);
+    if (!user) return res.sendResponse(404, { message: "User not found" });
 
-    try {
-      const license = await this._createLicense({
-        loId,
-        transactionId,
-        serverType,
-        userId,
-      });
-      if (!license) throw new Error("Failed to create license");
-      return res.sendResponse(201, license, "success");
-    } catch (err) {
-      console.error("LicenseControllerError: createByAdmin", err);
-      return res.sendResponse(
-        err.message === "Invalid license outline id" ? 400 : 500,
-        {
-          message:
-            err.message === "Invalid license outline id"
-              ? err.message
-              : "Internal Server Error",
-          error: err.message,
-        }
-      );
-    }
+    return this._create(res, userId, loId, transactionId, serverType);
   }
 
   async getLicenseActivityLimits(licenseId, userId){
@@ -151,7 +124,7 @@ class licenseController {
     const { id } = req.params;
     const {isSuspended} = req.body;
     try {
-      const license = await LicenseService.updateLicenseById(id, {isSuspended});
+      const license = await LicenseService.updateById(id, {isSuspended});
       if (!license) return res.sendResponse(400, { message: "Failed to suspend license" });
 
       return res.sendResponse(200, license, "success");

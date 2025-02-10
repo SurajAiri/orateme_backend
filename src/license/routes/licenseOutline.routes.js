@@ -1,7 +1,7 @@
 import express from "express";
-import licenseOutlineController from "../controllers/licenseOutline.controller";
+import licenseOutlineController from "../controllers/licenseOutline.controller.js";
 
-router = express.Router();
+const router = express.Router();
 router.get("/",licenseOutlineController.getActivePackages);
 
 export default router;

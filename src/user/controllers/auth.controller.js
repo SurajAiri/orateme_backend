@@ -43,8 +43,8 @@ async function loginWithUsername(req, res) {
     if (!user) return res.sendResponse(404, "User not found");
     if (!user.isActive)
       return res.sendResponse(403, "Account Banned or Suspended");
-    console.log("login user: ", user);
-    console.log("user password: ", user.password);
+    // console.log("login user: ", user);
+    // console.log("user password: ", user.password);
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.sendResponse(401, "Invalid password");

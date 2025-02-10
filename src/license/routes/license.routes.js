@@ -1,8 +1,8 @@
 import express from "express";
-import licenseController from "../controllers/license.controller";
+import licenseController from "../controllers/license.controller.js";
 
-router = express.Router();
-router.post("/",licenseController.createByUser);
+const router = express.Router();
+router.post("/",licenseController.userCreate);
 router.get("/",licenseController.getLicenseForUser);
 
 export default router;

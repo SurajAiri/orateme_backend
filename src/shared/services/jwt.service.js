@@ -6,6 +6,7 @@ const generateAccessToken = (user) => {
     email: user.email,
     role: user.role,
     name: `${user.firstName} ${user.lastName}`,
+    licenseId: user.licenseId,
   };
   return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
     expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN,

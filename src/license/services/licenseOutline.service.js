@@ -10,10 +10,10 @@ class LicenseOutlineService {
     }
 
     async getAllLicenseOutlines(query) {
-        const { featureTier, isActive, featured, isRecommended, page = 1, limit = 10 } = query;
+        const {  isActive, featured, isRecommended, page = 1, limit = 10 } = query;
         const filter = {};
         
-        if (featureTier) filter.featureTier = featureTier;
+        // if (featureTier) filter.featureTier = featureTier;
         if (isActive !== undefined) filter.isActive = isActive;
         if (featured !== undefined) filter.featured = featured;
         if (isRecommended !== undefined) filter.isRecommended = isRecommended;

@@ -1,12 +1,12 @@
-import license_outlineService from "../services/licenseOutline.service"
-import license_outlineValidator from "../validators/licenseOutline.validator";
+import license_outlineService from "../services/licenseOutline.service.js";
+import license_outlineValidator from "../validators/licenseOutline.validator.js";
 
 class LicenseOutlineController {
     async getActivePackages(req, res){
         try{
             const plans = await license_outlineService.getAllLicenseOutlines({featured:true});
 
-            if(!plans) res.sendResponse(404,{
+            if(!plans || plans.length === 0)return res.sendResponse(404,{
                 message:"No active plans found"
             });
 
@@ -55,7 +55,7 @@ class LicenseOutlineController {
             const plan = await license_outlineService.deleteLicenseOutlineById(id);
             if(!plan) return res.sendResponse(400,{message:"Failed to delete plan"});
 
-            return res.sendResponse(200,plan,'success');
+            return res.sendResponse(200,{message:"License Outline deleted successfully"},'success');
         }catch(err){
             console.error("LicenseOutlineController: delete: ",err);
             return res.sendResponse(500, {message: 'Internal Server Error', error: err.message});
@@ -79,7 +79,7 @@ class LicenseOutlineController {
         const query = req.query;
         try{
             const plans = await license_outlineService.getAllLicenseOutlines(query);
-            if(!plans) return res.sendResponse(404,{message:"No plans found"});
+            if(!plans || plans.length === 0) return res.sendResponse(404,{message:"No plans found"});
 
             return res.sendResponse(200,plans,'success');
         }catch(err){
