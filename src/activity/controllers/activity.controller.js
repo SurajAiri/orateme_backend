@@ -1,4 +1,5 @@
 import { DEFAULT_PAGE, DEFAULT_LIMIT } from '../../config/constants.js';
+import licenseController from '../../license/controllers/license.controller.js';
 import ActivityService from '../services/activity.service.js';
 import ActivityOutlineService from '../services/activity_outline.service.js';
 import recordService from '../services/record.service.js';
@@ -11,20 +12,30 @@ class ActivityController {
     async create(req, res) {
         try {
             const { actOutId } = req.body;
-            const { id: userId } = req.user;
+            const { id: userId,licenseId } = req.user;
 
-            // return any uncompleted activity with the same actOutId
+            // todo: return any uncompleted activity with the same actOutId
             // const incompleteAct = await ActivityService.getUncompletedActivity(userId, actOutId);
             // if (incompleteAct) return res.sendResponse(200, incompleteAct);
-    
+
+            // todo: validate license
+            const license = await licenseController.getLicenseActivityLimits(licenseId,userId);
+            if(!license)return res.sendResponse(400,{message: 'Unable to find license'});
+
+            if(!license.isValid)return res.sendResponse(400,{message:license.message || "Unknown reason"});
+
             // Validate input
             const { error, value } = ActivityValidator.createActivity.validate(req.body);
             if (error) return res.sendResponse(400, { message: error.message });
-    
+
+            
             // Fetch activity outline
             const ao = await ActivityOutlineService.getActivityOutlineById(actOutId);
             if (!ao) return res.sendResponse(400, { message: 'Invalid activity outline id' });
-    
+            
+            // check if activity limit is available
+            if((license.remaining ?? 0) < ao.costMultiplier)return res.sendResponse(400,{message:"Not enough credit to create activity."})
+
             // Generate random questions
             const ques = await getRandomQuestionByQuesBankUtil(ao.questionBankId, ao.questionCount);
             if (ques.error) return res.sendResponse(ques.error.status, { message: ques.error.message });

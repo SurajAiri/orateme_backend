@@ -6,6 +6,7 @@ import { parseTranscriptDb } from "../../utils/transcript_parser.js";
 import activityService from "../services/activity.service.js";
 import transcriptService from "../../transcript/services/transcript.service.js";
 import { llmJsonParser } from "../../utils/llm_parser.js";
+import licenseController from "../../license/controllers/license.controller.js";
 
 class PerformanceController {
     async create(req, res) {
@@ -18,7 +19,7 @@ class PerformanceController {
             const performance = await performanceService.create(value);
 
             // 3. update activity with performance id
-            // const activity = await activityService.updateById(value.activityId, { performanceId: performance._id });
+            const activity = await activityService.updateById(value.activityId, { performanceId: performance._id });
 
 
             return res.sendResponse(201, performance);
@@ -33,6 +34,8 @@ class PerformanceController {
         // 1. Validate request body
         // const { transcriptId } = req.params;
         // if(!transcriptId) return res.sendResponse(400, { message: 'TranscriptId is required' });
+
+        const {id:userId} = req.user;
 
         const { transcriptId, activityId } = req.body;
         if (!transcriptId || !activityId) return res.sendResponse(400, { message: 'transcriptId and activityId are required fields' });
@@ -70,6 +73,10 @@ class PerformanceController {
             const act = await activityService.updateById(activity._id, { overallPerformanceId: performance._id });
             // console.log('act', act);
             if(!act) return res.sendResponse(400, { message: 'Failed to update activity' });
+
+            // keep record of activity usage:
+            // todo: shift this to where activity is created but after uncompleted activity logic is done
+            const au = await licenseController.registerActivityUsage(userId,activityId,1);// as of now every activity is of cost 1
 
             return res.sendResponse(201, performance);
 

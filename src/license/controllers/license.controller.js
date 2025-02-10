@@ -39,7 +39,7 @@ class licenseController {
       if(!user){
         console.error(`Failed to update licenseId: ${license._id} in user: ${userId}`);
       }
-      
+
       return res.sendResponse(201, license, "success");
     } catch (err) {
       console.error("LicenseControllerError: createLicense", err);
@@ -135,6 +135,21 @@ class licenseController {
         error: err.message,
       });
     }
+  }
+
+  // activity use
+  async registerActivityUsage(userId,activityId, costMultiplier){
+    try{
+      const rawAU = {
+        userId,
+        activityId,
+        costMultiplier,
+      }
+      return await activityUsageService.createActivityUsage(rawAU);
+    }catch(err){
+      console.error("LicenseController: registerActivityUsage: ",err);
+    }
+    return null;
   }
 
   
