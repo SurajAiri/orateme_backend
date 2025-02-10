@@ -1,7 +1,5 @@
 import { DEFAULT_PAGE, DEFAULT_LIMIT } from '../../config/constants.js';
 import ActivityService from '../services/activity.service.js';
-import ActivityOutlineService from '../services/activity_outline.service.js';
-import RecordSchema from '../services/record.service.js';
 
 class AdminActivityController {
     async getById(req,res){
