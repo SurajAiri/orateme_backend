@@ -4,6 +4,7 @@ import {
   findUserByUsername,
   updateUser,
 } from "../../user/services/user.service.js";
+import { calculateWorkingTimePeriod } from "../../utils/utility.js";
 import activityUsageService from "../services/activityUsage.service.js";
 import LicenseService from "../services/license.service.js";
 import licenseOutlineService from "../services/licenseOutline.service.js";
@@ -89,8 +90,10 @@ class licenseController {
         return { isValid: false, message: "License is inactive" };
 
       const { weeklyLimit } = license;
+      const periodHours = calculateWorkingTimePeriod(license.boughtOn);
       const weeklyUsage =
-        await activityUsageService.getWeeklyActivityUsageByUserId(userId);
+        await activityUsageService.getWeeklyActivityUsageByUserId(userId,Math.ceil(periodHours));
+
       const totalUsage = weeklyUsage.reduce((acc, curr) => acc + curr.count, 0);
 
       return {

@@ -1,4 +1,5 @@
 import ActivityUsageModel from '../models/activityUsage.model.js';
+import mongoose from 'mongoose';
 
 class ActivityUsageService {
     async createActivityUsage(data) {
@@ -24,15 +25,25 @@ class ActivityUsageService {
             .exec();
     }
 
-    async getWeeklyActivityUsageByUserId(userId) {
-        // return await ActivityUsageModel.find({ userId });
+async getWeeklyActivityUsageByUserId(userId, periodHours) {
         return await ActivityUsageModel.aggregate([
-            { $match: { userId } },
+            { 
+                $match: { userId: new mongoose.Types.ObjectId(userId) } 
+            },
             {
                 $group: {
-                    _id: { $week: '$timestamp' },
+                    _id: {
+                        $dateTrunc: {
+                            date: "$timestamp",
+                            unit: "hour",
+                            binSize: periodHours
+                        }
+                    },
                     count: { $sum: 1 }
                 }
+            },
+            { 
+                $sort: { "_id": 1 } 
             }
         ]);
     }

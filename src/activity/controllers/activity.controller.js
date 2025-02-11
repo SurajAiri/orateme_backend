@@ -20,10 +20,10 @@ class ActivityController {
 
             // todo: validate license
             if(!licenseId) return res.sendResponse(400,{message:"No package purchased"});
-            const license = await licenseController.getLicenseActivityLimits(licenseId,userId);
-            if(!license)return res.sendResponse(400,{message: 'Unable to find license'});
+            const licenseLimit = await licenseController.getLicenseActivityLimits(licenseId,userId);
+            if(!licenseLimit)return res.sendResponse(400,{message: 'Unable to find license'});
 
-            if(!license.isValid)return res.sendResponse(400,{message:license.message || "Unknown reason"});
+            if(!licenseLimit.isValid)return res.sendResponse(400,{message:licenseLimit.message || "Unknown reason"});
 
             // Validate input
             const { error, value } = ActivityValidator.createActivity.validate(req.body);
@@ -35,7 +35,7 @@ class ActivityController {
             if (!ao) return res.sendResponse(400, { message: 'Invalid activity outline id' });
             
             // check if activity limit is available
-            if((license.remaining ?? 0) < ao.costMultiplier)return res.sendResponse(400,{message:"Not enough credit to create activity."})
+            if((licenseLimit.remaining ?? 0) < (ao.costMultiplier ?? 1))return res.sendResponse(400,{message:"Not enough credit to create activity."});
 
             // Generate random questions
             const ques = await getRandomQuestionByQuesBankUtil(ao.questionBankId, ao.questionCount);
