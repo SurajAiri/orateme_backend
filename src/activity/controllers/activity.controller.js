@@ -19,6 +19,7 @@ class ActivityController {
             // if (incompleteAct) return res.sendResponse(200, incompleteAct);
 
             // todo: validate license
+            if(!licenseId) return res.sendResponse(400,{message:"No package purchased"});
             const license = await licenseController.getLicenseActivityLimits(licenseId,userId);
             if(!license)return res.sendResponse(400,{message: 'Unable to find license'});
 

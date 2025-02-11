@@ -9,5 +9,6 @@ router.route("/:id")
     .get(licenseController.getById);
 
 router.patch("/suspend/:id",licenseController.suspendById); 
+router.post("/limit",licenseController.adminLicenseActivityLimitInfo);
 
 export default router;

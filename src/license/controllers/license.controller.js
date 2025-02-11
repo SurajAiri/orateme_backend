@@ -1,12 +1,16 @@
 import { updateUserById } from "../../user/controllers/user.controller.js";
-import { findUserByUsername, updateUser } from "../../user/services/user.service.js";
+import {
+  findUserById,
+  findUserByUsername,
+  updateUser,
+} from "../../user/services/user.service.js";
 import activityUsageService from "../services/activityUsage.service.js";
 import LicenseService from "../services/license.service.js";
 import licenseOutlineService from "../services/licenseOutline.service.js";
 
 class licenseController {
   async _create(res, userId, loId, transactionId, serverType) {
-    if (!userId) return res.sendResponse(401, { message: 'Unauthorized user' });
+    if (!userId) return res.sendResponse(401, { message: "Unauthorized user" });
     if (!loId || !transactionId || !serverType)
       return res.sendResponse(400, {
         message: "loId, transactionId and serviceType are required",
@@ -28,16 +32,18 @@ class licenseController {
         transactionId,
         serverType,
         weeklyLimit: plan.weeklyLimit,
-        expiryDate: new Date(Date.now() + plan.validity * 24 * 60 * 60 * 1000)
+        expiryDate: new Date(Date.now() + plan.validity * 24 * 60 * 60 * 1000),
       };
       const license = await LicenseService.createLicense(rawLicense);
       if (!license)
         return res.sendResponse(400, { message: "Failed to create license" });
 
-      // 3. update user 
-      const user = await updateUser(userId,{licenseId:license._id});
-      if(!user){
-        console.error(`Failed to update licenseId: ${license._id} in user: ${userId}`);
+      // 3. update user
+      const user = await updateUser(userId, { licenseId: license._id });
+      if (!user) {
+        console.error(
+          `Failed to update licenseId: ${license._id} in user: ${userId}`
+        );
       }
 
       return res.sendResponse(201, license, "success");
@@ -50,57 +56,120 @@ class licenseController {
     }
   }
 
-  userCreate = async(req, res)=> {
+  userCreate = async (req, res) => {
     const { loId, transactionId, serverType } = req.body;
     const { id: userId } = req.user;
     return this._create(res, userId, loId, transactionId, serverType);
-  }
+  };
 
-  adminCreate = async (req, res) =>{
+  adminCreate = async (req, res) => {
     const { loId, transactionId, serverType, userId } = req.body;
 
     // check if user exists
-    const user = await UserService.findUserById(userId);
+    const user = await findUserById(userId);
     if (!user) return res.sendResponse(404, { message: "User not found" });
 
     return this._create(res, userId, loId, transactionId, serverType);
-  }
+  };
 
-  async getLicenseActivityLimits(licenseId, userId){
-    try{
-        const license = await LicenseService.getById(licenseId);
-        if(!license) throw new Error('Invalid license id');
+  async getLicenseActivityLimits(licenseId, userId) {
+    try {
+      const license = await LicenseService.getById(licenseId);
+      if (!license) throw new Error("Invalid license id");
 
-        if(license.isSuspended) return {isValid:false, message:'License is suspended'};
-        if(license.expiryDate < new Date()) return {isValid:false, message:'License is expired'};
-        if(!license.isActive) return {isValid:false, message:'License is inactive'};
+      if (license.isSuspended)
+        return { isValid: false, message: "License is suspended" };
+      if (license.expiryDate < new Date())
+        return { isValid: false, message: "License is expired" };
+      if (!license.isActive)
+        return { isValid: false, message: "License is inactive" };
 
-        const {weeklyLimit} = license;
-        const weeklyUsage = await activityUsageService.getWeeklyActivityUsageByUserId(userId);
-        const totalUsage = weeklyUsage.reduce((acc,curr)=>acc+curr.count,0);
+      const { weeklyLimit } = license;
+      const weeklyUsage =
+        await activityUsageService.getWeeklyActivityUsageByUserId(userId);
+      const totalUsage = weeklyUsage.reduce((acc, curr) => acc + curr.count, 0);
 
-        return {
-            weeklyLimit,
-            weeklyUsage: totalUsage,
-            remaining: weeklyLimit - totalUsage,
-            isValid:true
-        }
-    }catch(err){
-        throw err;
+      return {
+        weeklyLimit,
+        weeklyUsage: totalUsage,
+        remaining: weeklyLimit - totalUsage,
+        isValid: true,
+        expiryDate:license.expiryDate,
+      };
+    } catch (err) {
+      throw err;
     }
   }
 
-  async getLicenseForUser(req, res) {
-    const {licenseId} = req.user;
-    if(!licenseId) return res.sendResponse(400,{message:'No license found for user'});
-    try{
-        const license = await LicenseService.getById(licenseId);
-        if(!license) throw new Error('Invalid license id');
+  userLicenseActivityLimitInfo = async (req, res) => {
+    const { id: userId, licenseId } = req.user;
+    if (!licenseId)
+      return res.sendResponse(400, { message: "No license found for user" });
+    try {
+      const info = await this.getLicenseActivityLimits(licenseId, userId);
+      if (info === null)
+        return res.sendResponse(400, {
+          isValid: false,
+          message: "Failed to get license activity limits",
+        });
+      return res.sendResponse(200, info, "success");
+    } catch (err) {
+      console.error(
+        "LicenseControllerError: userLicenseActivityLimitInfo",
+        err
+      );
+      return res.sendResponse(500, {
+        isValid: false,
+        message: "Internal Server Error",
+        error: err.message,
+      });
+    }
+  };
 
-        return res.sendResponse(200,license,'success');
-    }catch(err){
-        console.error('LicenseControllerError: getLicenseForUser',err);
-        return res.sendResponse(500,{message:'Internal Server Error',error:err.message});
+  async adminLicenseActivityLimitInfo(req, res) {
+    const { userId, licenseId } = req.body;
+    if (!userId || !licenseId)
+      return res.sendResponse(400, {
+        isValid: false,
+        message: "userId and licenseId are required",
+      });
+    try {
+      const info = await this.getLicenseActivityLimits(licenseId, userId);
+      if (info === null)
+        return res.sendResponse(400, {
+          isValid: false,
+          message: "Failed to get license activity limits",
+        });
+      return res.sendResponse(200, info, "success");
+    } catch (err) {
+      console.error(
+        "LicenseControllerError: adminLicenseActivityLimitInfo",
+        err
+      );
+      return res.sendResponse(500, {
+        isValid: false,
+        message: "Internal Server Error",
+        error: err.message,
+      });
+    }
+  }
+
+  // onnext: optimize calling this function (some internal logic so that user not have to call this everytime) [frontend-side + backend(better logic if required)]
+  async getLicenseForUser(req, res) {
+    const { licenseId } = req.user;
+    if (!licenseId)
+      return res.sendResponse(400, { message: "No license found for user" });
+    try {
+      const license = await LicenseService.getById(licenseId);
+      if (!license) throw new Error("Invalid license id");
+
+      return res.sendResponse(200, license, "success");
+    } catch (err) {
+      console.error("LicenseControllerError: getLicenseForUser", err);
+      return res.sendResponse(500, {
+        message: "Internal Server Error",
+        error: err.message,
+      });
     }
   }
 
@@ -108,7 +177,8 @@ class licenseController {
     const { id } = req.params;
     try {
       const license = await LicenseService.getById(id);
-      if (!license) return res.sendResponse(404, { message: "License not found" });
+      if (!license)
+        return res.sendResponse(404, { message: "License not found" });
 
       return res.sendResponse(200, license, "success");
     } catch (err) {
@@ -122,10 +192,11 @@ class licenseController {
 
   async suspendById(req, res) {
     const { id } = req.params;
-    const {isSuspended} = req.body;
+    const { isSuspended } = req.body;
     try {
-      const license = await LicenseService.updateById(id, {isSuspended});
-      if (!license) return res.sendResponse(400, { message: "Failed to suspend license" });
+      const license = await LicenseService.updateById(id, { isSuspended });
+      if (!license)
+        return res.sendResponse(400, { message: "Failed to suspend license" });
 
       return res.sendResponse(200, license, "success");
     } catch (err) {
@@ -138,22 +209,19 @@ class licenseController {
   }
 
   // activity use
-  async registerActivityUsage(userId,activityId, costMultiplier){
-    try{
+  async registerActivityUsage(userId, activityId, costMultiplier) {
+    try {
       const rawAU = {
         userId,
         activityId,
         costMultiplier,
-      }
+      };
       return await activityUsageService.createActivityUsage(rawAU);
-    }catch(err){
-      console.error("LicenseController: registerActivityUsage: ",err);
+    } catch (err) {
+      console.error("LicenseController: registerActivityUsage: ", err);
     }
     return null;
   }
-
-  
-  
 }
 
 export default new licenseController();
