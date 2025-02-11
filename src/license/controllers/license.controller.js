@@ -10,50 +10,54 @@ import licenseOutlineService from "../services/licenseOutline.service.js";
 
 class licenseController {
   async _create(res, userId, loId, transactionId, serverType) {
-    if (!userId) return res.sendResponse(401, { message: "Unauthorized user" });
-    if (!loId || !transactionId || !serverType)
-      return res.sendResponse(400, {
-        message: "loId, transactionId and serviceType are required",
-      });
-
     try {
-      // 1. get license outline
-      const plan = await licenseOutlineService.getById(loId);
-      if (!plan)
-        return res.sendResponse(400, { message: "Invalid license outline id" });
-
-      // 2. create license
-      const rawLicense = {
-        name: plan.name,
-        featureTier: plan.featureTier,
-        loId,
-        boughtBy: userId,
-        boughtOn: new Date(),
-        transactionId,
-        serverType,
-        weeklyLimit: plan.weeklyLimit,
-        expiryDate: new Date(Date.now() + plan.validity * 24 * 60 * 60 * 1000),
-      };
-      const license = await LicenseService.createLicense(rawLicense);
-      if (!license)
-        return res.sendResponse(400, { message: "Failed to create license" });
-
-      // 3. update user
-      const user = await updateUser(userId, { licenseId: license._id });
-      if (!user) {
-        console.error(
-          `Failed to update licenseId: ${license._id} in user: ${userId}`
-        );
-      }
-
-      return res.sendResponse(201, license, "success");
+      const success = await this._createLicense(userId, loId, transactionId, serverType);
+      return res.sendResponse(200, { success }, "License created successfully");
     } catch (err) {
-      console.error("LicenseControllerError: createLicense", err);
+      console.error("LicenseControllerError: _create", err);
       return res.sendResponse(500, {
-        message: "Internal Server Error",
+        message: "Failed to create license",
         error: err.message,
       });
     }
+  }
+
+  async _createLicense(userId, loId, transactionId, serverType, updateUser = true) {
+    if (!userId) throw new Error("Unauthorized user");
+    if (!loId || !transactionId || !serverType)
+      throw new Error("loId, transactionId and serviceType are required");
+
+    // 1. get license outline
+    const plan = await licenseOutlineService.getById(loId);
+    if (!plan) throw new Error("Invalid license outline id");
+
+    // 2. create license
+    const rawLicense = {
+      name: plan.name,
+      featureTier: plan.featureTier,
+      loId,
+      boughtBy: transactionId === "trial" ? undefined : userId,
+      boughtOn: new Date(),
+      transactionId: transactionId === "trial" ? undefined : transactionId,
+      serverType,
+      weeklyLimit: plan.weeklyLimit,
+      expiryDate: new Date(Date.now() + plan.validity * 24 * 60 * 60 * 1000),
+    };
+    const license = await LicenseService.createLicense(rawLicense);
+    if (!license) throw new Error("Failed to create license");
+
+    if(!updateUser) return license._id;
+
+    // 3. update user
+    const user = await updateUser(userId, { licenseId: license._id });
+    if (!user) {
+      console.error(
+        `Failed to update licenseId: ${license._id} in user: ${userId}`
+      );
+      throw new Error("Failed to update user with license");
+    }
+
+    return license._id;
   }
 
   userCreate = async (req, res) => {

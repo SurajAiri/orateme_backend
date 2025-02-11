@@ -5,9 +5,9 @@ const licenseModelSchema = new mongoose.Schema({
     featureTier: { type: String, required: true },
     // related to purchase
     loId:{type: mongoose.Schema.Types.ObjectId, ref: 'LicenseOutline', required: true},
-    boughtBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    boughtBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', sparse: true },
     boughtOn: { type: Date, default: Date.now },
-    transactionId:{type: String, required: true,unique:true},
+    transactionId:{type: String, sparse: true,unique:true},
     serverType:{type: String, enum: ['local', 'server'], required: true},
     weeklyLimit:{type: Number, required: true},
     isActive: { type: Boolean, default: true },

@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import * as JwtService from "../../shared/services/jwt.service.js";
 import * as UserService from "../services/user.service.js";
 import * as UserValidator from "../validators/user.validator.js";
+import licenseController from "../../license/controllers/license.controller.js";
 // const otpGenerator = require("otp-generator");
 // const { sendOtpTwilio } = require("../services/twilio.service");
 
@@ -16,17 +17,28 @@ async function registerWithUsername(req, res) {
     if (error) return res.sendResponse(400, `AuthError: registerWithUsername - ${error.message}`);
     // const refreshToken = generateRefreshToken(newUser);
     // const newUser = await createUserService({ ...value, refreshToken });
+    
+    let licenseId = null;
+    const trialPlanId = process.env.TRIAL_PLAN_ID;
+    if (trialPlanId) {
+      licenseId = await licenseController._createLicense("orateMe", trialPlanId, "trial", "local", false);
+    }
+    value.licenseId = licenseId;
     const newUser = await UserService.createUser(value);
     if (!newUser) return res.sendResponse(500, "Failed to create user");
     const accessToken = JwtService.generateAccessToken(newUser);
+
     return res.sendResponse(200, {
       user: newUser,
       accessToken,
       // refreshToken,
     });
   } catch (err) {
-    if (err.code === 11000) return res.sendResponse(400, "User already exists");
     console.error(`AuthError: registerWithUsername - ${err.message}`);
+    if (err.code === 11000) {
+      const field = Object.keys(err.keyPattern)[0];
+      return res.sendResponse(400, `${field} is already taken`);
+    }
     return res.sendResponse(400, `AuthError: registerWithUsername - ${err.message}`);
   }
 }
