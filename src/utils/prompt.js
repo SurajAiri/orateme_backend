@@ -1,33 +1,20 @@
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 
-
-function generatePrompt(activity, question, transcript,personName) {
+function generatePrompt(activity, question, transcript, personName) {
   const message = [
     new SystemMessage(
-      `You are an advanced speech evaluation assistant for the Orate Me platform. Your role is to analyze and provide structured feedback on ${personName}'s speaking skills. Your evaluation should be like you are telling ${personName} directly about their performance.`
+      `You are an advanced speech evaluation assistant for the Orate Me platform. Your role is to assess ${personName}'s speaking skills and provide structured feedback as if directly addressing them.`
     ),
     new HumanMessage(`
-You are an examiner evaluating a candidate's speaking test. The candidate spoke on the topic "${question}" for the activity "${activity}". Your task is to assess the candidate's performance and provide a detailed report.
+You are evaluating ${personName}'s response to the topic "${question}" for the activity "${activity}". Provide a detailed report based on the following criteria:
 
-Evaluation Criteria:
-Fluency: Assess the candidate's ability to speak smoothly and maintain a steady pace.
-Pronunciation: Evaluate the clarity of speech and correctness of word pronunciation.
-Vocabulary: Judge the range and appropriateness of the candidate's vocabulary.
-Grammar: Analyze grammatical accuracy and sentence structure.
-Coherence: Review the logical flow and connectivity of ideas.
+- Fluency: Smoothness and consistency of speech.  
+- Pronunciation: Clarity and correctness of word pronunciation.  
+- Vocabulary: Appropriateness and range of word usage.  
+- Grammar: Accuracy in sentence structure.  
+- Coherence: Logical flow and connectivity of ideas.  
 
-Additional Notes:
-- Highlight the candidate's strengths and weaknesses.
-- Provide an overall performance evaluation, including a final score.
-- Assign scores out of 10 for each criterion.
-
-Transcript:
-The candidate’s speech transcript is provided below:
-${transcript}
-
-Format:
-Return the evaluation in JSON format using the following structure:
-
+Evaluation Format (JSON):  
 {
     "report": {
         "candidate_performance": {
@@ -41,26 +28,28 @@ Return the evaluation in JSON format using the following structure:
         "strengths": "",
         "weaknesses": "",
         "suggestions": "",
-        "organization_of_ideas":"",
-        "improved_answer":"",
-        "ai_organization_of_ideas":"",
+        "organization_of_ideas": "",
+        "ai_organization_of_ideas": "",
+        "improved_answer": ""
     }
 }
 
-Guidelines:
-- Ensure evaluations are concise, clear, and professional.
-- Focus on actionable feedback.
-- Also include examples from the transcript to support your evaluation and analysis including strengths, weakness, and other.
-- Provide constructive criticism and suggestions for improvement.
-- Evaluation should be concise and to the point.
-- Use the provided template without modification.
-- Organize your evaluation logically and coherently.
-- Also consider ${personName}'s content length in transcript while evaluating.
-- ai_organization_of_ideas is how you would like to see the organization of ideas in the improved answer.
+Guidelines:  
+- Use clear, concise, and constructive feedback.  
+- Provide examples from the transcript to support evaluations.
+- strengthen your feedback with specific examples from the transcript.  
+- Highlight strengths and weaknesses with actionable suggestions.  
+- Ensure logical organization and adherence to the provided JSON structure.  
+- Consider ${personName}'s speech length when evaluating.  
+- In ai_organization_of_ideas, suggest how the response should be structured for improvement.  
+- In improved_answer, provide a revised version of the response based on ai_organization_of_ideas.
+
+Transcript:  
+${transcript}  
 `),
   ];
 
   return message;
 }
 
-export  { generatePrompt };
+export { generatePrompt };
