@@ -23,7 +23,11 @@ const speechEvaluationSchema = new mongoose.Schema({
   overall_performance: { type: overallPerformanceSchema, required: true },
   strengths: { type: String, required: true },
   weaknesses: { type: String, required: true },
-  suggestions: { type: String, required: true }
+  suggestions: { type: String, required: true },
+  improved_answer: { type: String, },
+  organization_of_ideas: { type: String, },
+  ai_organization_of_ideas: { type: String, },
+  createdAt: { type: Date, default: Date.now }
 });
 
 export default mongoose.model("Performance", speechEvaluationSchema);

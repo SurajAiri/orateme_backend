@@ -18,10 +18,10 @@ class OpenaiEvalService {
    * @returns {Promise<string>} The evaluation response content from the model
    * @throws {Error} When evaluation fails
    */
-  async evaluateSpeech(activity, question, transcript) {
+  async evaluateSpeech(activity, question, transcript,personName) {
     try {
       // fixme: uncomment the following lines
-      const messages = generatePrompt(activity, question, transcript);
+      const messages = generatePrompt(activity, question, transcript,personName);
       const response = await this.model.invoke(messages);
       // console.log(response);
       // console.log("\n")

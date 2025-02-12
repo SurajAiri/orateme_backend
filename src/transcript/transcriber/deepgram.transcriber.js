@@ -15,10 +15,8 @@ import { createClient } from "@deepgram/sdk";
         smart_format: true,
       }
     );
-    console.log("\n\ndeepgram: ",typeof(result),result);
     if (error) throw error;
 
-    // const result = JSON.parse(fs.readFileSync("./res1.json", 'utf8'));
     return result;
   } catch (err) {
     console.error("DeepgramTranscriberWithUrlError: ", err);

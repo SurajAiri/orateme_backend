@@ -25,7 +25,10 @@ class PerformanceValidator {
             overall_performance: this.overallPerformanceValidator.required(),
             strengths: Joi.string().required(),
             weaknesses: Joi.string().required(),
-            suggestions: Joi.string().required()
+            suggestions: Joi.string().required(),
+            improved_answer: Joi.string(),
+            organization_of_ideas: Joi.string(),
+            ai_organization_of_ideas: Joi.string()
         });
 
         this.updatePerformance = Joi.object({
@@ -33,7 +36,10 @@ class PerformanceValidator {
             overall_performance: this.overallPerformanceValidator,
             strengths: Joi.string(),
             weaknesses: Joi.string(),
-            suggestions: Joi.string()
+            suggestions: Joi.string(),
+            improved_answer: Joi.string(),
+            organization_of_ideas: Joi.string(),
+            ai_organization_of_ideas: Joi.string()
         }).min(1);
     }
 }

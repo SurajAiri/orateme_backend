@@ -34,6 +34,7 @@ const transcriptSchema = new mongoose.Schema({
     words: [wordSchema],
     paragraphs: [paragraphSchema],
     userId:{type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
+    createdAt: { type: Date, default: Date.now },
 });
 
 export default mongoose.model('Transcript', transcriptSchema);

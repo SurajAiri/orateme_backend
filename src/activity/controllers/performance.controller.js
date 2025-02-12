@@ -35,7 +35,7 @@ class PerformanceController {
         // const { transcriptId } = req.params;
         // if(!transcriptId) return res.sendResponse(400, { message: 'TranscriptId is required' });
 
-        const {id:userId} = req.user;
+        const {id:userId,name} = req.user;
 
         const { transcriptId, activityId } = req.body;
         if (!transcriptId || !activityId) return res.sendResponse(400, { message: 'transcriptId and activityId are required fields' });
@@ -56,7 +56,7 @@ class PerformanceController {
 
 
             // 5. Evaluate performance
-            const gptEval = await openaiEvaluation.evaluateSpeech(actTitle, question, transcriptText);
+            const gptEval = await openaiEvaluation.evaluateSpeech(actTitle, question, transcriptText,name);
             if(!gptEval) return res.sendResponse(400, { message: 'Failed to evaluate performance' });
 
             const evaluation = llmJsonParser(gptEval);
