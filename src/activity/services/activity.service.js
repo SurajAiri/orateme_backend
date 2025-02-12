@@ -75,6 +75,7 @@ class ActivitySchemaService {
         if (userId) filter.userId = userId;
         return await ActivitySchema.find(filter)
             .populate('actOutId')
+            .sort({ createdAt: -1 })
             .skip((page - 1) * limit)
             .limit(limit)
             .exec();

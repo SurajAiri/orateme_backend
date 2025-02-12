@@ -40,9 +40,11 @@ Guidelines:
 - strengthen your feedback with specific examples from the transcript.  
 - Highlight strengths and weaknesses with actionable suggestions.  
 - Ensure logical organization and adherence to the provided JSON structure.  
-- Consider ${personName}'s speech length when evaluating.  
+- Consider ${personName}'s speech length when evaluating. 
+- In organization_of_ideas, assess the logical structure of the response. 
 - In ai_organization_of_ideas, suggest how the response should be structured for improvement.  
 - In improved_answer, provide a revised version of the response based on ai_organization_of_ideas.
+
 
 Transcript:  
 ${transcript}  
