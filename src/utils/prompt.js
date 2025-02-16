@@ -36,6 +36,7 @@ Evaluation Format (JSON):
 
 Guidelines:  
 - Use clear, concise, and constructive feedback.  
+- Provide a score out of 100 for each criterion with two decimal precision.
 - Provide examples from the transcript to support evaluations.
 - strengthen your feedback with specific examples from the transcript.  
 - Highlight strengths and weaknesses with actionable suggestions.  

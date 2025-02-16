@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const performanceSchema = new mongoose.Schema({
-  score: { type: Number, required: true, min: 0, max: 10 },
+  score: { type: Number, required: true, min: 0, max: 100 },
   evaluation: { type: String, required: true }
 });
 
@@ -14,7 +14,7 @@ const candidatePerformanceSchema = new mongoose.Schema({
 });
 
 const overallPerformanceSchema = new mongoose.Schema({
-  score: { type: Number, required: true, min: 0, max: 10 },
+  score: { type: Number, required: true, min: 0, max: 100 },
   evaluation: { type: String, required: true }
 });
 

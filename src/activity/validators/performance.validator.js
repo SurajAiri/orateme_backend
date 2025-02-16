@@ -3,7 +3,7 @@ import Joi from 'joi';
 class PerformanceValidator {
     constructor() {
         this.performanceValidator = Joi.object({
-            score: Joi.number().min(0).max(10).required(),
+            score: Joi.number().min(0).max(100).required(),
             evaluation: Joi.string().required()
         });
 
@@ -16,7 +16,7 @@ class PerformanceValidator {
         });
 
         this.overallPerformanceValidator = Joi.object({
-            score: Joi.number().min(0).max(10).required(),
+            score: Joi.number().min(0).max(100).required(),
             evaluation: Joi.string().required()
         });
 
