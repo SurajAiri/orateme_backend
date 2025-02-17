@@ -68,7 +68,6 @@ class ActivitySchemaService {
     }
 
     async getAll(query) {
-        // todo: properly populate actOutId
         const { type, userId, page, limit } = query;
         const filter = {};
         if (type) filter.type = type;
@@ -81,10 +80,31 @@ class ActivitySchemaService {
             .exec();
     }
 
+    async getAllCompleted(query) {
+        const { type, userId, page, limit } = query;
+        const filter = {};
+        if (type) filter.type = type;
+        if (userId) filter.userId = userId;
+        filter.overallPerformanceId = { $exists: true, $ne: null };
+        return await ActivitySchema.find(filter)
+            .populate('actOutId')
+            .sort({ createdAt: -1 })
+            .skip((page - 1) * limit)
+            .limit(limit)
+            .exec();
+    }
+
     async activityCount(type, userId) {
         const filter = {};
         if (type) filter.type = type;
         if (userId) filter.userId = userId;
+        return await ActivitySchema.countDocuments(filter);
+    }
+    async completedActivityCount(type, userId) {
+        const filter = {};
+        if (type) filter.type = type;
+        if (userId) filter.userId = userId;
+        filter.overallPerformanceId = { $exists: true, $ne: null };
         return await ActivitySchema.countDocuments(filter);
     }
     

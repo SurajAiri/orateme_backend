@@ -171,6 +171,35 @@ class ActivityController {
             return res.sendResponse(500, {message: 'Internal Server Error', error: err.message});
         }
     }
+    
+    async getAllCompleted(req, res) {
+        const {id:userId} = req.user;
+        const {type, page = DEFAULT_PAGE, limit = DEFAULT_LIMIT} = req.query;
+        try {
+            // 1. fetch all activities with user id and type
+            const query = {userId};
+            if (type) query.type = type;
+            query.page = page;
+            query.limit = limit;
+
+            const activities = await ActivityService.getAllCompleted(query);
+            if (!activities || activities.length === 0) return res.sendResponse(404, {message: 'Activity not found'});
+
+            const totalCount = await ActivityService.completedActivityCount(type, userId);
+            // 2. return response
+            return res.sendResponse(200, activities, 'success', {
+                page: parseInt(page),
+                limit: parseInt(limit),
+                totalCount,
+                totalPages: Math.ceil(totalCount / limit),
+            });
+        } catch (err) {
+            console.error('ActivityControllerError: getAllActivities', err);
+            return res.sendResponse(500, {message: 'Internal Server Error', error: err.message});
+        }
+    }
+
+
 }
 
 export default new ActivityController();
