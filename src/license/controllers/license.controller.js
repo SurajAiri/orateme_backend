@@ -23,7 +23,7 @@ class licenseController {
     }
   }
 
-  async _createLicense(userId, loId, transactionId, serverType, updateUser = true) {
+  async _createLicense(userId, loId, transactionId, serverType, doUpdateUser = true) {
     if (!userId) throw new Error("Unauthorized user");
     if (!loId || !transactionId || !serverType)
       throw new Error("loId, transactionId and serviceType are required");
@@ -47,7 +47,7 @@ class licenseController {
     const license = await LicenseService.createLicense(rawLicense);
     if (!license) throw new Error("Failed to create license");
 
-    if(!updateUser) return license._id;
+    if(!doUpdateUser) return license._id;
 
     // 3. update user
     const user = await updateUser(userId, { licenseId: license._id });
