@@ -1,6 +1,8 @@
 import * as UserService from "../services/user.service.js";
 import * as UserValidator from "../validators/user.validator.js";
-import { DEFAULT_LIMIT, DEFAULT_PAGE } from '../../config/constants.js';
+import { DEFAULT_LIMIT, DEFAULT_PAGE } from "../../config/constants.js";
+import bcrypt from "bcrypt";
+
 
 // common operations [private access]
 async function _updateUser(userId, body, res) {
@@ -64,6 +66,40 @@ const deleteUserSelf = async (req, res) => {
   return _deleteUser(userId, res);
 };
 
+const changePassword = async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+  const { id: userId } = req.user;
+
+  if (!oldPassword || !newPassword)
+    return res.sendResponse(400, {
+      message: "oldPassword and newPassword are required",
+    });
+
+  try {
+    const user = await UserService.findUserById(userId, true);
+    if (!user) return res.sendResponse(404, { message: "User not found" });
+
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!isMatch) {
+      return res.sendResponse(401, "Invalid password");
+    }
+
+    const updatedUser = await UserService.updateUser(userId, {
+      password: newPassword,
+    });
+    if (!updatedUser)
+      return res.sendResponse(500, { message: "Internal Server Error" });
+
+    return res.sendResponse(200, { message: "Password updated successfully" });
+  } catch (error) {
+    console.error("UserControllerError: changePassword", error);
+    return res.sendResponse(500, {
+      message: "Internal Server Error",
+      error: error.message,
+    });
+  }
+};
+
 // admin only
 const getUserById = async (req, res) => {
   const userId = req.params.userId;
@@ -124,15 +160,19 @@ const getAllUsers = async (req, res) => {
     });
   } catch (error) {
     console.error("UserControllerError: getAllUsers", error);
-    return res.sendResponse(500, { message: "Internal Server Error",error: error.message });
+    return res.sendResponse(500, {
+      message: "Internal Server Error",
+      error: error.message,
+    });
   }
 };
 
-export  {
+export {
   // user only
   updateUserSelf,
   getUserSelf,
   deleteUserSelf,
+  changePassword,
   // admin only
   getUserById,
   createUser,

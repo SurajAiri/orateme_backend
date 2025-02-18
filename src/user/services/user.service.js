@@ -15,7 +15,9 @@ const deleteUser = async (id) => {
 };
 
 // admin access only
-const findUserById = async (id) => {
+const findUserById = async (id, passwordRequired) => {
+  if(passwordRequired)
+  return await User.findById(id).select("+password");
   return await User.findById(id);
 };
 

@@ -8,4 +8,6 @@ router
   .patch(UserController.updateUserSelf)
   .delete(UserController.deleteUserSelf);
 
+router.patch("/change_password", UserController.changePassword);
+
 export default router;
