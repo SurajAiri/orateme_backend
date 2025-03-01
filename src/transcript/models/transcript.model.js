@@ -13,14 +13,16 @@ paragraphs: [
 const sentenceSchema = new mongoose.Schema({
     text: String,
     start: Number,
-    end: Number
+    end: Number,
+    _id:false
 });
 
 const wordSchema = new mongoose.Schema({
     word: String,
     start: Number,
     end: Number,
-    confidence: Number
+    confidence: Number,
+    _id:false
 });
 
 const paragraphSchema = new mongoose.Schema({
@@ -28,6 +30,7 @@ const paragraphSchema = new mongoose.Schema({
     start: Number,
     end: Number,
     num_words: Number,
+    _id:false
 });
 
 const transcriptSchema = new mongoose.Schema({

@@ -17,8 +17,8 @@ class TranscriptValidator {
 
         this.paragraphValidator = Joi.object({
             sentences: Joi.array().items(this.sentenceValidator).required(),
-            start: Joi.number().required(),
-            end: Joi.number().required(),
+            start: Joi.number(),
+            end: Joi.number(),
             num_words: Joi.number()
         });
 
