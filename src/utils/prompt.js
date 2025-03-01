@@ -1,6 +1,6 @@
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 
-function generatePrompt(activity, question, transcript, personName) {
+function generateServerTranscriberPrompt(activity, question, transcript, personName) {
   const message = [
     new SystemMessage(
       `You are an advanced speech evaluation assistant for the Orate Me platform. Your role is to assess ${personName}'s speaking skills and provide structured feedback as if directly addressing them.`
@@ -34,12 +34,16 @@ ${transcript}
             "coherence": { "score": null, "evaluation": "" }
         },
         "overall_performance": { "score": null, "evaluation": "" },
-        "strengths": "",
-        "weaknesses": "",
-        "suggestions": "",
-        "organization_of_ideas": "",
-        "ai_organization_of_ideas": "",
-        "improved_answer": ""
+       "evaluation_summary": {
+          "strengths": "",
+          "weaknesses": "",
+          "suggestions": "",
+          "organization_of_ideas": "",
+        },
+        "enhanced_response":{
+          "ai_organization_of_ideas": "",
+          "improved_answer": ""
+        }
     }
 }
 
@@ -61,4 +65,4 @@ ${transcript}
   return message;
 }
 
-export { generatePrompt };
+export { generateServerTranscriberPrompt };

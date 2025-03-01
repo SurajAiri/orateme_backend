@@ -1,5 +1,6 @@
 import { ChatOpenAI } from "@langchain/openai";
-import { generatePrompt } from "../../utils/prompt.js";
+import {  generateServerTranscriberPrompt } from "../../utils/prompt.js";
+import e from "cors";
 
 class OpenaiEvalService {
   constructor() {
@@ -9,7 +10,6 @@ class OpenaiEvalService {
     });
   }
 
-
   /**
    * Evaluates a speech transcript using OpenAI's language model.
    * @param {Object} activity - The activity object containing evaluation context
@@ -18,34 +18,70 @@ class OpenaiEvalService {
    * @returns {Promise<string>} The evaluation response content from the model
    * @throws {Error} When evaluation fails
    */
-  async evaluateSpeech(activity, question, transcript,personName) {
+  async evaluateSpeech(activity, question, transcript, personName) {
     try {
       // fixme: uncomment the following lines
-      const messages = generatePrompt(activity, question, transcript,personName);
+      const messages = generateServerTranscriberPrompt(activity, question, transcript,personName);
       const response = await this.model.invoke(messages);
-      // console.log(response);
-      // console.log("\n")
-      // console.log(response.content);
+      console.log(response);
+      console.log("\n")
+      console.log(response.content);
 
+      // const response = {};
+      // response.content = {
+      //   report: {
+      //     candidate_performance: {
+      //       fluency: {
+      //         score: 50,
+      //         evaluation:
+      //           "Your speech had some smooth moments, but there were noticeable pauses and hesitations that disrupted the flow.",
+      //       },
+      //       pronunciation: {
+      //         score: 60,
+      //         evaluation:
+      //           "Most words were pronounced correctly, but some phrases were unclear, which affected overall understanding.",
+      //       },
+      //       vocabulary: {
+      //         score: 55,
+      //         evaluation:
+      //           "You used basic vocabulary effectively, but there was a lack of variety and complexity that could enhance your message.",
+      //       },
+      //       grammar: {
+      //         score: 45,
+      //         evaluation:
+      //           "There were several grammatical errors, such as 'which my differ' instead of 'which may differ', which impacted clarity.",
+      //       },
+      //       coherence: {
+      //         score: 50,
+      //         evaluation:
+      //           "The ideas presented were somewhat connected, but the transition between thoughts was not smooth, making it hard to follow.",
+      //       },
+      //     },
+      //     overall_performance: {
+      //       score: 52,
+      //       evaluation:
+      //         "Your response touched on important aspects of a meaningful life, but it lacked clarity and structure, which hindered overall effectiveness.",
+      //     },
+      //     evaluation_summary: {
+      //       strengths:
+      //         "You demonstrated a good understanding of the topic and shared personal insights.",
+      //       weaknesses:
+      //         "There were issues with fluency, pronunciation, and grammar that affected the overall delivery.",
+      //       suggestions:
+      //         "Work on speaking more confidently and practice pronunciation to improve clarity. Pay attention to grammar and sentence structure for better coherence.",
+      //       organization_of_ideas:
+      //         "The response lacked a clear structure and could benefit from a more organized presentation of ideas.",
+      //     },
+      //     enhanced_response: {
+      //       ai_organization_of_ideas:
+      //         "To improve clarity and coherence, consider structuring your response in a logical sequence with clear topic sentences and supporting details.",
+      //       improved_answer:
+      //         "In a revised version, you could start by introducing the concept of a meaningful life and then provide examples of what it means to you. Focus on connecting your ideas smoothly to engage the listener effectively.",
+      //     },
+      //   },
+      // };
 
-    //   const response = {};
-    //   response.content = {
-    //     "report": {
-    //         "candidate_performance": {
-    //             "fluency": { "score": 6, "evaluation": "The candidate demonstrated a reasonable level of fluency, with a steady pace throughout the speech. However, there were moments of hesitation and slight pauses that interrupted the flow." },
-    //             "pronunciation": { "score": 7, "evaluation": "Overall, the candidate's pronunciation was clear, with most words articulated correctly. There were a few instances of mispronunciation that slightly affected clarity." },
-    //             "vocabulary": { "score": 6, "evaluation": "The vocabulary used was appropriate for the topic, but the range was somewhat limited. The candidate could benefit from incorporating more varied and sophisticated terms." },
-    //             "grammar": { "score": 5, "evaluation": "There were several grammatical errors and awkward sentence structures that detracted from the overall quality of the speech. For example, phrases like 'the one of the most important wish' and 'we will we all will likely leave' were confusing." },
-    //             "coherence": { "score": 6, "evaluation": "The ideas presented were generally coherent, but the logical flow was occasionally disrupted by unclear transitions and repetitive phrasing. More structured argumentation would enhance clarity." }
-    //         },
-    //         "overall_performance": { "score": 6, "evaluation": "The candidate presented a thoughtful perspective on the topic, but improvements in grammar, vocabulary, and coherence are needed for a more polished delivery." },
-    //         "strengths": "The candidate showed a good understanding of the topic and was able to present both sides of the argument, demonstrating critical thinking.",
-    //         "weaknesses": "Grammatical inaccuracies and limited vocabulary hindered the overall effectiveness of the speech. Additionally, coherence could be improved with better transitions between ideas.",
-    //         "suggestions": "To improve, the candidate should practice speaking with a focus on grammatical accuracy and expanding vocabulary. Engaging in more structured practice sessions could help enhance coherence and fluency."
-    //     }
-    // };    
-      
-    return response.content;
+      return response.content;
     } catch (error) {
       console.error("Error in evaluation:", error);
       throw new Error("Evaluation failed");
