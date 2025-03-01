@@ -1,5 +1,5 @@
 import { ChatOpenAI } from "@langchain/openai";
-import {  generateServerTranscriberPrompt } from "../../utils/prompt.js";
+import {  generateServerTranscriberPrompt, generateLocalTranscriberPrompt } from "../../utils/prompt.js";
 import e from "cors";
 
 class OpenaiEvalService {
@@ -21,7 +21,7 @@ class OpenaiEvalService {
   async evaluateSpeech(activity, question, transcript, personName) {
     try {
       // fixme: uncomment the following lines
-      const messages = generateServerTranscriberPrompt(activity, question, transcript,personName);
+      const messages = generateLocalTranscriberPrompt(activity, question, transcript,personName);
       const response = await this.model.invoke(messages);
       console.log(response);
       console.log("\n")
