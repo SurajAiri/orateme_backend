@@ -2,6 +2,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
+import rateLimit from 'express-rate-limit'
 import responseFormatter from './src/shared/middlewares/response.middleware.js';
 import * as authMiddleware from './src/shared/middlewares/auth.middleware.js';
 import authRoutes from './src/user/routes/auth.routes.js';
@@ -42,6 +43,18 @@ const corsOptions = {
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(cors(corsOptions));
+
+
+// Define the rate limiter
+const limiter = rateLimit({
+    windowMs: 5 * 60 * 1000, // 15 minutes
+    max: 30, // Limit each IP to 100 requests per `windowMs`
+    message: "Too many requests from this IP, please try again later.",
+    headers: true,
+  });
+
+// Apply rate limiter to all routes
+app.use(limiter);
 
 // middlewares
 app.use(express.json());
