@@ -60,6 +60,7 @@ class PerformanceController {
             if(!gptEval) return res.sendResponse(400, { message: 'Failed to evaluate performance' });
 
             const evaluation = llmJsonParser(gptEval);
+            if(!evaluation) return res.sendResponse(400, { message: 'Failed to parse evaluation' });
 
             // 6. Validate evaluation data format
             const { error, value } = performanceValidator.createPerformance.validate(evaluation['report']);

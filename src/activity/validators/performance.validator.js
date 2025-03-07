@@ -9,11 +9,10 @@ class PerformanceValidator {
         });
 
         // For candidate_performance as a Map
-        // This validates an object with string keys and performance objects as values
         this.candidatePerformanceValidator = Joi.object().pattern(
-            Joi.string(), // Key as a dynamic string (fluency, pronunciation, etc.)
+            Joi.string(),
             this.performanceValidator.required()
-        ).required().min(1); // Ensure at least one performance metric
+        ).required().min(1);
 
         // For overall performance
         this.overallPerformanceValidator = Joi.object({
@@ -22,17 +21,16 @@ class PerformanceValidator {
         });
 
         // For AI feedback as a Map
-        // This validates an object with string keys and flexible value types
         this.aiFeedbackValidator = Joi.object().pattern(
-            Joi.string(), // Dynamic keys for AI feedback
+            Joi.string(),
             Joi.alternatives().try(
-                Joi.string(), 
                 Joi.number(),
                 Joi.boolean(),
                 Joi.array().items(Joi.any()), 
-                Joi.object()
+                Joi.object(),
+                Joi.string().allow('').default('NA'), // Allow empty string and set default to "NA"
             )
-        ).min(1); // Ensure at least one feedback item
+        ).min(1);
 
         // For creating a new performance document
         this.createPerformance = Joi.object({
@@ -48,7 +46,7 @@ class PerformanceValidator {
             overall_performance: this.overallPerformanceValidator,
             evaluation_summary: this.aiFeedbackValidator,
             enhanced_response: this.aiFeedbackValidator
-        }).min(1); // Ensure at least one field is being updated
+        }).min(1);
     }
 }
 

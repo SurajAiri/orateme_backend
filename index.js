@@ -54,7 +54,7 @@ const limiter = rateLimit({
   });
 
 // Apply rate limiter to all routes
-app.use(limiter);
+// app.use(limiter);
 
 // middlewares
 app.use(express.json());
