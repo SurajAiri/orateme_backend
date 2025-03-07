@@ -147,18 +147,19 @@ class ActivityController {
 
     async getAll(req, res) {
         const {id:userId} = req.user;
-        const {type, page = DEFAULT_PAGE, limit = DEFAULT_LIMIT} = req.query;
+        const {type, page = DEFAULT_PAGE, limit = DEFAULT_LIMIT, onlyCompleted=false} = req.query;
         try {
             // 1. fetch all activities with user id and type
             const query = {userId};
             if (type) query.type = type;
             query.page = page;
             query.limit = limit;
+            query.onlyCompleted = onlyCompleted;
 
             const activities = await ActivityService.getAll(query);
             if (!activities || activities.length === 0) return res.sendResponse(404, {message: 'Activity not found'});
 
-            const totalCount = await ActivityService.activityCount(type, userId);
+            const totalCount = await ActivityService.activityCount(type, userId,onlyCompleted);
             // 2. return response
             return res.sendResponse(200, activities, 'success', {
                 page: parseInt(page),

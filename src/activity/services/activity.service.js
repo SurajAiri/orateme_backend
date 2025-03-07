@@ -68,10 +68,12 @@ class ActivitySchemaService {
     }
 
     async getAll(query) {
-        const { type, userId, page, limit } = query;
+        const { type, userId, page, limit,onlyCompleted=false } = query;
         const filter = {};
         if (type) filter.type = type;
         if (userId) filter.userId = userId;
+        if(onlyCompleted)
+            filter.overallPerformanceId = { $exists: true, $ne: null };
         return await ActivitySchema.find(filter)
             .populate('actOutId')
             .sort({ createdAt: -1 })
@@ -94,10 +96,12 @@ class ActivitySchemaService {
             .exec();
     }
 
-    async activityCount(type, userId) {
+    async activityCount(type, userId,onlyCompleted=false) {
         const filter = {};
         if (type) filter.type = type;
         if (userId) filter.userId = userId;
+        if(onlyCompleted)
+            filter.overallPerformanceId = { $exists: true, $ne: null };
         return await ActivitySchema.countDocuments(filter);
     }
     async completedActivityCount(type, userId) {
