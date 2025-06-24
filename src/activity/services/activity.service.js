@@ -2,7 +2,7 @@ import ActivitySchema from '../model/activity.model.js';
 
 class ActivitySchemaService {
     async createActivity(data) {
-        const r = await await ActivitySchema.create(data);
+        const r = await ActivitySchema.create(data);
         return (await r.populate('actOutId')).populate({
             path: 'recordId',
             populate: {
