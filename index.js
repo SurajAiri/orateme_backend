@@ -30,30 +30,40 @@ import adminLicenseRoutes from './src/license/routes/license.admin.routes.js';
 
 dotenv.config();
 
+// Global mongoose connection for serverless
+let cached = global.mongoose || { conn: null, promise: null };
+
+if (!global.mongoose) {
+  global.mongoose = cached;
+}
+
 // MongoDB connection with proper configuration
 const connectDB = async () => {
-  try {
-    if (mongoose.connections[0].readyState) {
-      return;
-    }
-    
-    await mongoose.connect(process.env.MONGODB_URI, {
+  if (cached.conn) {
+    return cached.conn;
+  }
+
+  if (!cached.promise) {
+    const opts = {
       bufferCommands: false,
       maxPoolSize: 10,
       serverSelectionTimeoutMS: 5000,
       socketTimeoutMS: 45000,
       family: 4
-    });
-    
+    };
+
+    cached.promise = mongoose.connect(process.env.MONGODB_URI, opts);
+  }
+
+  try {
+    cached.conn = await cached.promise;
     console.log("Connected to MongoDB");
+    return cached.conn;
   } catch (err) {
     console.error("Failed to connect to MongoDB", err);
-    process.exit(1);
+    throw err;
   }
 };
-
-// Initialize database connection
-connectDB();
 
 const corsOptions = {
     origin: ['http://localhost:5173', 'https://orateme.netlify.app', 'https://www.orateme.com', 'https://orateme.com', 'https://web.orateme.com'],
@@ -67,6 +77,8 @@ const corsOptions = {
 // constants
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Apply middlewares
 app.use(cors(corsOptions));
 
 // Define the rate limiter
@@ -77,12 +89,21 @@ const limiter = rateLimit({
     headers: true,
 });
 
-// Apply rate limiter to all routes
 app.use(limiter);
-
-// middlewares
 app.use(express.json());
 app.use(responseFormatter);
+
+// Database connection middleware
+app.use(async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (error) {
+        console.error('Database connection error:', error);
+        res.status(500).json({ error: 'Database connection failed' });
+    }
+});
+
 app.use(authMiddleware.authorizeUser);
 
 app.get('/', (req, res) => {
@@ -110,6 +131,13 @@ app.use("/api/v1/admin/transcript", authMiddleware.restrictTo(["admin"]), adminT
 app.use("/api/v1/admin/plan", authMiddleware.restrictTo(["admin"]), adminPlanRoutes);
 app.use("/api/v1/admin/license", authMiddleware.restrictTo(["admin"]), adminLicenseRoutes);
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+// For Vercel, export the app instead of listening
+export default app;
+
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, async () => {
+        await connectDB();
+        console.log(`Server is running on port ${PORT}`);
+    });
+}
