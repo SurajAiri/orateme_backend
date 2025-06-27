@@ -30,6 +30,31 @@ import adminLicenseRoutes from './src/license/routes/license.admin.routes.js';
 
 dotenv.config();
 
+// MongoDB connection with proper configuration
+const connectDB = async () => {
+  try {
+    if (mongoose.connections[0].readyState) {
+      return;
+    }
+    
+    await mongoose.connect(process.env.MONGODB_URI, {
+      bufferCommands: false,
+      maxPoolSize: 10,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+      family: 4
+    });
+    
+    console.log("Connected to MongoDB");
+  } catch (err) {
+    console.error("Failed to connect to MongoDB", err);
+    process.exit(1);
+  }
+};
+
+// Initialize database connection
+connectDB();
+
 const corsOptions = {
     origin: ['http://localhost:5173', 'https://orateme.netlify.app', 'https://www.orateme.com', 'https://orateme.com', 'https://web.orateme.com'],
     credentials: true,
@@ -44,14 +69,13 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(cors(corsOptions));
 
-
 // Define the rate limiter
 const limiter = rateLimit({
-    windowMs: 5 * 60 * 1000, // 15 minutes
-    max: 30, // Limit each IP to 100 requests per `windowMs`
+    windowMs: 5 * 60 * 1000, // 5 minutes
+    max: 30, // Limit each IP to 30 requests per windowMs
     message: "Too many requests from this IP, please try again later.",
     headers: true,
-  });
+});
 
 // Apply rate limiter to all routes
 app.use(limiter);
@@ -89,13 +113,3 @@ app.use("/api/v1/admin/license", authMiddleware.restrictTo(["admin"]), adminLice
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
-
-// connect to mongodb
-mongoose.connect(process.env.MONGODB_URI)
-    .then(() => {
-        console.log("Connected to MongoDB");
-    })
-    .catch((err) => {
-        console.error("Failed to connect to MongoDB", err);
-        console.error("db uri: ",process.env.MONGODB_URI);
-    });
