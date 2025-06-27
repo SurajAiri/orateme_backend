@@ -172,6 +172,7 @@ async function loginWithUsername(req, res) {
 
 async function logoutUser() {
   // todo: implement logout user
+  
 }
 
 export {
