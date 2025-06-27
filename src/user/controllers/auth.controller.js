@@ -3,9 +3,70 @@ import * as JwtService from "../../shared/services/jwt.service.js";
 import * as UserService from "../services/user.service.js";
 import * as UserValidator from "../validators/user.validator.js";
 import licenseController from "../../license/controllers/license.controller.js";
+import googleAuthProvider from "../auth/google.auth.js";
 // const otpGenerator = require("otp-generator");
 // const { sendOtpTwilio } = require("../services/twilio.service");
 
+async function googleAuth(req, res) {
+  const { idToken } = req.body;
+
+  if (!idToken) {
+    return res.status(400).json({ message: "ID token is required" });
+  }
+
+  try {
+    const googleResponse = await googleAuthProvider(idToken);
+    if (!googleResponse) {
+      return res.status(401).json({ message: "Invalid ID token" });
+    }
+
+    // check if user exists in database
+    let existingUser = await UserService.findUserByEmail(
+      googleResponse.email,
+      true
+    );
+
+    if (existingUser) {
+      const accessToken = JwtService.generateAccessToken(existingUser);
+      return res.sendResponse(200, {
+        user: existingUser,
+        accessToken,
+      });
+    }
+
+    // if not create a new user
+    let licenseId = null;
+    const trialPlanId = process.env.TRIAL_PLAN_ID;
+    if (trialPlanId) {
+      licenseId = await licenseController._createLicense(
+        "orateMe",
+        trialPlanId,
+        "trial",
+        "local",
+        false
+      );
+    }
+    const newUser = await UserService.createUser({
+      email: googleResponse.email,
+      username: googleResponse.username,
+      firstName: googleResponse.name.split(" ")[0],
+      lastName: googleResponse.name.split(" ")[1] || "",
+      provider: googleResponse.provider,
+      licenseId,
+    });
+    if (!newUser) {
+      return res.status(500).json({ message: "Failed to create user" });
+    }
+    const accessToken = JwtService.generateAccessToken(newUser);
+    return res.sendResponse(201, {
+      user: newUser,
+      accessToken,
+    });
+  } catch (error) {
+    console.error("Google authentication error:", error);
+    return res.sendResponse(500, error.message, "Authentication failed");
+  }
+}
 
 // onnext: implement refresh token later on v2
 // username login
@@ -14,14 +75,24 @@ async function registerWithUsername(req, res) {
     const { error, value } = UserValidator.createUserValidator.validate(
       req.body
     );
-    if (error) return res.sendResponse(400, `AuthError: registerWithUsername - ${error.message}`);
+    if (error)
+      return res.sendResponse(
+        400,
+        `AuthError: registerWithUsername - ${error.message}`
+      );
     // const refreshToken = generateRefreshToken(newUser);
     // const newUser = await createUserService({ ...value, refreshToken });
-    
+
     let licenseId = null;
     const trialPlanId = process.env.TRIAL_PLAN_ID;
     if (trialPlanId) {
-      licenseId = await licenseController._createLicense("orateMe", trialPlanId, "trial", "local", false);
+      licenseId = await licenseController._createLicense(
+        "orateMe",
+        trialPlanId,
+        "trial",
+        "local",
+        false
+      );
     }
     value.licenseId = licenseId;
     const newUser = await UserService.createUser(value);
@@ -39,7 +110,10 @@ async function registerWithUsername(req, res) {
       const field = Object.keys(err.keyPattern)[0];
       return res.sendResponse(400, `${field} is already taken`);
     }
-    return res.sendResponse(400, `AuthError: registerWithUsername - ${err.message}`);
+    return res.sendResponse(
+      400,
+      `AuthError: registerWithUsername - ${err.message}`
+    );
   }
 }
 
@@ -48,10 +122,7 @@ async function loginWithUsername(req, res) {
   if (!username || !password)
     return res.sendResponse(400, "Username and password required");
   try {
-    const user = await UserService.findUserByUsername(
-      username,
-      true
-    );
+    const user = await UserService.findUserByUsername(username, true);
     if (!user) return res.sendResponse(404, "User not found");
     if (!user.isActive)
       return res.sendResponse(403, "Account Banned or Suspended");
@@ -72,7 +143,10 @@ async function loginWithUsername(req, res) {
   } catch (err) {
     console.error(err);
     console.error(`AuthError: loginWithUsername - ${err.message}`);
-    return res.sendResponse(400, `AuthError: loginWithUsername - ${err.message}`);
+    return res.sendResponse(
+      400,
+      `AuthError: loginWithUsername - ${err.message}`
+    );
   }
 }
 
@@ -100,10 +174,11 @@ async function logoutUser() {
   // todo: implement logout user
 }
 
-export  {
+export {
   // loginWithGoogleTokenController,
   registerWithUsername,
   loginWithUsername,
   logoutUser,
+  googleAuth,
   // sendOtp,
 };
